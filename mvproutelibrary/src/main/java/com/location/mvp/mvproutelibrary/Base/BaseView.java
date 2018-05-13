@@ -12,5 +12,5 @@ package com.location.mvp.mvproutelibrary.Base;
 
 
 public interface BaseView {
-
+///sss
 }
