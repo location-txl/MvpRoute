@@ -27,6 +27,7 @@ public class RxScheduer {
 
             @Override
             public R apply(BaseBean baseBean) throws Exception {
+                //dsadsa
                 return (R) baseBean.getData();
             }
         };

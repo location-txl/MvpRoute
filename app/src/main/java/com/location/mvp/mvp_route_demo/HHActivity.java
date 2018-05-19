@@ -11,5 +11,5 @@ package com.location.mvp.mvp_route_demo;
  */
 
 
-public class HHActivity {
+public class HHActivity{
 }
