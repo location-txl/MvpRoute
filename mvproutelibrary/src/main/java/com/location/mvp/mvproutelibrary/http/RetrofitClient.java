@@ -1,8 +1,5 @@
 package com.location.mvp.mvproutelibrary.http;
 
-import com.location.mvp.mvproutelibrary.Base.BaseBean;
-import com.location.mvp.mvproutelibrary.api.IAPiService;
-
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -33,10 +30,7 @@ public class RetrofitClient {
 
     }
 
-    public <T> io.reactivex.Observable<BaseBean<T>> get(String url) {
-        IAPiService iaPiService = client.create(IAPiService.class);
-        return iaPiService.<T>get(url);
-    }
+  
 
     public static RetrofitClient getRetrofitClient() {
         if (instance == null) {
