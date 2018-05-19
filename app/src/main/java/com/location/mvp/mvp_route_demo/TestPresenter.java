@@ -1,7 +1,5 @@
 package com.location.mvp.mvp_route_demo;
 
-import android.util.Log;
-
 import com.location.mvp.mvproutelibrary.Base.BaseOberver;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
@@ -21,17 +19,17 @@ public class TestPresenter extends TestContract.Presenter {
 
     @Override
     public void ss() {
-        view.load();
-        RetrofitClient retrofitClient = RetrofitClient.getRetrofitClient();
-        IAPiService api = retrofitClient.createApi(IAPiService.class);
+
+        TestService api = RetrofitClient.getRetrofitClient().createApi(TestService.class);
         api.get()
-                .map(RxScheduer.<BBBean>map())
+                .flatMap(RxScheduer.<UserBean>map())
                 .compose(RxScheduer.io_main())
-                .subscribe(new BaseOberver<BBBean>(rxManager) {
+                .subscribe(new BaseOberver<UserBean>(rxManager, view) {
                     @Override
-                    public void onNext(BBBean resultsBean) {
-                        Log.e("TAG", "tas===>" + resultsBean.getMessage());
+                    public void onNext(UserBean userBean) {
+                        view.load();
                     }
                 });
+
     }
 }

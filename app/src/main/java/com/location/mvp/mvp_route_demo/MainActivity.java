@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
+import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 
 public class MainActivity extends BaseActivity<MainPresenter> {
 
@@ -34,5 +35,10 @@ public class MainActivity extends BaseActivity<MainPresenter> {
     @Override
     protected MainPresenter createPresenter() {
         return null;
+    }
+
+    @Override
+    public void onshowError(BaseThrowable baseThrowable) {
+
     }
 }

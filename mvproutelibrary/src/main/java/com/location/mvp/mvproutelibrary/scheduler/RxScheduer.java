@@ -1,6 +1,7 @@
 package com.location.mvp.mvproutelibrary.scheduler;
 
 import com.location.mvp.mvproutelibrary.Base.BaseBean;
+import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -22,14 +23,16 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RxScheduer {
 
-    public static <R extends BaseBean> Function<BaseBean, R> map() {
-        final Function<BaseBean, R> function = new Function<BaseBean, R>() {
+    public static <R> Function<BaseBean<R>, ObservableSource<R>> map() {
+        final Function<BaseBean<R>, ObservableSource<R>> function = new Function<BaseBean<R>, ObservableSource<R>>() {
+
 
             @Override
-            public R apply(BaseBean baseBean) throws Exception {
-                //dsadsa
-                //dsadsadsadsadsadsa
-                return (R) baseBean.getData();
+            public ObservableSource<R> apply(BaseBean<R> rBaseBean) throws Exception {
+                if (rBaseBean.getCode() == 201) {
+                    return Observable.error(new BaseThrowable("出错了", "201"));
+                }
+                return Observable.just(rBaseBean.getData());
             }
         };
         return function;

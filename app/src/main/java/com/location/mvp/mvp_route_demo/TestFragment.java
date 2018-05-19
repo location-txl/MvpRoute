@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.location.mvp.mvproutelibrary.Base.BaseFragment;
+import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 
 /**
  * 项目名称: MvpRoute
@@ -26,10 +27,12 @@ public class TestFragment extends BaseFragment<TestContract.Presenter> implement
 
     @Override
     protected void initView(View view) {
+
         view.findViewById(R.id.fragment_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.ss();
+presenter.ss();
+
             }
         });
     }
@@ -37,7 +40,7 @@ public class TestFragment extends BaseFragment<TestContract.Presenter> implement
     @Override
     protected void loadData() {
 
-               
+
     }
 
     @NonNull
@@ -54,5 +57,10 @@ public class TestFragment extends BaseFragment<TestContract.Presenter> implement
     @Override
     public void load() {
         Toast.makeText(getActivity(), "你好啊", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onshowError(BaseThrowable baseThrowable) {
+        Toast.makeText(getActivity(), baseThrowable.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

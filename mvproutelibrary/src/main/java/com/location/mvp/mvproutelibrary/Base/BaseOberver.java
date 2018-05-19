@@ -1,7 +1,5 @@
 package com.location.mvp.mvproutelibrary.Base;
 
-import android.util.Log;
-
 import com.location.mvp.mvproutelibrary.manager.RxManager;
 
 import io.reactivex.Observer;
@@ -20,9 +18,11 @@ import io.reactivex.disposables.Disposable;
 
 public abstract class BaseOberver<T> implements Observer<T> {
     private RxManager rxManager;
+    private BaseView baseView;
 
-    public BaseOberver(RxManager rxManager) {
+    public BaseOberver(RxManager rxManager, BaseView baseView) {
         this.rxManager = rxManager;
+        this.baseView = baseView;
     }
 
     @Override
@@ -32,7 +32,7 @@ public abstract class BaseOberver<T> implements Observer<T> {
 
     @Override
     public void onError(Throwable e) {
-        Log.e("TAG", "error===>" + e.getMessage());
+        baseView.onshowError((BaseThrowable) e);
     }
 
     @Override
