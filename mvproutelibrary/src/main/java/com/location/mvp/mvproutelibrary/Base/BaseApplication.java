@@ -1,6 +1,7 @@
 package com.location.mvp.mvproutelibrary.Base;
 
 import android.app.Application;
+import android.util.Log;
 
 /**
  * 项目名称: MvpRoute
@@ -15,6 +16,9 @@ import android.app.Application;
 
 public class BaseApplication extends Application {
 
-
-
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.e("TAG","BaseApplication");
+    }
 }

@@ -23,7 +23,6 @@ public class MainActivity extends BaseActivity<MainPresenter> {
         TestFragment testFragment = new TestFragment();
         fragmentTransaction.add(R.id.id_fre, testFragment);
         fragmentTransaction.commit();
-
     }
 
     @Override

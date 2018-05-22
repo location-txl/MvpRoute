@@ -49,5 +49,14 @@ public class RxScheduer {
         return io;
     }
 
+    public static <T> Function<Throwable, ObservableSource<T>> handlerException() {
+        return new Function<Throwable, ObservableSource<T>>() {
+            @Override
+            public ObservableSource<T> apply(Throwable throwable) throws Exception {
+                return Observable.error(throwable);
+            }
+        };
+    }
+
 
 }
