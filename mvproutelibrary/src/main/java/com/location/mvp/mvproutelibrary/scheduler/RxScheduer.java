@@ -1,7 +1,6 @@
 package com.location.mvp.mvproutelibrary.scheduler;
 
 import com.location.mvp.mvproutelibrary.Base.BaseBean;
-import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -29,9 +28,9 @@ public class RxScheduer {
 
             @Override
             public ObservableSource<R> apply(BaseBean<R> rBaseBean) throws Exception {
-                if (rBaseBean.getCode() == 201) {
-                    return Observable.error(new BaseThrowable("出错了", "201"));
-                }
+//                if (rBaseBean.getCode() == 201) {
+//                    return Observable.error(new BaseThrowable("出错了", "201"));
+//                }
                 return Observable.just(rBaseBean.getData());
             }
         };

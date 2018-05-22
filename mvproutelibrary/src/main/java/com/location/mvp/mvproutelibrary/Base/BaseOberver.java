@@ -1,5 +1,7 @@
 package com.location.mvp.mvproutelibrary.Base;
 
+import android.util.Log;
+
 import com.location.mvp.mvproutelibrary.manager.RxManager;
 
 import io.reactivex.Observer;
@@ -32,7 +34,8 @@ public abstract class BaseOberver<T> implements Observer<T> {
 
     @Override
     public void onError(Throwable e) {
-        baseView.onshowError((BaseThrowable) e);
+//        baseView.onshowError((BaseThrowable) e);
+        Log.e("Mvp_moute", "error===>" + e.getMessage());
     }
 
     @Override

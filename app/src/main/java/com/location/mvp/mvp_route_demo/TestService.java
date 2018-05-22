@@ -3,7 +3,11 @@ package com.location.mvp.mvp_route_demo;
 import com.location.mvp.mvproutelibrary.Base.BaseBean;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * 项目名称: MvpRoute
@@ -18,5 +22,9 @@ import retrofit2.http.GET;
 
 public interface TestService {
     @GET("userInfo")
-    Observable<BaseBean<UserBean>> get();
+    Observable<BaseBean<UserBean>> get(@Query("dsa") String string);
+
+    @FormUrlEncoded
+    @POST("user/login")
+    Observable<BaseBean<LoginBean>> post( @Field("username") String s);
 }

@@ -21,7 +21,7 @@ public class TestPresenter extends TestContract.Presenter {
     public void ss() {
 
         TestService api = RetrofitClient.getRetrofitClient().createApi(TestService.class);
-        api.get()
+        api.get("txl")
                 .flatMap(RxScheduer.<UserBean>map())
                 .compose(RxScheduer.io_main())
                 .subscribe(new BaseOberver<UserBean>(rxManager, view) {
@@ -30,6 +30,15 @@ public class TestPresenter extends TestContract.Presenter {
                         view.load();
                     }
                 });
+//        api.post("tianxiaolong")
+//                .flatMap(RxScheduer.<LoginBean>map())
+//                .compose(RxScheduer.io_main())
+//                .subscribe(new BaseOberver(rxManager, view) {
+//                    @Override
+//                    public void onNext(Object o) {
+//
+//                    }
+//                });
 
     }
 }
