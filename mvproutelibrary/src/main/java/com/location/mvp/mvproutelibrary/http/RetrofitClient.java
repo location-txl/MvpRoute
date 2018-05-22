@@ -38,18 +38,21 @@ public class RetrofitClient {
                 Log.e(TAG, "method===>" + request.method());
                 Log.e(TAG, "header===>" + request.headers().toString());
 //                Log.e(TAG, "params====>" + request.toString());
+
                 Log.e(TAG, "response--------------------------------");
                 Response proceed = chain.proceed(request);
-
+                okhttp3.MediaType mediaType = proceed.body().contentType();
+                String content = proceed.body().string();
                 Log.e(TAG, "time" + proceed.sentRequestAtMillis());
 
                 Log.e(TAG, "message" + proceed.message());
 
 
                 Log.e(TAG, "headers===>" + proceed.headers().toString());
-//                Log.e(TAG, "body===>" + proceed.body().string());
-//                proceed.close();
-                return proceed;
+                Log.e(TAG, "body===>" + content);
+                return proceed.newBuilder()
+                        .body(okhttp3.ResponseBody.create(mediaType, content))
+                        .build();
             }
         });
 
