@@ -18,10 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
     private static RetrofitClient instance;
     private Retrofit client;
-//nnnnnnnn
-    //dsadsaewqew
     private RetrofitClient() {
-
         client = new Retrofit.Builder()
                 .baseUrl("http://www.wanandroid.com/tools/mockapi/428/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
