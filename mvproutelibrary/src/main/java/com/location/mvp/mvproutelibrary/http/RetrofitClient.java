@@ -46,8 +46,6 @@ public class RetrofitClient {
                 Log.e(TAG, "time" + proceed.sentRequestAtMillis());
 
                 Log.e(TAG, "message" + proceed.message());
-
-
                 Log.e(TAG, "headers===>" + proceed.headers().toString());
                 Log.e(TAG, "body===>" + content);
                 return proceed.newBuilder()
