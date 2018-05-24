@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 
@@ -23,7 +24,7 @@ import javax.xml.parsers.SAXParser;
  */
 
 public class FragmentUtils {
-
+	private static final String TAG = FragmentUtils.class.getSimpleName();
 	private SparseArray<BaseFragment> sparseIntArray;
 
 	private String simpleName;
@@ -38,7 +39,6 @@ public class FragmentUtils {
 
 	private BaseFragment baseFragment;
 
-	private boolean isadd;
 
 	private @IdRes
 	int resId;
@@ -61,11 +61,11 @@ public class FragmentUtils {
 
 
 	public FragmentUtils start(Class<? extends BaseFragment> clazz) {
+
 		transaction = fragmentManager.beginTransaction();
 		simpleName = clazz.getSimpleName();
 		baseFragment = (BaseFragment) fragmentManager.findFragmentByTag(simpleName);
-		isadd = baseFragment == null ? false : true;
-		if (!isadd) {
+		if (baseFragment == null) {
 			try {
 				baseFragment = clazz.newInstance();
 			} catch (InstantiationException e) {
@@ -79,8 +79,9 @@ public class FragmentUtils {
 
 
 	public FragmentUtils add(@IdRes int resid) {
+		Log.d(TAG, "isadd===>" + baseFragment.isAdded());
 		this.resId = resid;
-		if (!isadd) {
+		if (!baseFragment.isAdded()) {
 			transaction.add(resid, baseFragment, simpleName);
 		}
 
@@ -93,7 +94,7 @@ public class FragmentUtils {
 
 
 	public FragmentUtils setBundle(@NonNull Bundle bundle) {
-		if (!isadd) {
+		if (!baseFragment.isAdded()) {
 			baseFragment.setArguments(bundle);
 		}
 		return this;
