@@ -10,7 +10,6 @@ import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 public class MainActivity extends BaseActivity<MainPresenter> {
 
 
-
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
@@ -23,6 +22,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
         TestFragment testFragment = new TestFragment();
         fragmentTransaction.add(R.id.id_fre, testFragment);
         fragmentTransaction.commit();
+
     }
 
     @Override
