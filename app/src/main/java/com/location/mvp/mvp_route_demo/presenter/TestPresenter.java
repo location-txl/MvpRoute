@@ -1,7 +1,10 @@
-package com.location.mvp.mvp_route_demo;
+package com.location.mvp.mvp_route_demo.presenter;
 
 import android.util.Log;
 
+import com.location.mvp.mvp_route_demo.modle.service.TestService;
+import com.location.mvp.mvp_route_demo.modle.bean.UserBean;
+import com.location.mvp.mvp_route_demo.contract.TestContract;
 import com.location.mvp.mvproutelibrary.Base.BaseOberver;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
@@ -26,7 +29,6 @@ public class TestPresenter extends TestContract.Presenter {
     public void ss() {
 
         TestService api = RetrofitClient.getRetrofitClient().createApi(TestService.class);
-        //在公司提交
         api.get("txl")
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override

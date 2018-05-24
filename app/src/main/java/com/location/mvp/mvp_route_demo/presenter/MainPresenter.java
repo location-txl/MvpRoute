@@ -1,4 +1,6 @@
-package com.location.mvp.mvp_route_demo;
+package com.location.mvp.mvp_route_demo.presenter;
+
+import com.location.mvp.mvp_route_demo.contract.MainContract;
 
 /**
  * 项目名称: MvpRoute

@@ -1,5 +1,7 @@
-package com.location.mvp.mvp_route_demo;
+package com.location.mvp.mvp_route_demo.modle.service;
 
+import com.location.mvp.mvp_route_demo.modle.bean.LoginBean;
+import com.location.mvp.mvp_route_demo.modle.bean.UserBean;
 import com.location.mvp.mvproutelibrary.Base.BaseBean;
 
 import io.reactivex.Observable;
@@ -26,5 +28,5 @@ public interface TestService {
 
     @FormUrlEncoded
     @POST("user/login")
-    Observable<BaseBean<LoginBean>> post( @Field("username") String s);
+    Observable<BaseBean<LoginBean>> post(@Field("username") String s);
 }

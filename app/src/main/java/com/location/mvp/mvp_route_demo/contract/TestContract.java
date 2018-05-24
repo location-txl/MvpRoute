@@ -1,4 +1,4 @@
-package com.location.mvp.mvp_route_demo;
+package com.location.mvp.mvp_route_demo.contract;
 
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseView;
@@ -7,19 +7,22 @@ import com.location.mvp.mvproutelibrary.Base.BaseView;
  * 项目名称: MvpRoute
  * 类描述:
  * 创建人: 田晓龙
- * 创建时间: 2018/5/13 0013 20:16
+ * 创建时间: 2018/5/13 0013 19:40
  * 修改人:
  * 修改内容:
  * 修改时间:
  */
 
 
-public interface MainContract {
+public interface TestContract {
+
     interface View extends BaseView {
-        void toast(String message);
+void load();
     }
 
     abstract class Presenter extends BasePresenter<View> {
-        protected abstract void load();
+
+
+       public abstract void ss();
     }
 }

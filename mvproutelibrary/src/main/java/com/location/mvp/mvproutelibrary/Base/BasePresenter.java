@@ -14,16 +14,17 @@ import com.location.mvp.mvproutelibrary.manager.RxManager;
 
 
 public abstract class BasePresenter<T extends BaseView> {
-    protected RxManager rxManager;
-    protected T view;
+	protected RxManager rxManager;
+	protected T view;
 
 
 
-    protected void unRegist() {
-        rxManager.clear();
-    }
-    protected void regist(T view){
-        this.view = view;
-        rxManager = new RxManager();
-    }
+	protected void unRegist() {
+		rxManager.clear();
+	}
+
+	protected void regist(T view) {
+		this.view = view;
+		rxManager = new RxManager();
+	}
 }

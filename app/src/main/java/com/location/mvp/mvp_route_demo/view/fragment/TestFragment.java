@@ -1,10 +1,13 @@
-package com.location.mvp.mvp_route_demo;
+package com.location.mvp.mvp_route_demo.view.fragment;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.location.mvp.mvp_route_demo.R;
+import com.location.mvp.mvp_route_demo.contract.TestContract;
+import com.location.mvp.mvp_route_demo.presenter.TestPresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseFragment;
 import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 

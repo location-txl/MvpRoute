@@ -1,4 +1,4 @@
-package com.location.mvp.mvp_route_demo;
+package com.location.mvp.mvp_route_demo.modle.bean;
 
 /**
  * 项目名称: MvpRoute
