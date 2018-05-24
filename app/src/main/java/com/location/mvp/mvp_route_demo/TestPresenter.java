@@ -26,6 +26,7 @@ public class TestPresenter extends TestContract.Presenter {
     public void ss() {
 
         TestService api = RetrofitClient.getRetrofitClient().createApi(TestService.class);
+        //在公司提交
         api.get("txl")
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
