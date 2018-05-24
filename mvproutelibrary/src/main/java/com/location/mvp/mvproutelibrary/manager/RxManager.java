@@ -17,7 +17,6 @@ import io.reactivex.disposables.Disposable;
 
 
 public class RxManager {
-
     private final CompositeDisposable compositeDisposable;
 
     public RxManager() {
