@@ -1,5 +1,6 @@
 package com.location.mvp.mvproutelibrary.Base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -49,4 +50,8 @@ protected final String TAG = getClass().getSimpleName();
             presenter.unRegist();
         }
     }
+    protected void startActivity(Class activity){
+        startActivity(new Intent(this, activity));
+    }
+
 }
