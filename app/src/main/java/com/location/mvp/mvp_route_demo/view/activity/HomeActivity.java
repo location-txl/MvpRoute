@@ -44,28 +44,12 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
 				.start(OneFragment.class)
 				.add(R.id.home_fre)
 				.commit();
-		LogUtils.e(TAG,"你好啊");
-
+		LogUtils.e("你好啊");
 	}
 
-	private static String getClassName() {
-		String result;
-		StackTraceElement thisMethodStack = (new Exception()).getStackTrace()[1];
-		result = thisMethodStack.getClassName();
-		int lastIndex = result.lastIndexOf(".");
-		result = result.substring(lastIndex + 1, result.length());
-		return result;
-	}
 
-	private static String callMethodAndLine() {
-		String result = "at ";
-		StackTraceElement thisMethodStack = (new Exception()).getStackTrace()[1];
-		result += thisMethodStack.getClassName() + ".";
-		result += thisMethodStack.getMethodName();
-		result += "(" + thisMethodStack.getFileName();
-		result += ":" + thisMethodStack.getLineNumber() + ")  ";
-		return result;
-	}
+
+
 
 	@Override
 	protected void loadData() {
