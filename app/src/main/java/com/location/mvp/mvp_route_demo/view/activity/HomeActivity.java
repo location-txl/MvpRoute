@@ -14,6 +14,7 @@ import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
+import com.location.mvp.mvproutelibrary.utils.TimeUtils;
 
 /**
  * 项目:趣租部落
@@ -44,7 +45,8 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
 				.start(OneFragment.class)
 				.add(R.id.home_fre)
 				.commit();
-		LogUtils.e("你好啊");
+		LogUtils.e(TimeUtils.hxDate(System.currentTimeMillis()));
+
 	}
 
 
