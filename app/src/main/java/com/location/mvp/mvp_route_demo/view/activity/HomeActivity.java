@@ -13,6 +13,7 @@ import com.location.mvp.mvp_route_demo.view.fragment.TwoFragment;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 /**
  * 项目:趣租部落
@@ -43,6 +44,27 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
 				.start(OneFragment.class)
 				.add(R.id.home_fre)
 				.commit();
+		LogUtils.e(TAG,"你好啊");
+
+	}
+
+	private static String getClassName() {
+		String result;
+		StackTraceElement thisMethodStack = (new Exception()).getStackTrace()[1];
+		result = thisMethodStack.getClassName();
+		int lastIndex = result.lastIndexOf(".");
+		result = result.substring(lastIndex + 1, result.length());
+		return result;
+	}
+
+	private static String callMethodAndLine() {
+		String result = "at ";
+		StackTraceElement thisMethodStack = (new Exception()).getStackTrace()[1];
+		result += thisMethodStack.getClassName() + ".";
+		result += thisMethodStack.getMethodName();
+		result += "(" + thisMethodStack.getFileName();
+		result += ":" + thisMethodStack.getLineNumber() + ")  ";
+		return result;
 	}
 
 	@Override

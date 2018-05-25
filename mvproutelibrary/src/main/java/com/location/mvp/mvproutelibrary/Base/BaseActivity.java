@@ -19,7 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
     protected T presenter;
-
+protected final String TAG = getClass().getSimpleName();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
