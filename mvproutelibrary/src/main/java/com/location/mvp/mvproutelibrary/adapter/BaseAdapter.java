@@ -12,4 +12,5 @@ package com.location.mvp.mvproutelibrary.adapter;
 
 
 public class BaseAdapter   {
+
 }
