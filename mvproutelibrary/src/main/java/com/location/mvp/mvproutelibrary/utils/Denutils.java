@@ -15,16 +15,34 @@ import android.content.Context;
 
 public class Denutils {
 
+	private Denutils() {
+		throw new UnsupportedOperationException("cannot be instantiated");
+	}
 
-    public static float dptopx(Context context, float dp) {
-        return 1f;
-    }
 
-    public static float sptopx(Context context, float dp) {
-        return 1f;
-    }
+	public static int dptopx(Context context, float dp) {
+		float density = context.getResources().getDisplayMetrics().density;
+		return (int) (dp * density + 0.5f);
+	}
+	public static int pxtodp(Context context, float dp) {
+		float density = context.getResources().getDisplayMetrics().density;
+		return (int) (dp/density+0.5f);
+	}
+	public static int sptopx(Context context, float sp) {
+		float density = context.getResources().getDisplayMetrics().scaledDensity;
 
-    public static float pxtodp(Context context, float dp) {
-        return 1f;
-    }
+		return (int) (sp*density+0.5f);
+	}
+
+public static  int pxtosp(Context context,float px){
+	float density = context.getResources().getDisplayMetrics().scaledDensity;
+
+	return (int) (px/density+0.5f);
+}
+
+
+
+
+
+
 }
