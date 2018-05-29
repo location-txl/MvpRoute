@@ -1,7 +1,9 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,8 @@ import java.util.List;
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	protected List<T> data;
 
+	private SparseArray<OnChildListener> listenerSparseArray;
+
 	protected @LayoutRes
 	int[] layouts;
 
@@ -51,21 +55,34 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	}
 
 
-	public BaseAdapter(Collection<T> data, int[] layouts, AbsListView.OnClickListener listener) {
+	/**
+	 * 添加字view的点击事件
+	 *
+	 * @param ids
+	 * @param listener
+	 */
+	public void setChildOnClickListener(@IdRes int ids, OnChildListener listener) {
+		if (listenerSparseArray == null) {
+			listenerSparseArray = new SparseArray<>();
+		}
+		listenerSparseArray.put(ids, listener);
+	}
+
+	public BaseAdapter(Collection<T> data, int[] layouts, AbsListView.OnItemClickListener listener) {
 		this.data = new ArrayList<>(data);
 		this.layouts = layouts;
 		this.listener = listener;
 	}
 
-	public BaseAdapter(Collection<T> data, int layout, AbsListView.OnClickListener listener) {
+	public BaseAdapter(Collection<T> data, int layout, AbsListView.OnItemClickListener listener) {
 		this.data = new ArrayList<>(data);
 		this.layouts = new int[]{layout};
 		this.listener = listener;
 	}
 
-	protected AbsListView.OnClickListener listener;
+	protected AbsListView.OnItemClickListener listener;
 
-	public void setListener(AbsListView.OnClickListener listener) {
+	public void setListener(AbsListView.OnItemClickListener listener) {
 		this.listener = listener;
 	}
 
@@ -81,7 +98,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		} else {
 			view = LayoutInflater.from(parent.getContext()).inflate(layouts[0], parent, false);
 		}
-		ViewHolder holder = new ViewHolder(view);
+		ViewHolder holder = new ViewHolder(view, listener,listenerSparseArray);
 		return holder;
 	}
 
@@ -100,5 +117,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	public int getItemCount() {
 		return data.size();
 	}
+
 
 }

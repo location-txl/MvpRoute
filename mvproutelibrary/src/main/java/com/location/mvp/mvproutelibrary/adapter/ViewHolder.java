@@ -3,7 +3,9 @@ package com.location.mvp.mvproutelibrary.adapter;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,9 +25,23 @@ import com.location.mvp.mvproutelibrary.R;
 public class ViewHolder extends RecyclerView.ViewHolder {
 	public View itemView;
 
-	public ViewHolder(View itemView) {
+	public ViewHolder(View itemView, final AbsListView.OnItemClickListener listener, SparseArray<OnChildListener> sparseArray) {
 		super(itemView);
 		this.itemView = itemView;
+		if (listener != null) {
+			this.itemView.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					listener.onItemClick(null, v, getAdapterPosition(), -1);
+				}
+			});
+		}
+		if (sparseArray != null && sparseArray.size() > 0) {
+			for (int i = 0; i < sparseArray.size(); i++) {
+				OnChildListener onChildListener = sparseArray.get(i);
+				int i1 = sparseArray.keyAt(i);
+			}
+		}
 	}
 
 	public <T extends View> T findViewById(@IdRes int ids) {
