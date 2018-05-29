@@ -49,6 +49,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
 				.add(R.id.home_fre)
 				.commit();
 		LogUtils.e(TimeUtils.hxDate(System.currentTimeMillis()));
+		LogUtils.e(TAG,"ceshi");
 
 
 	}
