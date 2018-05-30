@@ -1,6 +1,7 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,6 +50,7 @@ public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements
 		findViewById(R.id.recy_remove).setOnClickListener(this);
 		findViewById(R.id.recy_clear).setOnClickListener(this);
 		recyclerView = findViewById(R.id.recy);
+//		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		presenter.loadData();
 
@@ -90,9 +92,10 @@ public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements
 				myAdapter.loadItem(list);
 				break;
 			case R.id.recy_clear:
+				myAdapter.clear();
 				break;
 			case R.id.recy_remove:
-				myAdapter.remove(myAdapter.getItemCount()-1);
+				myAdapter.remove(0);
 				break;
 
 

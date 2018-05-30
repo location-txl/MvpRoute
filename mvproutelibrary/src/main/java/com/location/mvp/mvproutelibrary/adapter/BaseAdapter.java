@@ -13,11 +13,14 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 
 
+import com.location.mvp.mvproutelibrary.R;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import retrofit2.http.POST;
 
 /**
  * 项目名称: MvpRoute
@@ -34,9 +37,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	protected List<T> data;
 
 	private View emptyView;
+	private ArrayList<DataBean> headerList = new ArrayList<>();
+
 
 	private final int TYPE_EMPTY = -999999999;
-
+	private final int TYPE_HEADER = 2000000000;
+	private final int TYPE_FOOTER = 1000000000;
 	private final int TYPE_NOMAL = 0;
 	/**
 	 * 存储子View的点击事件
@@ -115,6 +121,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 			view = LayoutInflater.from(parent.getContext()).inflate(layouts[0], parent, false);
 		}
 		ViewHolder holder = new ViewHolder(view, listener, listenerSparseArray);
+
 		return holder;
 	}
 
@@ -139,6 +146,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		return data.size();
 	}
 
+	public <T> void addHeaderView(T t, @LayoutRes int layout) {
+		headerList.add(new DataBean<T>(t, TYPE_HEADER, layout));
+	}
 
 	/**
 	 * 当没有数据时会显示此View
@@ -154,11 +164,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	@Override
 	public final int getItemViewType(int position) {
 		if (data.isEmpty() && data.size() == 0 && emptyView != null) return TYPE_EMPTY;
+
+		if (isHeaderPos(position)) {
+			return headerList.get(position).getType();
+		}
 		return getItemType(position);
 	}
 
 	protected int getItemType(int position) {
-
 		return TYPE_NOMAL;
 	}
 
@@ -196,11 +209,33 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	}
 
 
-
 	private void compatibilityDataSizeChanged(int newDataSize) {
 		int size = data.isEmpty() ? 0 : data.size();
 		if (size == newDataSize) notifyDataSetChanged();
 	}
 
+	public final void clear() {
+		data.clear();
+		notifyDataSetChanged();
+	}
+
+
+	private boolean isHeaderPos(int position) {
+		return getHeaderCount() > position;
+	}
+
+	private int getHeaderCount() {
+		return headerList.size();
+	}
+
+	private boolean isHeaderType(int type) {
+		for (DataBean dataBean : headerList) {
+			if (dataBean.getType() == type) {
+				return true;
+			}
+
+		}
+		return false;
+	}
 
 }
