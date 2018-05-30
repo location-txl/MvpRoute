@@ -3,12 +3,21 @@ package com.location.mvp.mvp_route_demo.view.activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.location.mvp.mvp_route_demo.MyAdapter;
 import com.location.mvp.mvp_route_demo.R;
+import com.location.mvp.mvp_route_demo.contract.RecyclerContract;
+import com.location.mvp.mvp_route_demo.modle.bean.DataBean;
+import com.location.mvp.mvp_route_demo.presenter.RecyclerPresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
+import com.location.mvp.mvproutelibrary.adapter.OnChildListener;
+import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +29,10 @@ import java.util.List;
  * description：
  */
 
-public class RecyclerActivity extends BaseActivity {
-	private List<String> strings;
-private RecyclerView recyclerView;
+public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements RecyclerContract.View, View.OnClickListener {
+	private RecyclerView recyclerView;
+	private MyAdapter myAdapter;
+
 	@Override
 	public void onshowError(BaseThrowable baseThrowable) {
 
@@ -35,13 +45,13 @@ private RecyclerView recyclerView;
 
 	@Override
 	protected void initView() {
-		strings = new ArrayList<>();
-		for (int i = 0; i < 10; i++) {
-			strings.add("年后");
-		}
+		findViewById(R.id.recy_add).setOnClickListener(this);
+		findViewById(R.id.recy_remove).setOnClickListener(this);
+		findViewById(R.id.recy_clear).setOnClickListener(this);
 		recyclerView = findViewById(R.id.recy);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		recyclerView.setAdapter(new MyAdapter(strings,R.layout.item_text));
+		presenter.loadData();
+
 	}
 
 	@Override
@@ -51,7 +61,41 @@ private RecyclerView recyclerView;
 
 	@NonNull
 	@Override
-	protected BasePresenter createPresenter() {
-		return null;
+	protected RecyclerPresenter createPresenter() {
+		return new RecyclerPresenter();
+	}
+
+	@Override
+	public void showData(List<DataBean> data) {
+		int[] layouts = new int[]{R.layout.item_text, R.layout.item_image};
+		myAdapter = new MyAdapter(data, layouts);
+		View emptuView = LayoutInflater.from(this).inflate(R.layout.item_empty_view, null);
+		myAdapter.setEmptyView(emptuView);
+		myAdapter.setChildOnClickListener(R.id.item_img, new OnChildListener() {
+			@Override
+			public void onChildClcikListener(ViewHolder viewHolder, View view, int position) {
+				Toast.makeText(RecyclerActivity.this, "哈哈哈", Toast.LENGTH_SHORT).show();
+			}
+		});
+		recyclerView.setAdapter(myAdapter);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.recy_add:
+				List<DataBean> list = new ArrayList<>();
+				list.add(new DataBean(DataBean.TYPE_TEXT, "鲁智深"));
+				list.add(new DataBean(DataBean.TYPE_TEXT, "祖冲之"));
+				myAdapter.loadItem(list);
+				break;
+			case R.id.recy_clear:
+				break;
+			case R.id.recy_remove:
+				myAdapter.remove(myAdapter.getItemCount()-1);
+				break;
+
+
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.location.mvp.mvproutelibrary.R;
@@ -37,11 +39,26 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 			});
 		}
 		if (sparseArray != null && sparseArray.size() > 0) {
-			for (int i = 0; i < sparseArray.size(); i++) {
-				OnChildListener onChildListener = sparseArray.get(i);
-				int i1 = sparseArray.keyAt(i);
+			int length = sparseArray.size();
+			for (int i = 0; i < length; i++) {
+				int ids = sparseArray.keyAt(i);
+				final OnChildListener onChildListener = sparseArray.valueAt(i);
+				final View childView = this.itemView.findViewById(ids);
+				if (childView != null && onChildListener != null) {
+					childView.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							onChildListener.onChildClcikListener(ViewHolder.this, childView, getAdapterPosition());
+						}
+					});
+				}
+
 			}
 		}
+	}
+
+	public ViewHolder(View itemView) {
+		super(itemView);
 	}
 
 	public <T extends View> T findViewById(@IdRes int ids) {
@@ -68,6 +85,13 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 		View view = findViewById(ids);
 		if (view instanceof TextView) {
 			((TextView) view).setText(stringres);
+		}
+	}
+
+	public void setImageResouce(@IdRes int ids, @DrawableRes int resouce) {
+		View view = findViewById(ids);
+		if (view instanceof ImageView) {
+			((ImageView) view).setImageResource(resouce);
 		}
 	}
 }
