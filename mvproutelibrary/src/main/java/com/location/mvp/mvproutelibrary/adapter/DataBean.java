@@ -14,6 +14,14 @@ public class DataBean<T> {
 	private int type;
 	private @LayoutRes int layout;
 
+	public int getLayout() {
+		return layout;
+	}
+
+	public void setLayout(int layout) {
+		this.layout = layout;
+	}
+
 	public DataBean(T response, int type, @LayoutRes int layout) {
 		this.response = response;
 		this.type = type;
