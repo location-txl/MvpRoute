@@ -7,11 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.location.mvp.mvproutelibrary.R;
 
 /**
  * 项目名称: MvpRoute
@@ -59,6 +56,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
 	public ViewHolder(View itemView) {
 		super(itemView);
+		this.itemView = itemView;
 	}
 
 	public <T extends View> T findViewById(@IdRes int ids) {

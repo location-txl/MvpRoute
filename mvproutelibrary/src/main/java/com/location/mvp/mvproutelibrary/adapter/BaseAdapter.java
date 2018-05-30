@@ -29,9 +29,9 @@ import java.util.List;
 
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
     protected List<T> data;
-
     private View emptyView;
     private ArrayList<DataBean> headerList = new ArrayList<>();
+    private ArrayList<DataBean> footerList = new ArrayList<>();
 
 
     private final int TYPE_EMPTY = -999999999;
@@ -112,6 +112,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
             return new ViewHolder(view);
         }
+
+        if (isFooterType(viewType) != -1) {
+            view = LayoutInflater.from(parent.getContext()).inflate(isFooterType(viewType),
+                    parent, false);
+            return new ViewHolder(view);
+        }
         if (viewType == TYPE_EMPTY) {
             return new ViewHolder(emptyView);
         }
@@ -127,36 +133,50 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (isHeaderPos(position)) {
-            onBindHeaderViewHolder(holder, headerList.get(position).getResponse());
+            onBindHeaderViewHolder(holder, headerList.get(position).getResponse(), headerList.get
+                    (position).getLayout());
             return;
         }
-        //1 -1 0 >1  false
+        if (isFooterPos(position)) {
+         onBindFooterViewHolder(holder,footerList.get(position-headerList.size()-data.size()).getResponse(),footerList.get
+                 (position-headerList.size()-data.size()).getLayout());
+        }
         if ((position - headerList.size()) > data.size() - 1) {
             conver(holder, null, getItemViewType((position)));
         } else {
-            conver(holder, data.get((position - headerList.size())), getItemViewType((position )));
+            conver(holder, data.get((position - headerList.size())), getItemViewType((position)));
         }
     }
 
 
     public abstract void conver(ViewHolder holder, T data, int viewType);
 
-
-
-    public void onBindHeaderViewHolder(ViewHolder viewHolder, Object response) {
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
+    public void onBindHeaderViewHolder(ViewHolder viewHolder, Object response, @LayoutRes int
+            layout) {
+    }
+    public void onBindFooterViewHolder(ViewHolder viewHolder, Object response, @LayoutRes int
+            layout) {
+    }
     @CallSuper
     @Override
     public int getItemCount() {
         if (data.isEmpty() && data.size() == 0 && emptyView != null) {
             return 1;
         }
-        return data.size() + headerList.size();
+        return data.size() + headerList.size()+footerList.size();
     }
 
-    public <T> void addHeaderView(T t, @LayoutRes int layout) {
-        headerList.add(new DataBean<T>(t, TYPE_HEADER, layout));
+    public void addHeaderView(Object t, @LayoutRes int layout) {
+        headerList.add(new DataBean<>(t, TYPE_HEADER, layout));
+    }
+
+    public void addFooterView(Object t, @LayoutRes int layout) {
+        footerList.add(new DataBean(t, TYPE_FOOTER, layout));
     }
 
     /**
@@ -177,6 +197,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
         if (isHeaderPos(position)) {
             return headerList.get(position).getType();
         }
+        if (isFooterPos(position)) {
+            return footerList.get(position - data.size() - headerList.size()).getType();
+        }
         return getItemType(position - headerList.size());
     }
 
@@ -185,7 +208,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public final void loadItem(Collection<T> items) {
-        int size = data.size()+headerList.size();
+        int size = data.size() + headerList.size();
         data.addAll(items);
         notifyItemRangeInserted(size, items.size());
         compatibilityDataSizeChanged(items.size());
@@ -194,7 +217,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
     public final void loadItem(T t) {
         data.add(t);
-        notifyItemInserted(data.size()+headerList.size());
+        notifyItemInserted(data.size() + headerList.size());
         compatibilityDataSizeChanged(1);
     }
 
@@ -213,7 +236,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
         if (position >= data.size()) return;
         int size = data.size();
         data.remove(position);
-        notifyItemRemoved(position+headerList.size());
+        notifyItemRemoved(position + headerList.size());
         compatibilityDataSizeChanged(0);
     }
 
@@ -233,8 +256,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
         return getHeaderCount() > position;
     }
 
+    private boolean isFooterPos(int position) {
+        return position >= headerList.size() + data.size();
+    }
+
     private int getHeaderCount() {
         return headerList.size();
+    }
+
+    private int getFooterCount() {
+        return footerList.size();
     }
 
     private int isHeaderType(int type) {
@@ -242,6 +273,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
             if (dataBean.getType() == type) {
                 return dataBean.getLayout();
             }
+        }
+        return -1;
+    }
+
+    private int isFooterType(int type) {
+        for (DataBean dataBean : footerList) {
+            if (dataBean.getType() == type) {
+                return dataBean.getLayout();
+            }
+
         }
         return -1;
     }

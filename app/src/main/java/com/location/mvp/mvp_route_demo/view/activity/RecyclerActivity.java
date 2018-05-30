@@ -71,7 +71,8 @@ public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements
 		myAdapter = new MyAdapter(data, layouts);
 		View emptuView = LayoutInflater.from(this).inflate(R.layout.item_empty_view, null);
 		myAdapter.setEmptyView(emptuView);
-		myAdapter.addHeaderView(123,R.layout.header_view);
+		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
+		myAdapter.addFooterView(123, R.layout.footer_view);
 		myAdapter.setChildOnClickListener(R.id.item_img, new OnChildListener() {
 			@Override
 			public void onChildClcikListener(ViewHolder viewHolder, View view, int position) {
