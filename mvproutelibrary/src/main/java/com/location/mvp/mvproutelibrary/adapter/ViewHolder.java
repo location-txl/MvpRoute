@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 /**
  * 项目名称: MvpRoute
- * 类描述:
+ * 类描述:  基础viewholder类  类中方法自行扩展
  * 创建人: 田晓龙
  * 创建时间: 2018/5/25 0025 23:26
  * 修改人:
@@ -92,4 +92,5 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 			((ImageView) view).setImageResource(resouce);
 		}
 	}
+
 }
