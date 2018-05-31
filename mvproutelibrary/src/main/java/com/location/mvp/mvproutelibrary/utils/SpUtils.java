@@ -2,6 +2,7 @@ package com.location.mvp.mvproutelibrary.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.ArrayMap;
 
 import com.google.gson.Gson;
 
@@ -23,7 +24,7 @@ public class SpUtils {
 
 	private static SharedPreferences sharedPreferences;
 	private static Context context;
-	private static Map<String, SharedPreferences> sps = new HashMap<>();
+	private static ArrayMap<String, SharedPreferences> sps = new ArrayMap<>();
 	private static SpUtils spUtils;
 
 	private static final String DEFAULT_STRING = "";
