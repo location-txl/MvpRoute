@@ -1,6 +1,7 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,11 +15,16 @@ import com.location.mvp.mvp_route_demo.modle.bean.DataBean;
 import com.location.mvp.mvp_route_demo.presenter.RecyclerPresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
+import com.location.mvp.mvproutelibrary.adapter.MyLayoutManager;
 import com.location.mvp.mvproutelibrary.adapter.OnChildListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
+import com.location.mvp.mvproutelibrary.utils.SpUtils;
+import com.location.mvp.mvproutelibrary.utils.TimeUtils;
+import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 项目:趣租部落
@@ -30,6 +36,7 @@ import java.util.List;
 public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements RecyclerContract.View, View.OnClickListener {
 	private RecyclerView recyclerView;
 	private MyAdapter myAdapter;
+
 
 	@Override
 	public void onshowError(BaseThrowable baseThrowable) {
@@ -47,8 +54,9 @@ public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements
 		findViewById(R.id.recy_remove).setOnClickListener(this);
 		findViewById(R.id.recy_clear).setOnClickListener(this);
 		recyclerView = findViewById(R.id.recy);
-//		recyclerView.setItemAnimator(new DefaultItemAnimator());
+		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//		recyclerView.setLayoutManager(new MyLayoutManager());
 //		recyclerView.setLayoutManager(new StaggeredGridLayoutManager());
 		presenter.loadData();
 
@@ -67,12 +75,13 @@ public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements
 
 	@Override
 	public void showData(List<DataBean> data) {
+
 		int[] layouts = new int[]{R.layout.item_text, R.layout.item_image};
 		myAdapter = new MyAdapter(data, layouts);
 		View emptuView = LayoutInflater.from(this).inflate(R.layout.item_empty_view, null);
 		myAdapter.setEmptyView(emptuView);
 		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
-		myAdapter.addFooterView(123, R.layout.footer_view);
+//		myAdapter.addFooterView(123, R.layout.footer_view);
 		myAdapter.setChildOnClickListener(R.id.item_img, new OnChildListener() {
 			@Override
 			public void onChildClcikListener(ViewHolder viewHolder, View view, int position) {

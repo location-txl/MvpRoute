@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 import com.location.mvp.mvproutelibrary.Base.BaseApplication;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
+import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.lang.reflect.Method;
 
@@ -19,7 +20,7 @@ public class App extends BaseApplication {
 	public void onCreate() {
 		super.onCreate();
 		SpUtils.init(this);
-
+		ToastUtils.init(this);
 
 		if (BuildConfig.DEBUG) {
 			try {
