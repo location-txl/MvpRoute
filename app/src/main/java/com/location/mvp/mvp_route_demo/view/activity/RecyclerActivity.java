@@ -15,16 +15,11 @@ import com.location.mvp.mvp_route_demo.modle.bean.DataBean;
 import com.location.mvp.mvp_route_demo.presenter.RecyclerPresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
-import com.location.mvp.mvproutelibrary.adapter.MyLayoutManager;
 import com.location.mvp.mvproutelibrary.adapter.OnChildListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
-import com.location.mvp.mvproutelibrary.utils.SpUtils;
-import com.location.mvp.mvproutelibrary.utils.TimeUtils;
-import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * 项目:趣租部落
@@ -81,7 +76,23 @@ public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements
 		View emptuView = LayoutInflater.from(this).inflate(R.layout.item_empty_view, null);
 		myAdapter.setEmptyView(emptuView);
 		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
-//		myAdapter.addFooterView(123, R.layout.footer_view);
+		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
+		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
+		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
+		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
+		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
+		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
+		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
+		myAdapter.addFooterView(123, R.layout.footer_view);
+		myAdapter.addFooterView(123, R.layout.footer_view);
+		myAdapter.addFooterView(123, R.layout.footer_view);
+		myAdapter.addFooterView(123, R.layout.footer_view);
+		myAdapter.addFooterView(123, R.layout.footer_view);
+		myAdapter.addFooterView(123, R.layout.footer_view);
+		myAdapter.addFooterView(123, R.layout.footer_view);
+		myAdapter.addFooterView(123, R.layout.footer_view);
+		myAdapter.addFooterView(123, R.layout.footer_view);
+		myAdapter.addFooterView(123, R.layout.footer_view);
 		myAdapter.setChildOnClickListener(R.id.item_img, new OnChildListener() {
 			@Override
 			public void onChildClcikListener(ViewHolder viewHolder, View view, int position) {
