@@ -1,6 +1,5 @@
 package com.location.mvp.mvproutelibrary.utils;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -19,58 +18,112 @@ import android.text.style.UnderlineSpan;
  */
 
 public class StringUtils {
+    private SpannableString span;
+
+    public StringUtils(String message) {
+        span = new SpannableString(message);
+    }
 
 
-	public static CharSequence stringForColor(String message, int startIndex, int endIndex, int color) {
-		SpannableString spannableString = new SpannableString(message);
-		ForegroundColorSpan colorSpan = new ForegroundColorSpan(color);
-		spannableString.setSpan(colorSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-		return spannableString;
-	}
+    /**
+     * 设置某段文字的颜色
+     *
+     * @param startIndex 从哪开始（包括）
+     * @param endIndex   从哪结束 （不包括）
+     * @param color      设置的颜色
+     * @return
+     */
+    public StringUtils stringForColor(int startIndex, int endIndex, int color) {
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(color);
+        span.setSpan(colorSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        return this;
+    }
 
-	public static CharSequence stringForBackGround(String message, int startIndex, int endIndex, int color) {
+    /**
+     * 设置某段文字的背景色
+     *
+     * @param startIndex
+     * @param endIndex
+     * @param color
+     * @return
+     */
+    public StringUtils stringForBackGround(int startIndex, int endIndex, int
+            color) {
+        BackgroundColorSpan colorSpan = new BackgroundColorSpan(color);
+        span.setSpan(colorSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        return this;
+    }
 
-		SpannableString spannableString = new SpannableString(message);
-		BackgroundColorSpan colorSpan = new BackgroundColorSpan(color);
-		spannableString.setSpan(colorSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-		return spannableString;
-	}
+
+    /**
+     * 设置某段文字的大小
+     *
+     * @param startIndex
+     * @param endIndex
+     * @param scale      大小比例 基于原文字大小  1为原大小  1.2为原文字大小的1.2倍
+     * @return
+     */
+    public StringUtils stringSize(int startIndex, int endIndex, float scale) {
+        RelativeSizeSpan sizeSpan = new RelativeSizeSpan(scale);
+        span.setSpan(sizeSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        return this;
+    }
 
 
-	public static CharSequence stringSize(String message, int startIndex, int endIndex, float scale) {
-		SpannableString spannableString = new SpannableString(message);
-		RelativeSizeSpan sizeSpan = new RelativeSizeSpan(scale);
-		spannableString.setSpan(sizeSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-		return spannableString;
-	}
+    /**
+     * 设置删除线
+     *
+     * @param startIndex
+     * @param endIndex
+     * @return
+     */
+    public StringUtils stringStrik(int startIndex, int endIndex) {
+        StrikethroughSpan strikethroughSpan = new StrikethroughSpan();
+        span.setSpan(strikethroughSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        return this;
+    }
 
-	public static CharSequence stringStrik(String message, int startIndex, int endIndex) {
-		SpannableString spannableString = new SpannableString(message);
-		StrikethroughSpan strikethroughSpan = new StrikethroughSpan();
-		spannableString.setSpan(strikethroughSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-		return spannableString;
-	}
+    /***
+     * 设置下划线
+     * @param startIndex
+     * @param endIndex
+     * @return
+     */
+    public StringUtils stringUnderline(int startIndex, int endIndex) {
+        UnderlineSpan underlineSpan = new UnderlineSpan();
+        span.setSpan(underlineSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        return this;
+    }
 
-	public static CharSequence stringUnderline(String message, int startIndex, int endIndex) {
-		SpannableString spannableString = new SpannableString(message);
-		UnderlineSpan underlineSpan = new UnderlineSpan();
-		spannableString.setSpan(underlineSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-		return spannableString;
-	}
+    /**
+     * 设置粗体
+     *
+     * @param startIndex
+     * @param endIndex
+     * @return
+     */
+    public StringUtils stringBold(int startIndex, int endIndex) {
+        StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
+        span.setSpan(styleSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        return this;
+    }
 
-	public static CharSequence stringBold(String message, int startIndex, int endIndex) {
-		SpannableString spannableString = new SpannableString(message);
-		StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
-		spannableString.setSpan(styleSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-		return spannableString;
-	}
+    /**
+     * 设置斜体
+     *
+     * @param startIndex
+     * @param endIndex
+     * @return
+     */
+    public StringUtils stringItailic(int startIndex, int endIndex) {
+        StyleSpan styleSpan = new StyleSpan(Typeface.ITALIC);
+        span.setSpan(styleSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        return this;
+    }
 
-	public static CharSequence stringItailic(String message, int startIndex, int endIndex) {
-		SpannableString spannableString = new SpannableString(message);
-		StyleSpan styleSpan = new StyleSpan(Typeface.ITALIC);
-		spannableString.setSpan(styleSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-		return spannableString;
-	}
 
+    public CharSequence build() {
+        return span;
+    }
 
 }

@@ -1,12 +1,12 @@
 package com.location.mvp.mvp_route_demo.view.fragment;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.contract.TestContract;
+import com.location.mvp.mvp_route_demo.modle.bean.UserBean;
 import com.location.mvp.mvp_route_demo.presenter.TestPresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseFragment;
 import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
@@ -23,14 +23,10 @@ import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 
 
 public class TestFragment extends BaseFragment<TestContract.Presenter> implements TestContract.View {
-    public void ss() {
-        Log.e("TEST", "dsa");
-        presenter.ss();
-    }
-
+private TextView content;
     @Override
     protected void initView(View view) {
-
+        content = view.findViewById(R.id.fragment_content);
         view.findViewById(R.id.fragment_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,12 +54,12 @@ presenter.ss();
     }
 
     @Override
-    public void load() {
-        Toast.makeText(getActivity(), "你好啊", Toast.LENGTH_SHORT).show();
+    public void load(UserBean userBean) {
+        content.setText("成功\n" + userBean.toString());
     }
 
     @Override
     public void onshowError(BaseThrowable baseThrowable) {
-        Toast.makeText(getActivity(), baseThrowable.getMessage(), Toast.LENGTH_SHORT).show();
+        content.setText("失败\n" + baseThrowable.getMessage());
     }
 }

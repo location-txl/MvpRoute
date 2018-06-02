@@ -28,9 +28,6 @@ public class RxScheduer {
 
             @Override
             public ObservableSource<R> apply(BaseBean<R> rBaseBean) throws Exception {
-//                if (rBaseBean.getCode() == 201) {
-//                    return Observable.error(new BaseThrowable("出错了", "201"));
-//                }
                 return Observable.just(rBaseBean.getData());
             }
         };
