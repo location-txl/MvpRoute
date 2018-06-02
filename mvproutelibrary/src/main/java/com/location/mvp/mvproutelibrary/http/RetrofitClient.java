@@ -2,19 +2,18 @@ package com.location.mvp.mvproutelibrary.http;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
-import android.util.ArrayMap;
 import android.util.Log;
 
 import com.location.mvp.mvproutelibrary.service.ApiService;
 
 import java.io.IOException;
+import java.util.List;
 
-import io.reactivex.Observable;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -31,19 +30,47 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RetrofitClient {
-    private static final String HEADER_URL = "header_url";
+    public static final String HEADER_URL = "header_url";
+    public static final String DEFAULT_URL = "default";
     private static final String TAG = "Mvp_moute";
+
+
     private static RetrofitClient instance;
     private Retrofit client;
 
     private ApiService apiService;
 
-    private ArrayMap<String, String> urlMap;
-
 
     @SuppressLint("NewApi")
-    private RetrofitClient(@NonNull String baseUrl, @NonNull OkHttpClient okHttpClient) {
-        final OkHttpClient.Builder builder = new OkHttpClient.Builder();
+    private RetrofitClient(@NonNull String baseUrl, @NonNull final OkHttpClient.Builder
+            builder) {
+        builder.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                HttpUrl oldUrl = request.url();
+                Request.Builder newBuilder = request.newBuilder();
+                List<String> headers = request.headers(HEADER_URL);
+                if (headers != null && !headers.isEmpty() && !DEFAULT_URL.equals(headers.get(0))) {
+                    newBuilder.removeHeader(HEADER_URL);
+                    String urlname = headers.get(0);
+                    HttpUrl httpUrl = HttpUrl.parse(urlname);
+                    HttpUrl newHttpurl = oldUrl.newBuilder()
+                            .scheme(httpUrl.scheme())
+                            .host(httpUrl.host())
+                            .port(httpUrl.port())
+                            .build();
+                    //TODO  需要解决
+                    String replace = newHttpurl.toString().replace("%2F", "/");
+                    newBuilder.url(replace);
+                    return chain.proceed(newBuilder.build());
+                } else {
+                    if (headers != null) newBuilder.removeHeader(HEADER_URL);
+                    return chain.proceed(newBuilder.build());
+                }
+
+            }
+        });
         builder.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
@@ -56,7 +83,6 @@ public class RetrofitClient {
                 okhttp3.MediaType mediaType = proceed.body().contentType();
                 String content = proceed.body().string();
                 Log.e(TAG, "time" + proceed.sentRequestAtMillis());
-
                 Log.e(TAG, "message" + proceed.message());
                 Log.e(TAG, "headers===>" + proceed.headers().toString());
                 Log.e(TAG, "body===>" + content);
@@ -65,21 +91,21 @@ public class RetrofitClient {
                         .build();
             }
         });
-        urlMap = new ArrayMap<>();
         client = new Retrofit.Builder()
                 .client(builder.build())
-                .baseUrl("http://www.wanandroid.com/tools/mockapi/428/")
+                .baseUrl(baseUrl)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
     }
 
-    public RetrofitClient setBaseUrl(String url) {
-        urlMap.put(HEADER_URL, url);
-        return this;
+    public static RetrofitClient getInstance() {
+        if (instance == null) {
+            throw new RuntimeException("you need initialize RetrofitClient");
+        }
+        return instance;
     }
-
 
     /**
      * 设置内置Apiservice方法  只需要在app中国调用一次
@@ -90,16 +116,17 @@ public class RetrofitClient {
 
 
     public @NonNull
-    Observable<ResponseBody> get() {
-        return null;
+    ParamsBuilder get() {
+        return new ParamsBuilder(apiService, ParamsBuilder.METHOD_GET);
     }
 
-    private static RetrofitClient getRetrofitClient(@NonNull String baseurl, @NonNull OkHttpClient
-            okHttpClient) {
+    private static RetrofitClient getRetrofitClient(@NonNull String baseurl, @NonNull
+            OkHttpClient.Builder
+            builder) {
         if (instance == null) {
             synchronized (RetrofitClient.class) {
                 if (instance == null) {
-                    instance = new RetrofitClient(baseurl, okHttpClient);
+                    instance = new RetrofitClient(baseurl, builder);
                 }
             }
         }
@@ -111,17 +138,17 @@ public class RetrofitClient {
     }
 
 
-    public static class RetrofitCLientBuilder {
+    public static class Builder {
         private OkHttpClient.Builder builder;
         private String baseUrl;
 
-        public RetrofitCLientBuilder(String baseurl) {
+        public Builder(String baseurl) {
             this.baseUrl = baseurl;
             builder = new OkHttpClient.Builder();
         }
 
         public RetrofitClient build() {
-            return RetrofitClient.getRetrofitClient(baseUrl, builder.build());
+            return RetrofitClient.getRetrofitClient(baseUrl, builder);
         }
     }
 }
