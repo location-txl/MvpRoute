@@ -14,7 +14,7 @@ Android项目开发框架 基于Mvp
   3. RecyclerView万能适配器  支持EmptyView HeaderView FooterView 刷新动画
      多布局  友好扩展ViewHolder
   4. 封装多种工具类 LogUtils SpUtils SpanUtils ToastUtils FragmentUtils
-  
+  5. 封装Popwindow像dialog一样使用popwindow
 
 ## 使用的第三方
 
