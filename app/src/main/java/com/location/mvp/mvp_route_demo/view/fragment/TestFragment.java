@@ -79,6 +79,12 @@ public class TestFragment extends BaseFragment<TestContract.Presenter> implement
 
 	@Override
 	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
-		content.setText("失败\n" + baseThrowable.getMessage());
+		content.setText("失败\n" + baseThrowable.msg);
 	}
+
+	@Override
+	protected int[] hideSoftByEditViewIds() {
+		return new int[]{R.id.fragment_edittext};
+	}
+
 }

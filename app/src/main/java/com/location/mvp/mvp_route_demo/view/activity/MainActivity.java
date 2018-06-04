@@ -13,6 +13,8 @@ import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 public class MainActivity extends BaseActivity<MainPresenter> {
 
 
+
+
     @Override
     protected int getLayout() {
         return R.layout.activity_main;

@@ -41,36 +41,36 @@ public class TestPresenter extends TestContract.Presenter {
 //                        LogUtils.e("TAG", responseBody.string());
 //                    }
 //                });
-//		TestService api = App.client.createApi(TestService.class);
-		App.client.get()
-				.url("111")
-				.addParams("123", "123")
-				.addParams("123", "123")
-				.addHeader("123", "123")
-				.create()
-				.compose(new RxResPonse.Compose<UserBean>())
-				.subscribe(new Consumer<UserBean>() {
-					@Override
-					public void accept(UserBean userBean) throws Exception {
-
-					}
-				});
-//		api.get("txl")
-//				.map(new RxScheduer.map<UserBean>())
-//				.onErrorResumeNext(RxScheduer.<UserBean>handlerException())
-//				.compose(new RxScheduer.IO_MAIN<UserBean>())
-//				.subscribe(new BaseOberver<UserBean>(rxManager, view) {
+		TestService api = App.client.createApi(TestService.class);
+//		App.client.get()
+//				.url("111")
+//				.addParams("123", "123")
+//				.addParams("123", "123")
+//				.addHeader("123", "123")
+//				.create()
+//				.compose(new RxResPonse.Compose<UserBean>())
+//				.subscribe(new Consumer<UserBean>() {
 //					@Override
-//					public void onNext(UserBean userBean) {
-//						view.load(userBean);
-//					}
+//					public void accept(UserBean userBean) throws Exception {
 //
-//					@Override
-//					public void onError(Throwable e) {
-//						super.onError(e);
-//						Log.e("TAG", "error===>" + e.getMessage());
 //					}
 //				});
+		api.get("txl")
+				.map(new RxScheduer.map<UserBean>())
+				.onErrorResumeNext(RxScheduer.<UserBean>handlerException())
+				.compose(new RxScheduer.IO_MAIN<UserBean>())
+				.subscribe(new BaseOberver<UserBean>(rxManager, view) {
+					@Override
+					public void onNext(UserBean userBean) {
+						view.load(userBean);
+					}
+
+					@Override
+					public void onError(Throwable e) {
+						super.onError(e);
+						Log.e("TAG", "error===>" + e.getMessage());
+					}
+				});
 
 	}
 }

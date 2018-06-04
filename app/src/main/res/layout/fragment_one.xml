@@ -23,5 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
+    <EditText
+        android:hint="请输入内容"
+        android:layout_below="@id/fragment_content"
+        android:id="@+id/fragment_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
