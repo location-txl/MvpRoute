@@ -1,8 +1,6 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.support.annotation.NonNull;
-import android.view.View;
-import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.location.mvp.mvp_route_demo.R;
@@ -13,8 +11,6 @@ import com.location.mvp.mvp_route_demo.view.fragment.OneFragment;
 import com.location.mvp.mvp_route_demo.view.fragment.ThreeFragment;
 import com.location.mvp.mvp_route_demo.view.fragment.TwoFragment;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
-import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
-import com.location.mvp.mvproutelibrary.listener.OnNoDoubleClickListener;
 import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import com.location.mvp.mvproutelibrary.utils.TimeUtils;

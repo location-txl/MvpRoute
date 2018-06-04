@@ -25,7 +25,7 @@ public class App extends BaseApplication {
         super.onCreate();
         SpUtils.init(this);
         ToastUtils.init(this);
-        client = new RetrofitClient.Builder("http://gank.io/")
+        client = new RetrofitClient.Builder("http://www.wanandroid.com/tools/mockapi/428/")
                 .build();
         client.createApiService();
         if (BuildConfig.DEBUG) {

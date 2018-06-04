@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvproutelibrary.Base.BaseFragment;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
-import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 
 /**
  * 项目:趣租部落

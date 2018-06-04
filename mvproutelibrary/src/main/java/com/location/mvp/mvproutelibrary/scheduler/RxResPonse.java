@@ -5,7 +5,13 @@ import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
 /**
@@ -27,12 +33,18 @@ public  class RxResPonse {
 			ParameterizedType parameter = (ParameterizedType) myclass;
 			mType = $Gson$Types.canonicalize(parameter.getActualTypeArguments()[0]);
 		}
-
-
 		@Override
-		public T apply(ResponseBody responseBody) throws Exception {
+		public final T apply(ResponseBody responseBody) throws Exception {
 			Gson gson = new Gson();
 			return gson.fromJson(responseBody.string(),mType);
+		}
+	}
+	public static class Compose<T> implements ObservableTransformer<ResponseBody,T> {
+
+		@Override
+		public ObservableSource<T> apply(Observable<ResponseBody> upstream) {
+			return upstream.map(new RxGsonResponse<T>() {
+			}).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 		}
 	}
 

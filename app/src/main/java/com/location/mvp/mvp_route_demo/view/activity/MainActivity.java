@@ -8,7 +8,6 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.presenter.MainPresenter;
 import com.location.mvp.mvp_route_demo.view.fragment.TestFragment;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
-import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 
 public class MainActivity extends BaseActivity<MainPresenter> {
 

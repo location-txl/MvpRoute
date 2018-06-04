@@ -14,7 +14,6 @@ import com.location.mvp.mvp_route_demo.contract.RecyclerContract;
 import com.location.mvp.mvp_route_demo.modle.bean.DataBean;
 import com.location.mvp.mvp_route_demo.presenter.RecyclerPresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
-import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 import com.location.mvp.mvproutelibrary.adapter.OnChildListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 

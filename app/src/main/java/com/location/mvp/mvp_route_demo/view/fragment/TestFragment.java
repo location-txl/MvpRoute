@@ -1,6 +1,5 @@
 package com.location.mvp.mvp_route_demo.view.fragment;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -9,22 +8,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.location.mvp.mvp_route_demo.App;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.contract.TestContract;
 import com.location.mvp.mvp_route_demo.modle.bean.UserBean;
 import com.location.mvp.mvp_route_demo.presenter.TestPresenter;
-import com.location.mvp.mvproutelibrary.Base.BaseBean;
 import com.location.mvp.mvproutelibrary.Base.BaseFragment;
-import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
-import com.location.mvp.mvproutelibrary.scheduler.RxResPonse;
-import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
-import com.location.mvp.mvproutelibrary.scheduler.TestBean;
-import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import com.location.mvp.mvproutelibrary.view.BobPopwindow;
-
-import io.reactivex.functions.Consumer;
-import okhttp3.ResponseBody;
 
 /**
  * 项目名称: MvpRoute
@@ -47,25 +36,11 @@ public class TestFragment extends BaseFragment<TestContract.Presenter> implement
 			@Override
 			public void onClick(View view) {
 				presenter.ss();
-
 			}
 		});
 		view.findViewById(R.id.fragment_new_button).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-//                App.client
-//                        .get()
-//                        .url("tools/mockapi/428/userinfo")
-//                        .setBaseUrl("http://www.wanandroid.com/")
-//                        .build()
-//                        .map(new RxResPonse.RxGsonResponse<TestBean>() {})
-//                        .compose(new RxScheduer.IO_MAIN<TestBean>())
-//                        .subscribe(new Consumer<TestBean>() {
-//                            @Override
-//                            public void accept(TestBean responseBody) throws Exception {
-//                                LogUtils.e("TAG", responseBody.toString());
-//                            }
-//                        });
 				View views = LayoutInflater.from(activity).inflate(R.layout.pop_view, null);
 				BobPopwindow popwindow = new BobPopwindow.Builder()
 						.setView(views)

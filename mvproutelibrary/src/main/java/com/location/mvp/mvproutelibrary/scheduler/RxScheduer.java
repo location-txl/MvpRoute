@@ -1,7 +1,8 @@
 package com.location.mvp.mvproutelibrary.scheduler;
 
 import com.location.mvp.mvproutelibrary.Base.BaseBean;
-import com.location.mvp.mvproutelibrary.R;
+import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
+import com.location.mvp.mvproutelibrary.error.ResponseCodeUtils;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -28,6 +29,9 @@ public class RxScheduer {
 
 		@Override
 		public T apply(BaseBean<T> tBaseBean) throws Exception {
+			if (!tBaseBean.isOk()) {
+				throw new ExceptionHandle.ServerException(tBaseBean.getCode(), ResponseCodeUtils.getMsg(tBaseBean.getCode()));
+			}
 			return tBaseBean.getData();
 		}
 	}
@@ -57,7 +61,7 @@ public class RxScheduer {
 		return new Function<Throwable, ObservableSource<T>>() {
 			@Override
 			public ObservableSource<T> apply(Throwable throwable) throws Exception {
-				return Observable.error(throwable);
+				return Observable.error(ExceptionHandle.handleException(throwable));
 			}
 		};
 	}

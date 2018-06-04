@@ -91,7 +91,7 @@ public class ParamsBuilder {
     }
 
     @SuppressLint("NewApi")
-    public Observable<ResponseBody> build() {
+    public Observable<ResponseBody> create() {
         if (TextUtils.isEmpty(pathUrl)) {
             throw new NullPointerException("pathurl is null");
         }

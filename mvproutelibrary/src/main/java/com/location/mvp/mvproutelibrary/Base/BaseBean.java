@@ -18,10 +18,10 @@ public class BaseBean<T> {
 
 
     public boolean isOk() {
-        if (code == 201) {
-            return false;
-        }
-        return true;
+       if(code==200){
+           return true;
+       }
+        return false;
     }
 
     public String getMessage() {

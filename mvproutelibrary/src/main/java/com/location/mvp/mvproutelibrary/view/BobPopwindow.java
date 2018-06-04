@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
+import android.support.annotation.IdRes;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,6 +45,11 @@ public class BobPopwindow extends PopupWindow {
 
 	public BobPopwindow(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
 		super(context, attrs, defStyleAttr, defStyleRes);
+	}
+
+
+	public void setOnClick(@IdRes int viewid, View.OnClickListener onClickListener) {
+		getContentView().findViewById(viewid).setOnClickListener(onClickListener);
 	}
 
 	public BobPopwindow(View contentView) {
@@ -167,6 +173,7 @@ public class BobPopwindow extends PopupWindow {
 			popwindow.setOutsideTouchable(outsideTouchable);
 			return this;
 		}
+
 		public Builder setTouchable(boolean touchable) {
 			popwindow.setTouchable(touchable);
 			return this;
@@ -185,6 +192,16 @@ public class BobPopwindow extends PopupWindow {
 
 		public Builder setAlpha(@FloatRange(from = 0.1f, to = 1.0f) float alpha) {
 			popwindow.setAlpha(alpha);
+			return this;
+		}
+
+		public Builder setAnim(int anim) {
+			popwindow.setAnimationStyle(anim);
+			return this;
+		}
+
+		public Builder setViewClick(@IdRes int viewid, View.OnClickListener onClickListener) {
+			popwindow.setOnClick(viewid, onClickListener);
 			return this;
 		}
 
