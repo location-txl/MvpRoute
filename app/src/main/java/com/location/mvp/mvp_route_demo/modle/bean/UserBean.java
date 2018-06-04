@@ -1,10 +1,5 @@
 package com.location.mvp.mvp_route_demo.modle.bean;
 
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 项目名称: MvpRoute
  * 类描述:
@@ -29,6 +24,16 @@ public class UserBean {
     private String userName;
     private String sex;
     private boolean isDuck;
+
+    @Override
+    public String toString() {
+        return "UserBean{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", sex='" + sex + '\'' +
+                ", isDuck=" + isDuck +
+                '}';
+    }
 
     public int getUserId() {
         return userId;

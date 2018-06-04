@@ -1,5 +1,6 @@
 package com.location.mvp.mvp_route_demo.contract;
 
+import com.location.mvp.mvp_route_demo.modle.bean.UserBean;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseView;
 
@@ -17,12 +18,12 @@ import com.location.mvp.mvproutelibrary.Base.BaseView;
 public interface TestContract {
 
     interface View extends BaseView {
-void load();
+        void load(UserBean userBean);
     }
 
     abstract class Presenter extends BasePresenter<View> {
 
 
-       public abstract void ss();
+        public abstract void ss();
     }
 }

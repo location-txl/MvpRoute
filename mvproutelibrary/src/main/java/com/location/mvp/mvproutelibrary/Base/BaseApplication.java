@@ -2,9 +2,8 @@ package com.location.mvp.mvproutelibrary.Base;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.CallSuper;
 import android.util.Log;
-
-import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 /**
  * 项目名称: MvpRoute
@@ -18,12 +17,14 @@ import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 
 public class BaseApplication extends Application {
-public static Context context;
+    public static Context context;
+
+    @CallSuper
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e("TAG","BaseApplication");
+        Log.e("TAG", "BaseApplication");
         this.context = this;
-        Log.println(Log.DEBUG,"哈哈哈","哈哈哈");
+        Log.println(Log.DEBUG, "哈哈哈", "哈哈哈");
     }
 }

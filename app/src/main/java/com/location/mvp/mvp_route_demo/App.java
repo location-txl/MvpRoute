@@ -3,7 +3,9 @@ package com.location.mvp.mvp_route_demo;
 import android.widget.Toast;
 
 import com.location.mvp.mvproutelibrary.Base.BaseApplication;
+import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
+import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.lang.reflect.Method;
 
@@ -15,24 +17,28 @@ import java.lang.reflect.Method;
  */
 
 public class App extends BaseApplication {
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		SpUtils.init(this);
 
+    public static RetrofitClient client;
 
-		if (BuildConfig.DEBUG) {
-			try {
-				Class<?> debugDB = Class.forName("com.amitshekhar.DebugDB");
-				Method getAddressLog = debugDB.getMethod("getAddressLog");
-				Object value = getAddressLog.invoke(null);
-				Toast.makeText(this, (String) value, Toast.LENGTH_LONG).show();
-			} catch (Exception ignore) {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        SpUtils.init(this);
+        ToastUtils.init(this);
+        client = new RetrofitClient.Builder("http://gank.io/")
+                .build();
+        client.createApiService();
+        if (BuildConfig.DEBUG) {
+            try {
+                Class<?> debugDB = Class.forName("com.amitshekhar.DebugDB");
+                Method getAddressLog = debugDB.getMethod("getAddressLog");
+                Object value = getAddressLog.invoke(null);
+                Toast.makeText(this, (String) value, Toast.LENGTH_LONG).show();
+            } catch (Exception ignore) {
 
-			}
-		}
-	}
-
+            }
+        }
+    }
 
 
 }

@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:gravity="center"
+    <Button
         android:id="@+id/fragment_button"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="点击"
-        android:textSize="30sp" />
-</LinearLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="默认url" />
+
+    <Button
+        android:layout_toRightOf="@id/fragment_button"
+        android:id="@+id/fragment_new_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="新的url" />
+
+    <TextView
+        android:id="@+id/fragment_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>

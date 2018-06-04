@@ -13,33 +13,33 @@ import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
 public class MainActivity extends BaseActivity<MainPresenter> {
 
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_main;
-	}
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_main;
+    }
 
-	@Override
-	protected void initView() {
+    @Override
+    protected void initView() {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         TestFragment testFragment = new TestFragment();
         fragmentTransaction.add(R.id.id_fre, testFragment);
         fragmentTransaction.commit();
-	}
+    }
 
-	@Override
-	protected void loadData() {
+    @Override
+    protected void loadData() {
 
-	}
+    }
 
-	@NonNull
-	@Override
-	protected MainPresenter createPresenter() {
-		return null;
-	}
+    @NonNull
+    @Override
+    protected MainPresenter createPresenter() {
+        return null;
+    }
 
-	@Override
-	public void onshowError(BaseThrowable baseThrowable) {
+    @Override
+    public void onshowError(BaseThrowable baseThrowable) {
 
-	}
+    }
 }
