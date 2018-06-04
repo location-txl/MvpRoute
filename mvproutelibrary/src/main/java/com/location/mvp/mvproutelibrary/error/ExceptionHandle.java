@@ -133,10 +133,6 @@ public class ExceptionHandle {
 		 * 服务器找不到
 		 */
 		public static final int UNKNOWN_HOST = 1007;
-		/**
-		 * 未实名认证
-		 */
-		public static final int NO_REALNAME = 1083;
 	}
 }
 

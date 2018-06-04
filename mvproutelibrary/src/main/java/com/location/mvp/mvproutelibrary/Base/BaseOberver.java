@@ -35,9 +35,7 @@ public abstract class BaseOberver<T> implements Observer<T> {
 
     @Override
     public void onError(Throwable e) {
-//        baseView.onshowError((BaseThrowable) e);
         baseView.onshowError((ExceptionHandle.ResponeThrowable) e);
-        Log.e("Mvp_moute", "error===>" + e.getMessage());
     }
 
     @Override

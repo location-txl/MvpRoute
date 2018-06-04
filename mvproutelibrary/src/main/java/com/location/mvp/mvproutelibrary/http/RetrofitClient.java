@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.location.mvp.mvproutelibrary.service.ApiService;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
     public static final String HEADER_URL = "header_url";
     public static final String DEFAULT_URL = "default";
-    private static final String TAG = "Mvp_moute";
+    private static final String TAG = "Retrofit";
 
 
     private static RetrofitClient instance;
@@ -75,17 +76,17 @@ public class RetrofitClient {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
-                Log.e(TAG, "url===>" + request.url().toString());
-                Log.e(TAG, "method===>" + request.method());
-                Log.e(TAG, "header===>" + request.headers().toString());
-                Log.e(TAG, "response--------------------------------");
+                LogUtils.e(TAG, "url===>" + request.url().toString());
+                LogUtils.e(TAG, "method===>" + request.method());
+                LogUtils.e(TAG, "header===>" + request.headers().toString());
+                LogUtils.e(TAG, "response--------------------------------");
                 Response proceed = chain.proceed(request);
                 okhttp3.MediaType mediaType = proceed.body().contentType();
                 String content = proceed.body().string();
-                Log.e(TAG, "time" + proceed.sentRequestAtMillis());
-                Log.e(TAG, "message" + proceed.message());
-                Log.e(TAG, "headers===>" + proceed.headers().toString());
-                Log.e(TAG, "body===>" + content);
+                LogUtils.e(TAG, "time" + proceed.sentRequestAtMillis());
+                LogUtils.e(TAG, "message" + proceed.message());
+                LogUtils.e(TAG, "headers===>" + proceed.headers().toString());
+                LogUtils.e(TAG, "body===>" + content);
                 return proceed.newBuilder()
                         .body(okhttp3.ResponseBody.create(mediaType, content))
                         .build();
@@ -146,7 +147,6 @@ public class RetrofitClient {
             this.baseUrl = baseurl;
             builder = new OkHttpClient.Builder();
         }
-
         public RetrofitClient build() {
             return RetrofitClient.getRetrofitClient(baseUrl, builder);
         }

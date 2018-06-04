@@ -1,6 +1,9 @@
 package com.location.mvp.mvproutelibrary.utils;
 
+import android.provider.Telephony;
+
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -27,6 +30,21 @@ public class TimeUtils {
 
     public static String hxTime(long misslas){
         return new SimpleDateFormat(TIME_FORMAT).format(new Date(misslas));
+    }
+
+    /**
+     * 得到昨天的时间
+     * @return
+     */
+    public static String getYesterdayDate(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,-1);
+        return new SimpleDateFormat(DATE_FORMAT).format(calendar.getTime());
+    }
+
+
+    public static String getTodayDate(){
+        return new SimpleDateFormat(DATE_FORMAT).format(new Date());
     }
 
 
