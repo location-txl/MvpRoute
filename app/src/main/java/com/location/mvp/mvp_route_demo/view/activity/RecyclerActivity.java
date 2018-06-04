@@ -16,6 +16,7 @@ import com.location.mvp.mvp_route_demo.presenter.RecyclerPresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.adapter.OnChildListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
+import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements
 
 
 	@Override
-	public void onshowError(BaseThrowable baseThrowable) {
+	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
 
 	}
 

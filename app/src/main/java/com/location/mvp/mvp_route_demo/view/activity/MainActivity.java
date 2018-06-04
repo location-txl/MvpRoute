@@ -8,6 +8,7 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.presenter.MainPresenter;
 import com.location.mvp.mvp_route_demo.view.fragment.TestFragment;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
+import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
 public class MainActivity extends BaseActivity<MainPresenter> {
 
@@ -38,7 +39,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
     }
 
     @Override
-    public void onshowError(BaseThrowable baseThrowable) {
+    public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
 
     }
 }

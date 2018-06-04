@@ -41,7 +41,7 @@ public class TestPresenter extends TestContract.Presenter {
 //                        LogUtils.e("TAG", responseBody.string());
 //                    }
 //                });
-		TestService api = App.client.createApi(TestService.class);
+//		TestService api = App.client.createApi(TestService.class);
 		App.client.get()
 				.url("111")
 				.addParams("123", "123")

@@ -1,5 +1,7 @@
 package com.location.mvp.mvproutelibrary.Base;
 
+import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
+
 /**
  * 项目名称: MvpRoute
  * 类描述:
@@ -12,5 +14,5 @@ package com.location.mvp.mvproutelibrary.Base;
 
 
 public interface BaseView {
-    void onshowError(BaseThrowable baseThrowable);
+    void onshowError(ExceptionHandle.ResponeThrowable baseThrowable);
 }

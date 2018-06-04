@@ -35,7 +35,6 @@ public class App extends BaseApplication {
                 Object value = getAddressLog.invoke(null);
                 Toast.makeText(this, (String) value, Toast.LENGTH_LONG).show();
             } catch (Exception ignore) {
-
             }
         }
     }

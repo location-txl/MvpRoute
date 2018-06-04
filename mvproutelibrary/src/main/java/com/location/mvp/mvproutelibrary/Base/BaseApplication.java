@@ -23,8 +23,6 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e("TAG", "BaseApplication");
         this.context = this;
-        Log.println(Log.DEBUG, "哈哈哈", "哈哈哈");
     }
 }

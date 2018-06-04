@@ -13,6 +13,7 @@ import com.location.mvp.mvp_route_demo.contract.TestContract;
 import com.location.mvp.mvp_route_demo.modle.bean.UserBean;
 import com.location.mvp.mvp_route_demo.presenter.TestPresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseFragment;
+import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.view.BobPopwindow;
 
 /**
@@ -77,7 +78,7 @@ public class TestFragment extends BaseFragment<TestContract.Presenter> implement
 	}
 
 	@Override
-	public void onshowError(BaseThrowable baseThrowable) {
+	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
 		content.setText("失败\n" + baseThrowable.getMessage());
 	}
 }

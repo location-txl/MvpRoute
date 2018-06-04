@@ -5,7 +5,6 @@ package com.location.mvp.mvproutelibrary.error;
  */
 public class ResponseCodeUtils {
 
-
 	public static String getMsg(int code) {
 		String msg = "";
 		switch (code) {

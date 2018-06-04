@@ -11,6 +11,7 @@ import com.location.mvp.mvp_route_demo.view.fragment.OneFragment;
 import com.location.mvp.mvp_route_demo.view.fragment.ThreeFragment;
 import com.location.mvp.mvp_route_demo.view.fragment.TwoFragment;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
+import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import com.location.mvp.mvproutelibrary.utils.TimeUtils;
@@ -27,7 +28,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
 
 
 	@Override
-	public void onshowError(BaseThrowable baseThrowable) {
+	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
 
 	}
 

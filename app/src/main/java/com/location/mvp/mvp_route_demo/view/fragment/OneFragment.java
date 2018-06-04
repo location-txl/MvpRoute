@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvproutelibrary.Base.BaseFragment;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
+import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
 /**
  * 项目:趣租部落
@@ -17,7 +18,7 @@ import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 
 public class OneFragment extends BaseFragment {
 	@Override
-	public void onshowError(BaseThrowable baseThrowable) {
+	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
 
 	}
 
