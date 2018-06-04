@@ -27,7 +27,7 @@ public class TestPresenter extends TestContract.Presenter {
                 .get()
                 .url("api/data/Android/10/1")
                 .build()
-                .compose(RxScheduer.io_main())
+                .compose(new RxScheduer.IO_MAIN<ResponseBody>())
                 .subscribe(new Consumer<ResponseBody>() {
                     @Override
                     public void accept(ResponseBody responseBody) throws Exception {

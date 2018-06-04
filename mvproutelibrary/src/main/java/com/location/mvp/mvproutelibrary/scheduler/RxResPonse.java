@@ -1,18 +1,11 @@
 package com.location.mvp.mvproutelibrary.scheduler;
 
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
-import com.google.gson.reflect.TypeToken;
-import com.location.mvp.mvproutelibrary.utils.LogUtils;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
-
 import io.reactivex.functions.Function;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /**

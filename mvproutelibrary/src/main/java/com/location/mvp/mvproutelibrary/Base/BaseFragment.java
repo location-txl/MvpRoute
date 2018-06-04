@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView {
     protected T presenter;
     protected final String TAG = getClass().getSimpleName();
-    private BaseActivity activity;
+    protected BaseActivity activity;
 
     @Nullable
     @Override

@@ -1,7 +1,12 @@
 package com.location.mvp.mvp_route_demo.view.fragment;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.location.mvp.mvp_route_demo.App;
@@ -16,6 +21,7 @@ import com.location.mvp.mvproutelibrary.scheduler.RxResPonse;
 import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
 import com.location.mvp.mvproutelibrary.scheduler.TestBean;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
+import com.location.mvp.mvproutelibrary.view.BobPopwindow;
 
 import io.reactivex.functions.Consumer;
 import okhttp3.ResponseBody;
@@ -32,62 +38,71 @@ import okhttp3.ResponseBody;
 
 
 public class TestFragment extends BaseFragment<TestContract.Presenter> implements TestContract.View {
-    private TextView content;
+	private TextView content;
 
-    @Override
-    protected void initView(View view) {
-        content = view.findViewById(R.id.fragment_content);
-        view.findViewById(R.id.fragment_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.ss();
+	@Override
+	protected void initView(View view) {
+		content = view.findViewById(R.id.fragment_content);
+		view.findViewById(R.id.fragment_button).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				presenter.ss();
 
-            }
-        });
-        view.findViewById(R.id.fragment_new_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                App.client
-                        .get()
-                        .url("tools/mockapi/428/userinfo")
-                        .setBaseUrl("http://www.wanandroid.com/")
-                        .build()
-                        .map(new RxResPonse.RxGsonResponse<TestBean>() {})
-                        .compose(new RxScheduer.IO_MAIN<TestBean>())
-                        .subscribe(new Consumer<TestBean>() {
-                            @Override
-                            public void accept(TestBean responseBody) throws Exception {
-                                LogUtils.e("TAG", responseBody.toString());
-                            }
-                        });
-            }
-        });
-    }
+			}
+		});
+		view.findViewById(R.id.fragment_new_button).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+//                App.client
+//                        .get()
+//                        .url("tools/mockapi/428/userinfo")
+//                        .setBaseUrl("http://www.wanandroid.com/")
+//                        .build()
+//                        .map(new RxResPonse.RxGsonResponse<TestBean>() {})
+//                        .compose(new RxScheduer.IO_MAIN<TestBean>())
+//                        .subscribe(new Consumer<TestBean>() {
+//                            @Override
+//                            public void accept(TestBean responseBody) throws Exception {
+//                                LogUtils.e("TAG", responseBody.toString());
+//                            }
+//                        });
+				View views = LayoutInflater.from(activity).inflate(R.layout.pop_view, null);
+				BobPopwindow popwindow = new BobPopwindow.Builder()
+						.setView(views)
+						.setParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+						.setAlpha(0.5f)
+						.setDarken(activity)
+						.create();
+				popwindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
 
-    @Override
-    protected void loadData() {
+			}
+		});
+	}
+
+	@Override
+	protected void loadData() {
 
 
-    }
+	}
 
-    @NonNull
-    @Override
-    protected TestContract.Presenter createPresenter() {
-        return new TestPresenter();
-    }
+	@NonNull
+	@Override
+	protected TestContract.Presenter createPresenter() {
+		return new TestPresenter();
+	}
 
-    @Override
-    protected int getLayout() {
-        return R.layout.fragment_one;
-    }
+	@Override
+	protected int getLayout() {
+		return R.layout.fragment_one;
+	}
 
-    @Override
-    public void load(UserBean userBean) {
-        content.setText("成功\n" + userBean.toString());
-    }
+	@Override
+	public void load(UserBean userBean) {
+		content.setText("成功\n" + userBean.toString());
+	}
 
-    @Override
-    public void onshowError(BaseThrowable baseThrowable) {
-        content.setText("失败\n" + baseThrowable.getMessage());
-    }
+	@Override
+	public void onshowError(BaseThrowable baseThrowable) {
+		content.setText("失败\n" + baseThrowable.getMessage());
+	}
 }
