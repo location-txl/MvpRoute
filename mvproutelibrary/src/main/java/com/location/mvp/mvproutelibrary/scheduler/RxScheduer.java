@@ -1,6 +1,7 @@
 package com.location.mvp.mvproutelibrary.scheduler;
 
 import com.location.mvp.mvproutelibrary.Base.BaseBean;
+import com.location.mvp.mvproutelibrary.R;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -22,37 +23,44 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RxScheduer {
 
-    public static <R> Function<BaseBean<R>, ObservableSource<R>> map() {
-        final Function<BaseBean<R>, ObservableSource<R>> function = new Function<BaseBean<R>, ObservableSource<R>>() {
+
+	public static class map<T> implements Function<BaseBean<T>, T> {
+
+		@Override
+		public T apply(BaseBean<T> tBaseBean) throws Exception {
+			return tBaseBean.getData();
+		}
+	}
+
+	public static class compose<T> implements ObservableTransformer<BaseBean<T>, T> {
+		@Override
+		public ObservableSource<T> apply(Observable upstream) {
+			return upstream.map(new Function<BaseBean<T>, T>() {
+				@Override
+				public T apply(BaseBean<T> tBaseBean) throws Exception {
+					return tBaseBean.getData();
+				}
+			}).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+		}
+	}
+
+	public static class IO_MAIN<T> implements ObservableTransformer<T, T> {
+
+		@Override
+		public ObservableSource<T> apply(Observable<T> upstream) {
+			return upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+		}
+	}
 
 
-            @Override
-            public ObservableSource<R> apply(BaseBean<R> rBaseBean) throws Exception {
-                return Observable.just(rBaseBean.getData());
-            }
-        };
-        return function;
-
-    }
-
-    public static ObservableTransformer io_main() {
-        ObservableTransformer io = new ObservableTransformer() {
-            @Override
-            public ObservableSource apply(Observable upstream) {
-                return upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-            }
-        };
-        return io;
-    }
-
-    public static <T> Function<Throwable, ObservableSource<T>> handlerException() {
-        return new Function<Throwable, ObservableSource<T>>() {
-            @Override
-            public ObservableSource<T> apply(Throwable throwable) throws Exception {
-                return Observable.error(throwable);
-            }
-        };
-    }
+	public static <T> Function<Throwable, ObservableSource<T>> handlerException() {
+		return new Function<Throwable, ObservableSource<T>>() {
+			@Override
+			public ObservableSource<T> apply(Throwable throwable) throws Exception {
+				return Observable.error(throwable);
+			}
+		};
+	}
 
 
 }

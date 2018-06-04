@@ -9,9 +9,12 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.contract.TestContract;
 import com.location.mvp.mvp_route_demo.modle.bean.UserBean;
 import com.location.mvp.mvp_route_demo.presenter.TestPresenter;
+import com.location.mvp.mvproutelibrary.Base.BaseBean;
 import com.location.mvp.mvproutelibrary.Base.BaseFragment;
 import com.location.mvp.mvproutelibrary.Base.BaseThrowable;
+import com.location.mvp.mvproutelibrary.scheduler.RxResPonse;
 import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
+import com.location.mvp.mvproutelibrary.scheduler.TestBean;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import io.reactivex.functions.Consumer;
@@ -49,12 +52,12 @@ public class TestFragment extends BaseFragment<TestContract.Presenter> implement
                         .url("tools/mockapi/428/userinfo")
                         .setBaseUrl("http://www.wanandroid.com/")
                         .build()
-                        .compose(RxScheduer.<ResponseBody>io_main())
-                        .subscribe(new Consumer<ResponseBody>() {
+                        .map(new RxResPonse.RxGsonResponse<TestBean>() {})
+                        .compose(new RxScheduer.IO_MAIN<TestBean>())
+                        .subscribe(new Consumer<TestBean>() {
                             @Override
-                            public void accept(ResponseBody responseBody) throws Exception {
-                                String string = responseBody.string();
-                                LogUtils.e("TAG", string);
+                            public void accept(TestBean responseBody) throws Exception {
+                                LogUtils.e("TAG", responseBody.toString());
                             }
                         });
             }
