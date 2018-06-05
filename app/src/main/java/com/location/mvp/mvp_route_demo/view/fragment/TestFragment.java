@@ -32,27 +32,27 @@ public class TestFragment extends BaseFragment<TestContract.Presenter> implement
 
 	@Override
 	protected void initView(View view) {
-		content = view.findViewById(R.id.fragment_content);
-		view.findViewById(R.id.fragment_button).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				presenter.ss();
-			}
-		});
-		view.findViewById(R.id.fragment_new_button).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				View views = LayoutInflater.from(activity).inflate(R.layout.pop_view, null);
-				BobPopwindow popwindow = new BobPopwindow.Builder()
-						.setView(views)
-						.setParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
-						.setAlpha(0.5f)
-						.setDarken(activity)
-						.create();
-				popwindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
-
-			}
-		});
+//		content = view.findViewById(R.id.fragment_content);
+//		view.findViewById(R.id.fragment_button).setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View view) {
+//				presenter.ss();
+//			}
+//		});
+//		view.findViewById(R.id.fragment_new_button).setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View view) {
+//				View views = LayoutInflater.from(activity).inflate(R.layout.pop_view, null);
+//				BobPopwindow popwindow = new BobPopwindow.Builder()
+//						.setView(views)
+//						.setParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+//						.setAlpha(0.5f)
+//						.setDarken(activity)
+//						.create();
+//				popwindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+//
+//			}
+//		});
 	}
 
 	@Override
@@ -82,9 +82,5 @@ public class TestFragment extends BaseFragment<TestContract.Presenter> implement
 		content.setText("失败\n" + baseThrowable.msg);
 	}
 
-	@Override
-	protected int[] hideSoftByEditViewIds() {
-		return new int[]{R.id.fragment_edittext};
-	}
 
 }

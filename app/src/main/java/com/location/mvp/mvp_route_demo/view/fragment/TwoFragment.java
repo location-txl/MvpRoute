@@ -9,6 +9,8 @@ import com.location.mvp.mvproutelibrary.Base.BaseFragment;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
+import java.util.List;
+
 /**
  * 项目:趣租部落
  * author：田晓龙
@@ -17,6 +19,10 @@ import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
  */
 
 public class TwoFragment extends BaseFragment {
+	private List<String> titles;
+
+
+	private List<BaseFragment> fragments;
 	@Override
 	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
 
@@ -24,8 +30,6 @@ public class TwoFragment extends BaseFragment {
 
 	@Override
 	protected void initView(View view) {
-		TextView textView = view.findViewById(R.id.fragment_button);
-		textView.setText("TWO");
 	}
 
 	@Override

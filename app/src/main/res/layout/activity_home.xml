@@ -13,35 +13,47 @@
 	<RadioGroup
 		android:id="@+id/home_radio"
 		android:layout_width="match_parent"
-		android:layout_height="50dp"
+		android:layout_height="40dp"
 		android:orientation="horizontal">
+
 		<RadioButton
 			android:id="@+id/home_1"
-			android:gravity="center"
-			android:text="1"
-			android:layout_weight="1"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" />
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:background="@drawable/select_new_task_center"
+			android:button="@null"
+			android:checked="true"
+			android:gravity="center"
+			android:text="adapter" />
+
 		<RadioButton
 			android:id="@+id/home_2"
-			android:gravity="center"
-			android:text="2"
-			android:layout_weight="1"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" />
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:background="@drawable/select_new_task_center"
+			android:button="@null"
+			android:gravity="center"
+			android:text="2" />
+
 		<RadioButton
 			android:id="@+id/home_3"
-			android:gravity="center"
-			android:text="3"
-			android:layout_weight="1"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" />
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:background="@drawable/select_new_task_center"
+			android:button="@null"
+			android:gravity="center"
+			android:text="3" />
 
 		<RadioButton
 			android:id="@+id/home_4"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_height="match_parent"
 			android:layout_weight="1"
+			android:background="@drawable/select_new_task_center"
+			android:button="@null"
 			android:gravity="center"
 			android:text="4" />
 

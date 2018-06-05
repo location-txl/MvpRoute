@@ -1,9 +1,12 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -17,6 +20,8 @@ import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.adapter.OnChildListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
+import com.location.mvp.mvproutelibrary.utils.DividerGridItemDecoration;
+import com.location.mvp.mvproutelibrary.utils.GridLayoutDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +56,7 @@ public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements
 		recyclerView = findViewById(R.id.recy);
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//		recyclerView.setLayoutManager(new MyLayoutManager());
-//		recyclerView.setLayoutManager(new StaggeredGridLayoutManager());
+		recyclerView.addItemDecoration(new GridLayoutDividerItemDecoration(this, 3, Color.parseColor("#FF0AEF84")));
 		presenter.loadData();
 
 	}
@@ -74,25 +78,25 @@ public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements
 		int[] layouts = new int[]{R.layout.item_text, R.layout.item_image};
 		myAdapter = new MyAdapter(data, layouts);
 		View emptuView = LayoutInflater.from(this).inflate(R.layout.item_empty_view, null);
-		myAdapter.setEmptyView(emptuView);
-		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
-		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
-		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
-		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
-		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
-		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
-		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
-		myAdapter.addHeaderView(R.drawable.ic_launcher_background,R.layout.header_view);
-		myAdapter.addFooterView(123, R.layout.footer_view);
-		myAdapter.addFooterView(123, R.layout.footer_view);
-		myAdapter.addFooterView(123, R.layout.footer_view);
-		myAdapter.addFooterView(123, R.layout.footer_view);
-		myAdapter.addFooterView(123, R.layout.footer_view);
-		myAdapter.addFooterView(123, R.layout.footer_view);
-		myAdapter.addFooterView(123, R.layout.footer_view);
-		myAdapter.addFooterView(123, R.layout.footer_view);
-		myAdapter.addFooterView(123, R.layout.footer_view);
-		myAdapter.addFooterView(123, R.layout.footer_view);
+//		myAdapter.setEmptyView(emptuView);
+//		myAdapter.addHeaderView(R.drawable.ic_launcher_background, R.layout.header_view);
+//		myAdapter.addHeaderView(R.drawable.ic_launcher_background, R.layout.header_view);
+//		myAdapter.addHeaderView(R.drawable.ic_launcher_background, R.layout.header_view);
+//		myAdapter.addHeaderView(R.drawable.ic_launcher_background, R.layout.header_view);
+//		myAdapter.addHeaderView(R.drawable.ic_launcher_background, R.layout.header_view);
+//		myAdapter.addHeaderView(R.drawable.ic_launcher_background, R.layout.header_view);
+//		myAdapter.addHeaderView(R.drawable.ic_launcher_background, R.layout.header_view);
+//		myAdapter.addHeaderView(R.drawable.ic_launcher_background, R.layout.header_view);
+//		myAdapter.addFooterView(123, R.layout.footer_view);
+//		myAdapter.addFooterView(123, R.layout.footer_view);
+//		myAdapter.addFooterView(123, R.layout.footer_view);
+//		myAdapter.addFooterView(123, R.layout.footer_view);
+//		myAdapter.addFooterView(123, R.layout.footer_view);
+//		myAdapter.addFooterView(123, R.layout.footer_view);
+//		myAdapter.addFooterView(123, R.layout.footer_view);
+//		myAdapter.addFooterView(123, R.layout.footer_view);
+//		myAdapter.addFooterView(123, R.layout.footer_view);
+//		myAdapter.addFooterView(123, R.layout.footer_view);
 		myAdapter.setChildOnClickListener(R.id.item_img, new OnChildListener() {
 			@Override
 			public void onChildClcikListener(ViewHolder viewHolder, View view, int position) {

@@ -40,9 +40,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	private ArrayList<DataBean> footerList = new ArrayList<>();
 
 	//标记type类型
-	private final int TYPE_EMPTY = -999999999;
-	private final int TYPE_HEADER = 2000000000;
-	private final int TYPE_FOOTER = 1000000000;
+	public static final int TYPE_EMPTY = -999999999;
+	public static final int TYPE_HEADER = 2000000000;
+	public static final int TYPE_FOOTER = 1000000000;
 	private final int TYPE_NOMAL = 0;
 	/**
 	 * 存储子View的点击事件

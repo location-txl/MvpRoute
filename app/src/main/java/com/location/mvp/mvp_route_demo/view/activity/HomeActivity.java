@@ -8,9 +8,11 @@ import com.location.mvp.mvp_route_demo.contract.HomeContract;
 import com.location.mvp.mvp_route_demo.presenter.HomePresenter;
 import com.location.mvp.mvp_route_demo.view.fragment.FourFragment;
 import com.location.mvp.mvp_route_demo.view.fragment.OneFragment;
+import com.location.mvp.mvp_route_demo.view.fragment.PictureFragment;
 import com.location.mvp.mvp_route_demo.view.fragment.ThreeFragment;
 import com.location.mvp.mvp_route_demo.view.fragment.TwoFragment;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
+import com.location.mvp.mvproutelibrary.Base.BaseFragment;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
@@ -47,8 +49,6 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
 				.commit();
 		LogUtils.e(TimeUtils.hxDate(System.currentTimeMillis()));
 		LogUtils.e(TAG,"ceshi");
-
-
 	}
 
 
