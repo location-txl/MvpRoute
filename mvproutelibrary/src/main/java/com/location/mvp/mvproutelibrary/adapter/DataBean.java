@@ -11,7 +11,6 @@ import android.support.annotation.LayoutRes;
 
 public class DataBean<T> {
 	private T response;
-	private int type;
 	private @LayoutRes int layout;
 
 	public int getLayout() {
@@ -22,9 +21,8 @@ public class DataBean<T> {
 		this.layout = layout;
 	}
 
-	public DataBean(T response, int type, @LayoutRes int layout) {
+	public DataBean(T response,  @LayoutRes int layout) {
 		this.response = response;
-		this.type = type;
 		this.layout = layout;
 	}
 
@@ -36,11 +34,4 @@ public class DataBean<T> {
 		this.response = response;
 	}
 
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
 }

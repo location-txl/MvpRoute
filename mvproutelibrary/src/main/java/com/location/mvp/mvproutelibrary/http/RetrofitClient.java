@@ -72,26 +72,26 @@ public class RetrofitClient {
 
             }
         });
-        builder.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-                LogUtils.e(TAG, "url===>" + request.url().toString());
-                LogUtils.e(TAG, "method===>" + request.method());
-                LogUtils.e(TAG, "header===>" + request.headers().toString());
-                LogUtils.e(TAG, "response--------------------------------");
-                Response proceed = chain.proceed(request);
-                okhttp3.MediaType mediaType = proceed.body().contentType();
-                String content = proceed.body().string();
-                LogUtils.e(TAG, "time" + proceed.sentRequestAtMillis());
-                LogUtils.e(TAG, "message" + proceed.message());
-                LogUtils.e(TAG, "headers===>" + proceed.headers().toString());
-                LogUtils.e(TAG, "body===>" + content);
-                return proceed.newBuilder()
-                        .body(okhttp3.ResponseBody.create(mediaType, content))
-                        .build();
-            }
-        });
+//        builder.addInterceptor(new Interceptor() {
+//            @Override
+//            public Response intercept(Chain chain) throws IOException {
+//                Request request = chain.request();
+//                LogUtils.e(TAG, "url===>" + request.url().toString());
+//                LogUtils.e(TAG, "method===>" + request.method());
+//                LogUtils.e(TAG, "header===>" + request.headers().toString());
+//                LogUtils.e(TAG, "response--------------------------------");
+//                Response proceed = chain.proceed(request);
+//                okhttp3.MediaType mediaType = proceed.body().contentType();
+//                String content = proceed.body().string();
+//                LogUtils.e(TAG, "time" + proceed.sentRequestAtMillis());
+//                LogUtils.e(TAG, "message" + proceed.message());
+//                LogUtils.e(TAG, "headers===>" + proceed.headers().toString());
+//                LogUtils.e(TAG, "body===>" + content);
+//                return proceed.newBuilder()
+//                        .body(okhttp3.ResponseBody.create(mediaType, content))
+//                        .build();
+//            }
+//        });
         client = new Retrofit.Builder()
                 .client(builder.build())
                 .baseUrl(baseUrl)

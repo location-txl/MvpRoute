@@ -1,6 +1,5 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
-import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
@@ -41,13 +40,23 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
 	//标记type类型
 	public static final int TYPE_EMPTY = -999999999;
-	public static final int TYPE_HEADER = 2000000000;
-	public static final int TYPE_FOOTER = 1000000000;
 	private final int TYPE_NOMAL = 0;
+
 	/**
 	 * 存储子View的点击事件
 	 */
 	private SparseArray<OnChildListener> listenerSparseArray;
+
+
+	private boolean isDrawHeaderFooterLine = true;
+
+	public void setDrawHeaderFooterLine(boolean isDrawHeaderFooterLine) {
+		this.isDrawHeaderFooterLine = isDrawHeaderFooterLine;
+	}
+
+	public boolean isDrawHeaderFooterLine() {
+		return isDrawHeaderFooterLine;
+	}
 
 	//布局数组
 	protected @LayoutRes
@@ -119,14 +128,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	public final ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = null;
 		if (isHeaderType(viewType) != -1) {
-			view = LayoutInflater.from(parent.getContext()).inflate(isHeaderType
-					(viewType), parent, false);
-
+			view = LayoutInflater.from(parent.getContext()).inflate(isHeaderType(viewType), parent, false);
 			return new ViewHolder(view);
 		}
 
 		if (isFooterType(viewType) != -1) {
-			view = LayoutInflater.from(parent.getContext()).inflate(isFooterType(viewType),
+			view = LayoutInflater.from(parent.getContext()).inflate(isHeaderType(viewType),
 					parent, false);
 			return new ViewHolder(view);
 		}
@@ -141,6 +148,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		ViewHolder holder = new ViewHolder(view, listener, listenerSparseArray);
 		return holder;
 	}
+
+
 
 	@Override
 	public final void onBindViewHolder(ViewHolder holder, int position) {
@@ -247,11 +256,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	 * @param layout 头尾布局的layoutID
 	 */
 	public void addHeaderView(Object t, @LayoutRes int layout) {
-		headerList.add(new DataBean<>(t, TYPE_HEADER, layout));
+		DataBean<Object> dataBean = new DataBean<>(t, layout);
+		headerList.add(dataBean);
 	}
 
 	public void addFooterView(Object t, @LayoutRes int layout) {
-		footerList.add(new DataBean(t, TYPE_FOOTER, layout));
+		DataBean dataBean = new DataBean(t, layout);
+		footerList.add(dataBean);
 	}
 
 	/**
@@ -270,10 +281,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		if (data.isEmpty() && data.size() == 0 && emptyView != null) return TYPE_EMPTY;
 
 		if (isHeaderPos(position)) {
-			return headerList.get(position).getType();
+			return headerList.get(position).getLayout();
 		}
 		if (isFooterPos(position)) {
-			return footerList.get(position - data.size() - headerList.size()).getType();
+			return footerList.get(position - data.size() - headerList.size()).getLayout();
 		}
 		return getItemType(position - headerList.size());
 	}
@@ -358,13 +369,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	}
 
 
-
-
-	private boolean isHeaderPos(int position) {
+	public final boolean isHeaderPos(int position) {
 		return getHeaderCount() > position;
 	}
 
-	private boolean isFooterPos(int position) {
+	public final boolean isFooterPos(int position) {
 		return position >= headerList.size() + data.size();
 	}
 
@@ -378,21 +387,28 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
 	private int isHeaderType(int type) {
 		for (DataBean dataBean : headerList) {
-			if (dataBean.getType() == type) {
+			if (dataBean.getLayout() == type) {
 				return dataBean.getLayout();
 			}
 		}
 		return -1;
+	}
+
+	@Override
+	public void onViewDetachedFromWindow(ViewHolder holder) {
+		super.onViewDetachedFromWindow(holder);
+
 	}
 
 	private int isFooterType(int type) {
 		for (DataBean dataBean : footerList) {
-			if (dataBean.getType() == type) {
+			if (dataBean.getLayout() == type) {
 				return dataBean.getLayout();
 			}
 
 		}
 		return -1;
 	}
+
 
 }

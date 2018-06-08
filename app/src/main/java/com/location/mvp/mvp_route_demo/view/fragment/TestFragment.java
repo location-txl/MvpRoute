@@ -14,6 +14,8 @@ import com.location.mvp.mvp_route_demo.modle.bean.UserBean;
 import com.location.mvp.mvp_route_demo.presenter.TestPresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseFragment;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
+import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 import com.location.mvp.mvproutelibrary.view.BobPopwindow;
 
 /**
@@ -33,12 +35,12 @@ public class TestFragment extends BaseFragment<TestContract.Presenter> implement
 	@Override
 	protected void initView(View view) {
 //		content = view.findViewById(R.id.fragment_content);
-//		view.findViewById(R.id.fragment_button).setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				presenter.ss();
-//			}
-//		});
+		view.findViewById(R.id.id_button).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				presenter.ss();
+			}
+		});
 //		view.findViewById(R.id.fragment_new_button).setOnClickListener(new View.OnClickListener() {
 //			@Override
 //			public void onClick(View view) {
@@ -74,12 +76,14 @@ public class TestFragment extends BaseFragment<TestContract.Presenter> implement
 
 	@Override
 	public void load(UserBean userBean) {
-		content.setText("成功\n" + userBean.toString());
+		ToastUtils.showShort("成功");
+		LogUtils.i(userBean.toString());
+
 	}
 
 	@Override
 	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
-		content.setText("失败\n" + baseThrowable.msg);
+		ToastUtils.showShort("失敗");
 	}
 
 

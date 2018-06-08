@@ -57,7 +57,7 @@ public class TestPresenter extends TestContract.Presenter {
 //				});
 		api.get("txl")
 				.map(new RxScheduer.map<UserBean>())
-				.onErrorResumeNext(RxScheduer.<UserBean>handlerException())
+//				.onErrorResumeNext(RxScheduer.<UserBean>handlerException())
 				.compose(new RxScheduer.IO_MAIN<UserBean>())
 				.subscribe(new BaseOberver<UserBean>(rxManager, view) {
 					@Override

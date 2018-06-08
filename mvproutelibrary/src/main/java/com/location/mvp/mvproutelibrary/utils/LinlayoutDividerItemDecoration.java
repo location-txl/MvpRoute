@@ -11,6 +11,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;
+
+
 /**
  * 项目:趣租部落
  * author：田晓龙
@@ -28,7 +31,8 @@ public class LinlayoutDividerItemDecoration extends RecyclerView.ItemDecoration 
 	private Paint mPaint;
 	private int mDividerHeight = 2;
 
-	/** * 默认样式分割线
+	/**
+	 * 默认样式分割线
 	 * 宽度为2 颜色为灰色
 	 *
 	 * @param context
@@ -40,6 +44,7 @@ public class LinlayoutDividerItemDecoration extends RecyclerView.ItemDecoration 
 		a.recycle();
 		setOrientation(orientation);
 	}
+
 	/**
 	 * 自定义分割线
 	 *
@@ -52,7 +57,9 @@ public class LinlayoutDividerItemDecoration extends RecyclerView.ItemDecoration 
 		mDivider = ContextCompat.getDrawable(context, drawableId);
 		mDividerHeight = mDivider.getIntrinsicHeight();
 	}
-	/** * 自定义分割线
+
+	/**
+	 * 自定义分割线
 	 *
 	 * @param context
 	 * @param orientation   列表方向
@@ -90,13 +97,20 @@ public class LinlayoutDividerItemDecoration extends RecyclerView.ItemDecoration 
 
 	// 绘制垂直排列的分割线
 	public void drawVertical(Canvas c, RecyclerView parent) {
+
 		final int left = parent.getPaddingLeft();
 		final int right = parent.getWidth() - parent.getPaddingRight();
 		final int childCount = parent.getChildCount();
+		BaseAdapter adapter = (BaseAdapter) parent.getAdapter();
 		for (int i = 0; i < childCount; i++) {
 			final View child = parent.getChildAt(i);
+			int position = parent.getChildAdapterPosition(child);
+			int itemViewType = adapter.getItemViewType(position);
+			if (!adapter.isDrawHeaderFooterLine() && ( adapter.isHeaderPos(position)|| adapter.isFooterPos(position))) {
+				continue;
+			}
 			RecyclerView v = new RecyclerView(parent.getContext());
-			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child                .getLayoutParams();
+			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 			final int top = child.getBottom() + params.bottomMargin;
 			final int bottom = top + mDividerHeight;
 			if (mDivider != null) {
@@ -114,9 +128,15 @@ public class LinlayoutDividerItemDecoration extends RecyclerView.ItemDecoration 
 		final int top = parent.getPaddingTop();
 		final int bottom = parent.getHeight() - parent.getPaddingBottom();
 		final int childCount = parent.getChildCount();
+		BaseAdapter adapter = (BaseAdapter) parent.getAdapter();
 		for (int i = 0; i < childCount; i++) {
 			final View child = parent.getChildAt(i);
-			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child                .getLayoutParams();
+			int position = parent.getChildAdapterPosition(child);
+			int itemViewType = adapter.getItemViewType(position);
+			if (!adapter.isDrawHeaderFooterLine() && (adapter.isHeaderPos(position) || adapter.isFooterPos(position))) {
+				continue;
+			}
+			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 			final int left = child.getRight() + params.rightMargin;
 			final int right = left + mDividerHeight;
 			if (mDivider != null) {
