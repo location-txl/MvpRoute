@@ -29,10 +29,17 @@ import java.util.List;
 
 
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
+	//当数据没有时显示即使已经添加了头布局尾布局
+	public static final int ERMTY_MODLE_HEADERS = 0x001;
+	//当没有数据 并且头尾布局都没有的情况下显示
+	public static final int EMPTY_MODLE_NOMAL = 0x002;
 	//存储数据
 	protected List<T> data;
 	//存储空View
 	private View emptyView;
+
+
+	private int emptyModle = ERMTY_MODLE_HEADERS;
 	//存储头布局
 	private ArrayList<DataBean> headerList = new ArrayList<>();
 	//存储尾布局
@@ -66,6 +73,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		this.layouts = layouts;
 		data = new ArrayList<>();
 	}
+
 
 	public BaseAdapter(Collection<T> data, int[] layouts) {
 		this.data = new ArrayList<>(data);
@@ -113,7 +121,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	 * @param listener 点击回调事件
 	 */
 
-	public void setChildOnClickListener(@IdRes int ids, @NonNull OnChildListener listener) {
+	public void setOnChildClickListener(@IdRes int ids, @NonNull OnChildListener listener) {
 		if (listenerSparseArray == null) {
 			listenerSparseArray = new SparseArray<>();
 		}
@@ -124,6 +132,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		this.data = new ArrayList<>(data);
 	}
 
+
+	/**
+	 * @param parent
+	 * @param viewType
+	 * @return
+	 * @see ViewHolder
+	 */
 	@Override
 	public final ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = null;
@@ -145,14 +160,20 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		} else {
 			view = LayoutInflater.from(parent.getContext()).inflate(layouts[0], parent, false);
 		}
-		ViewHolder holder = new ViewHolder(view, listener, listenerSparseArray);
+		ViewHolder holder = new ViewHolder(view, listener, listenerSparseArray, getHeaderCount());
 		return holder;
 	}
 
 
-
+	/**
+	 * @param holder
+	 * @param position
+	 * @see #conver(ViewHolder, Object, int) {@link #onBindFooterViewHolder(ViewHolder, Object, int)}
+	 * {@link #onBindHeaderViewHolder(ViewHolder, Object, int)}
+	 */
 	@Override
 	public final void onBindViewHolder(ViewHolder holder, int position) {
+		if (getItemViewType(position) == TYPE_EMPTY) return;
 		if (isHeaderPos(position)) {
 			onBindHeaderViewHolder(holder, headerList.get(position).getResponse(), headerList.get
 					(position).getLayout());
@@ -230,22 +251,31 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	 *
 	 * @param viewHolder
 	 * @param response   用到时 强转为你所需要的实体类
-	 * @param layout
+	 * @param layout     添加多个头布局时  可以判断layout来控制视图
 	 */
 
 	public void onBindHeaderViewHolder(ViewHolder viewHolder, Object response, @LayoutRes int
 			layout) {
 	}
 
+	//用法参见header
 	public void onBindFooterViewHolder(ViewHolder viewHolder, Object response, @LayoutRes int
 			layout) {
 	}
 
 	@Override
 	public final int getItemCount() {
-		if (data.isEmpty() && data.size() == 0 && emptyView != null) {
-			return 1;
+
+		if (emptyModle == EMPTY_MODLE_NOMAL) {
+			if (data.isEmpty() && data.size() == 0 && emptyView != null && headerList.isEmpty() && footerList.isEmpty()) {
+				return 1;
+			}
+		} else {
+			if (data.isEmpty() && data.size() == 0 && emptyView != null) {
+				return 1;
+			}
 		}
+
 		return data.size() + headerList.size() + footerList.size();
 	}
 
@@ -265,6 +295,20 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		footerList.add(dataBean);
 	}
 
+
+	/**
+	 * 无数据时视图显示模式
+	 * 默认模式为   {@link #ERMTY_MODLE_HEADERS}  当数据没有时显示
+	 * 即使已经添加了头布局尾布局
+	 * 可选模式     {@link #EMPTY_MODLE_NOMAL}  当没有数据 并且头尾布局都没有的情况下显示
+	 *
+	 * @param modle {@link #emptyModle}
+	 */
+	public void setEmptyModle(int modle) {
+		this.emptyModle = modle;
+	}
+
+
 	/**
 	 * 当没有数据时会显示此View
 	 *
@@ -276,9 +320,22 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		this.emptyView.setLayoutParams(params);
 	}
 
+
+	/**
+	 * 加入final 禁止子类重写
+	 * 如果需要多布局  请重写  {@link #getItemType(int)}
+	 *
+	 * @param position
+	 * @return
+	 */
 	@Override
 	public final int getItemViewType(int position) {
-		if (data.isEmpty() && data.size() == 0 && emptyView != null) return TYPE_EMPTY;
+		if (emptyModle == EMPTY_MODLE_NOMAL) {
+			if (data.isEmpty() && data.size() == 0 && emptyView != null && headerList.isEmpty() && footerList.isEmpty())
+				return TYPE_EMPTY;
+		} else {
+			if (data.isEmpty() && data.size() == 0 && emptyView != null) return TYPE_EMPTY;
+		}
 
 		if (isHeaderPos(position)) {
 			return headerList.get(position).getLayout();
@@ -405,7 +462,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 			if (dataBean.getLayout() == type) {
 				return dataBean.getLayout();
 			}
-
 		}
 		return -1;
 	}

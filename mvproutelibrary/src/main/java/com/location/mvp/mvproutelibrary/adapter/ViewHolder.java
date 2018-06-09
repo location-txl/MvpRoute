@@ -10,8 +10,10 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.quzubuluo.quzu.utils.GlideUtils;
+
 /**
- * 项目名称: MvpRoute
+ * 项目名称: 趣租部落
  * 类描述:  基础viewholder类  类中方法自行扩展
  * 创建人: 田晓龙
  * 创建时间: 2018/5/25 0025 23:26
@@ -24,14 +26,14 @@ import android.widget.TextView;
 public class ViewHolder extends RecyclerView.ViewHolder {
 	public View itemView;
 
-	public ViewHolder(View itemView, final AbsListView.OnItemClickListener listener, SparseArray<OnChildListener> sparseArray) {
+	public ViewHolder(View itemView, final AbsListView.OnItemClickListener listener, SparseArray<OnChildListener> sparseArray, final int headerSize) {
 		super(itemView);
 		this.itemView = itemView;
 		if (listener != null) {
 			this.itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					listener.onItemClick(null, v, getAdapterPosition(), -1);
+					listener.onItemClick(null, v, getAdapterPosition()-headerSize, -1);
 				}
 			});
 		}
@@ -45,7 +47,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 					childView.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							onChildListener.onChildClcikListener(ViewHolder.this, childView, getAdapterPosition());
+							onChildListener.onChildClcikListener(ViewHolder.this, childView, getAdapterPosition()-headerSize);
 						}
 					});
 				}
@@ -90,6 +92,13 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 		View view = findViewById(ids);
 		if (view instanceof ImageView) {
 			((ImageView) view).setImageResource(resouce);
+		}
+	}
+
+	public void setImageurl(@IdRes int ids,String url){
+		View view = findViewById(ids);
+		if (view instanceof ImageView) {
+			GlideUtils.loadImage(view.getContext(),url, (ImageView) view);
 		}
 	}
 
