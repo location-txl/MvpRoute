@@ -2,6 +2,8 @@ package com.location.mvp.mvproutelibrary.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.media.Image;
+import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
@@ -9,6 +11,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +22,18 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
-import com.location.mvp.mvproutelibrary.R;
 import com.location.mvp.mvproutelibrary.listener.OnNoDoubleClickListener;
+import com.quzubuluo.quzu.R;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
+import cn.bingoogolapple.bgabanner.BGABannerScroller;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -105,14 +112,6 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 		this(context, null);
 	}
 
-	public void setPlayStart(boolean isStart) {
-		this.isPlayStart = isStart;
-	}
-
-
-	public void setIntervalTime(@IntRange(from = 0) int intervalTime) {
-		this.intervalTime = intervalTime;
-	}
 
 	public BannerView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
@@ -125,6 +124,25 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 	}
 
 	/**
+	 * 是否自动轮播
+	 *
+	 * @param isStart
+	 */
+	public void setPlayStart(boolean isStart) {
+		this.isPlayStart = isStart;
+	}
+
+
+	/**
+	 * 轮播图切换的间隔时间  单位是秒
+	 *
+	 * @param intervalTime
+	 */
+	public void setIntervalTime(@IntRange(from = 0) int intervalTime) {
+		this.intervalTime = intervalTime;
+	}
+
+	/**
 	 * 初始化BannerView  加入ViewPager 加入RadioGroup
 	 *
 	 * @param context
@@ -132,6 +150,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 	 */
 	private void init(Context context, AttributeSet attrs) {
 		TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BannerView);
+
 		try {
 			isPlayStart = typedArray.getBoolean(R.styleable.BannerView_start_plary, DEFAULAT_PALYER);
 			selectTab = typedArray.getResourceId(R.styleable.BannerView_tab_select, 0);
@@ -147,7 +166,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 
 		imgs = new LinkedList<>();
 		viewpager = new ViewPager(context);
-		//设置viewpager的切换时间
+		//设置viewpager的切换时间  默认切换时间为1000 单位毫秒
 		setPageChangeDuration(speed);
 		viewpager.addOnPageChangeListener(this);
 		viewpager.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -167,38 +186,9 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 		imgs.clear();
 		int length = datas.size();
 		for (int i = 0; i < length; i++) {
-			View view = null;
-			if (binderViewAdapter == null) {
-				view = getDefaultView(datas.get(i));
-			} else {
-				view = binderViewAdapter.onBindView(datas.get(i), i);
-			}
-			if (onItemClickListener != null) {
-				final int finalI = i;
-				final View finalView = view;
-				view.setOnClickListener(new OnNoDoubleClickListener() {
-					@Override
-					public void onNoDoubleClick(View v) {
-						onItemClickListener.onItemClickListener(finalView, finalI);
-					}
-				});
-			}
-
-			imgs.add(view);
-			RadioButton radioButton = new RadioButton(context);
-			if (selectTab != 0) {
-				radioButton.setBackgroundResource(selectTab);
-				radioButton.setButtonDrawable(context.getResources().getDrawable(android.R.color.transparent));
-			}
-			RadioGroup.LayoutParams buttonParams = new RadioGroup.LayoutParams(tabWidth, tabHeight);
-			if (i != length - 1) {
-				buttonParams.setMargins(0, 0, tabMargin, 0);
-			}
-			radioButton.setLayoutParams(buttonParams);
-			radioButton.setId(i);
-			if (i == 0) radioButton.setChecked(true);
+			String url = datas.get(i);
+			RadioButton radioButton = instData(length, i, url);
 			radioGroup.addView(radioButton);
-
 		}
 		bannerAdapter = new BannerAdapter(imgs);
 		viewpager.setAdapter(bannerAdapter);
@@ -209,14 +199,53 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 	}
 
 	@NonNull
-	private ImageView getDefaultView(String url) {
-		final ImageView imageView = new ImageView(context);
-		imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+	private RadioButton instData(int length, int i, String url) {
+		View view = null;
+		if (binderViewAdapter == null) {
+			view = getDefaultView(url);
+		} else {
+			view = binderViewAdapter.onBindView(viewpager, getView(), url, i);
+		}
+		if (onItemClickListener != null) {
+			final int finalI = i;
+			final View finalView = view;
+			view.setOnClickListener(new OnNoDoubleClickListener() {
+				@Override
+				public void onNoDoubleClick(View v) {
+					onItemClickListener.onItemClickListener(finalView, finalI);
+				}
+			});
+		}
 
-//		imageView.setImageResource(R.mipmap.ic_launcher);
+		imgs.add(view);
+		RadioButton radioButton = new RadioButton(context);
+		if (selectTab != 0) {
+			radioButton.setBackgroundResource(selectTab);
+			radioButton.setButtonDrawable(context.getResources().getDrawable(android.R.color.transparent));
+		}
+		RadioGroup.LayoutParams buttonParams = new RadioGroup.LayoutParams(tabWidth, tabHeight);
+		if (i != length - 1) {
+			buttonParams.setMargins(0, 0, tabMargin, 0);
+		}
+		radioButton.setLayoutParams(buttonParams);
+		radioButton.setId(i);
+		if (i == 0) radioButton.setChecked(true);
+		return radioButton;
+	}
+
+	@NonNull
+	private ImageView getDefaultView(String url) {
+		final ImageView imageView = getView();
+		imageView.setImageURI(Uri.parse(url));
 		return imageView;
 	}
 
+
+	private ImageView getView() {
+		ImageView imageView = new ImageView(context);
+		imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+		return imageView;
+	}
 
 	public void stopPlay() {
 		if (disposable != null) disposable.dispose();
@@ -230,6 +259,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 	public void startPlay() {
 		stopPlay();
 		isPlayStart = true;
+		//默认耗时任务在子线程
 		io.reactivex.Observable.interval(intervalTime, TimeUnit.SECONDS)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Observer<Long>() {
@@ -269,6 +299,14 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 		int length = datas.size();
 		for (int i = 0; i < length; i++) {
 			String data = listener.setDataListener(datas.get(i));
+			RadioButton radioButton = instData(length, i, data);
+			radioGroup.addView(radioButton);
+		}
+		bannerAdapter = new BannerAdapter(imgs);
+		viewpager.setAdapter(bannerAdapter);
+		viewpager.setCurrentItem(DEFAULT_NUMBER / 2);
+		if (isPlayStart) {
+			startPlay();
 		}
 	}
 
@@ -287,7 +325,6 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 
 	@Override
 	public void onPageScrollStateChanged(int state) {
-
 
 
 	}
@@ -389,7 +426,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 	}
 
 	public interface BinderViewAdapter {
-		View onBindView(String url, int position);
+		View onBindView(ViewGroup parent, View view, String url, int position);
 	}
 
 }

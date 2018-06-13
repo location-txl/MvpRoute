@@ -44,14 +44,20 @@ public class TestFragment extends BaseFragment<TestContract.Presenter> implement
 //		view.findViewById(R.id.fragment_new_button).setOnClickListener(new View.OnClickListener() {
 //			@Override
 //			public void onClick(View view) {
-//				View views = LayoutInflater.from(activity).inflate(R.layout.pop_view, null);
-//				BobPopwindow popwindow = new BobPopwindow.Builder()
-//						.setView(views)
-//						.setParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
-//						.setAlpha(0.5f)
-//						.setDarken(activity)
-//						.create();
-//				popwindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+				View views = LayoutInflater.from(activity).inflate(R.layout.pop_view, null);
+				BobPopwindow popwindow = new BobPopwindow.Builder()
+						.setView(views)
+						.setParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+						.setAlpha(0.5f)
+						.setViewClick(R.id.ALT, new View.OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								ToastUtils.showShort("点击");
+							}
+						})
+						.setDarken(activity)
+						.create();
+				popwindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
 //
 //			}
 //		});
