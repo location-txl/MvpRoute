@@ -1,6 +1,7 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 
 /**
  * 项目:趣租部落
@@ -9,8 +10,8 @@ import android.support.annotation.LayoutRes;
  * description：
  */
 
-public class DataBean<T> {
-	private T response;
+public class DataBean {
+	private @Nullable Object response;
 	private @LayoutRes int layout;
 
 	public int getLayout() {
@@ -21,16 +22,20 @@ public class DataBean<T> {
 		this.layout = layout;
 	}
 
-	public DataBean(T response,  @LayoutRes int layout) {
+	public DataBean(Object response,  @LayoutRes int layout) {
 		this.response = response;
 		this.layout = layout;
 	}
 
-	public T getResponse() {
+	public DataBean(int layout) {
+		this.layout = layout;
+	}
+
+	public Object getResponse() {
 		return response;
 	}
 
-	public void setResponse(T response) {
+	public void setResponse(Object response) {
 		this.response = response;
 	}
 

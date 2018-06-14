@@ -23,17 +23,17 @@ import com.quzubuluo.quzu.utils.GlideUtils;
  */
 
 
-public class ViewHolder extends RecyclerView.ViewHolder {
-	public View itemView;
+public final class ViewHolder extends RecyclerView.ViewHolder {
+	private View itemView;
+	private SparseArray<View> viewCache;
 
-	public ViewHolder(View itemView, final AbsListView.OnItemClickListener listener, SparseArray<OnChildListener> sparseArray, final int headerSize) {
-		super(itemView);
-		this.itemView = itemView;
+	public ViewHolder(View itemView, final AbsListView.OnItemClickListener listener, SparseArray<OnChildClickListener> sparseArray, final int headerSize) {
+		this(itemView);
 		if (listener != null) {
 			this.itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					listener.onItemClick(null, v, getAdapterPosition()-headerSize, -1);
+					listener.onItemClick(null, v, getAdapterPosition() - headerSize, -1);
 				}
 			});
 		}
@@ -41,30 +41,47 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 			int length = sparseArray.size();
 			for (int i = 0; i < length; i++) {
 				int ids = sparseArray.keyAt(i);
-				final OnChildListener onChildListener = sparseArray.valueAt(i);
+				final OnChildClickListener onChildClickListener = sparseArray.valueAt(i);
 				final View childView = this.itemView.findViewById(ids);
-				if (childView != null && onChildListener != null) {
+				if (childView != null && onChildClickListener != null) {
 					childView.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							onChildListener.onChildClcikListener(ViewHolder.this, childView, getAdapterPosition()-headerSize);
+							onChildClickListener.onChildClcik(ViewHolder.this, childView, getAdapterPosition() - headerSize);
 						}
 					});
 				}
-
 			}
 		}
+	}
+
+	public ViewHolder(View itemView, OnHeaderClickListener listener,BaseAdapter baseAdapter) {
+		this(itemView);
+
 	}
 
 	public ViewHolder(View itemView) {
 		super(itemView);
 		this.itemView = itemView;
+		viewCache = new SparseArray<>();
 	}
 
 	public <T extends View> T findViewById(@IdRes int ids) {
-		return itemView.findViewById(ids);
+		View view = viewCache.get(ids);
+		if (view == null) {
+			view = itemView.findViewById(ids);
+			viewCache.put(ids, view);
+		}
+		return (T) view;
 	}
-
+public void registListener(final OnHeaderClickListener onHeaderClickListener, final Object data, final int position,final boolean isHeader){
+itemView.setOnClickListener(new View.OnClickListener() {
+	@Override
+	public void onClick(View v) {
+		onHeaderClickListener.onHeaderClick(itemView,data,position,isHeader);
+	}
+});
+}
 	public void setText(@IdRes int ids, CharSequence charSequence) {
 		View view = findViewById(ids);
 		if (view instanceof TextView) {
@@ -72,6 +89,9 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 		}
 	}
 
+	public View getItemView() {
+		return itemView;
+	}
 
 	public void setText(@IdRes int ids, String message) {
 		View view = findViewById(ids);
@@ -95,10 +115,10 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 		}
 	}
 
-	public void setImageurl(@IdRes int ids,String url){
+	public void setImageurl(@IdRes int ids, String url) {
 		View view = findViewById(ids);
 		if (view instanceof ImageView) {
-			GlideUtils.loadImage(view.getContext(),url, (ImageView) view);
+			GlideUtils.loadImage(view.getContext(), url, (ImageView) view);
 		}
 	}
 
