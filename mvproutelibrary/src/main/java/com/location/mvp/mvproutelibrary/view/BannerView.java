@@ -22,8 +22,8 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
+import com.location.mvp.mvproutelibrary.R;
 import com.location.mvp.mvproutelibrary.listener.OnNoDoubleClickListener;
-import com.quzubuluo.quzu.R;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
-import cn.bingoogolapple.bgabanner.BGABannerScroller;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
