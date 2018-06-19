@@ -1,5 +1,6 @@
 package com.location.mvp.mvp_route_demo.demo;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -44,6 +45,12 @@ public class RecyclerTypeActivity extends AppCompatActivity implements View.OnCl
 		findViewById(R.id.recy_add).setOnClickListener(this);
 		findViewById(R.id.recy_remove).setOnClickListener(this);
 		findViewById(R.id.recy_clear).setOnClickListener(this);
+		findViewById(R.id.recy_up).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(RecyclerTypeActivity.this,GroupActivity.class));
+			}
+		});
 		recyclerView = findViewById(R.id.recy);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		//设置分割线
