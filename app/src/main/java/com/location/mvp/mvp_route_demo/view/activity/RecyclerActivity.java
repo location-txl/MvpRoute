@@ -1,5 +1,6 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +18,7 @@ import com.location.mvp.mvp_route_demo.contract.RecyclerContract;
 import com.location.mvp.mvp_route_demo.modle.bean.DataBean;
 import com.location.mvp.mvp_route_demo.presenter.RecyclerPresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
+import com.location.mvp.mvproutelibrary.adapter.OnChildClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnChildListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
@@ -56,7 +58,6 @@ public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements
 		recyclerView = findViewById(R.id.recy);
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		recyclerView.addItemDecoration(new GridLayoutDividerItemDecoration(this, 3, Color.parseColor("#FF0AEF84")));
 		presenter.loadData();
 
 	}
@@ -76,7 +77,9 @@ public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements
 	public void showData(List<DataBean> data) {
 
 		int[] layouts = new int[]{R.layout.item_text, R.layout.item_image};
-		myAdapter = new MyAdapter(data, layouts);
+		myAdapter = new MyAdapter(data, R.layout.item_text);
+		myAdapter.addType(DataBean.TYPE_TEXT, R.layout.item_text);
+		myAdapter.addType(DataBean.TYPE_IMAGE, R.layout.item_image);
 		View emptuView = LayoutInflater.from(this).inflate(R.layout.item_empty_view, null);
 //		myAdapter.setEmptyView(emptuView);
 //		myAdapter.addHeaderView(R.drawable.ic_launcher_background, R.layout.header_view);
@@ -97,9 +100,9 @@ public class RecyclerActivity extends BaseActivity<RecyclerPresenter> implements
 //		myAdapter.addFooterView(123, R.layout.footer_view);
 //		myAdapter.addFooterView(123, R.layout.footer_view);
 //		myAdapter.addFooterView(123, R.layout.footer_view);
-		myAdapter.setChildOnClickListener(R.id.item_img, new OnChildListener() {
+		myAdapter.setOnChildClickListener(R.id.item_img, new OnChildClickListener() {
 			@Override
-			public void onChildClcikListener(ViewHolder viewHolder, View view, int position) {
+			public void onChildClcik(ViewHolder viewHolder, View view, int position) {
 				Toast.makeText(RecyclerActivity.this, "哈哈哈", Toast.LENGTH_SHORT).show();
 			}
 		});

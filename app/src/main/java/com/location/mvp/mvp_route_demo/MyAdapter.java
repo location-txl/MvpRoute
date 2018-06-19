@@ -15,17 +15,18 @@ import java.util.Collection;
 
 public class MyAdapter extends BaseAdapter<DataBean> {
 
-    public MyAdapter(Collection<DataBean> data, int[] layouts) {
-        super(data, layouts);
+
+    public MyAdapter(Collection<DataBean> data, int layout) {
+        super(data, layout);
     }
 
     @Override
     public void conver(ViewHolder holder, DataBean data, int viewType) {
         switch (viewType) {
-            case 0:
+            case DataBean.TYPE_TEXT:
                 holder.setText(R.id.id_text, data.getMessage());
                 break;
-            case 1:
+            case DataBean.TYPE_IMAGE:
                 holder.setImageResouce(R.id.item_img, R.drawable.ic_launcher_background);
                 break;
         }
@@ -37,12 +38,5 @@ public class MyAdapter extends BaseAdapter<DataBean> {
         viewHolder.setImageResouce(R.id.head_img, (Integer) response);
     }
 
-    @Override
-    protected int getItemType(int position) {
-        if (data.get(position).getType() == DataBean.TYPE_TEXT) {
-            return 0;
-        }
-        return 1;
-    }
 
 }

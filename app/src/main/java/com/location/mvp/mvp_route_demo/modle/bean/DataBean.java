@@ -2,6 +2,8 @@ package com.location.mvp.mvp_route_demo.modle.bean;
 
 import android.support.annotation.StringRes;
 
+import com.location.mvp.mvproutelibrary.adapter.MulitTypeListener;
+
 /**
  * 项目:趣租部落
  * author：田晓龙
@@ -9,9 +11,9 @@ import android.support.annotation.StringRes;
  * description：
  */
 
-public class DataBean  {
-	public static final int TYPE_TEXT = 0;
-	public static final int TYPE_IMAGE = 1;
+public class DataBean implements MulitTypeListener {
+	public static final int TYPE_TEXT = 12;
+	public static final int TYPE_IMAGE = 13;
 	private int type;
 	private String message;
 
@@ -36,5 +38,10 @@ public class DataBean  {
 		this.message = message;
 	}
 	public DataBean() {
+	}
+
+	@Override
+	public int getItemType() {
+		return type;
 	}
 }

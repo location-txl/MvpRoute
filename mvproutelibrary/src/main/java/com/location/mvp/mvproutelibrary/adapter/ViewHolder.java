@@ -4,13 +4,15 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.quzubuluo.quzu.utils.GlideUtils;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
+
 
 /**
  * 项目名称: 趣租部落
@@ -55,7 +57,7 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		}
 	}
 
-	public ViewHolder(View itemView, OnHeaderClickListener listener,BaseAdapter baseAdapter) {
+	public ViewHolder(View itemView, OnHeaderClickListener listener, BaseAdapter baseAdapter) {
 		this(itemView);
 
 	}
@@ -74,14 +76,17 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		}
 		return (T) view;
 	}
-public void registListener(final OnHeaderClickListener onHeaderClickListener, final Object data, final int position,final boolean isHeader){
-itemView.setOnClickListener(new View.OnClickListener() {
-	@Override
-	public void onClick(View v) {
-		onHeaderClickListener.onHeaderClick(itemView,data,position,isHeader);
+
+	public void registListener(final int layout, final OnHeaderClickListener onHeaderClickListener, final Object data, final int position, final boolean isHeader) {
+		itemView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				LogUtils.i("response===>"+data);
+				onHeaderClickListener.onHeaderClick(layout,itemView, data, position, isHeader);
+			}
+		});
 	}
-});
-}
+
 	public void setText(@IdRes int ids, CharSequence charSequence) {
 		View view = findViewById(ids);
 		if (view instanceof TextView) {
@@ -115,11 +120,5 @@ itemView.setOnClickListener(new View.OnClickListener() {
 		}
 	}
 
-	public void setImageurl(@IdRes int ids, String url) {
-		View view = findViewById(ids);
-		if (view instanceof ImageView) {
-			GlideUtils.loadImage(view.getContext(), url, (ImageView) view);
-		}
-	}
 
 }

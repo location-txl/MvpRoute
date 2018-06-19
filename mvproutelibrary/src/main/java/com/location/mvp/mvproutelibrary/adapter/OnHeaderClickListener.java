@@ -1,5 +1,6 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.view.View;
 
@@ -13,10 +14,11 @@ import android.view.View;
 public interface OnHeaderClickListener {
 	/**
 	 *headerFotter点击事件
+	 * @param layout  布局ID
 	 * @param view view
 	 * @param data  数据源
 	 * @param position  当前坐标索引 不是RecyclerView的索引 而是相对于这个布局
 	 * @param isHeader  是否是头布局
 	 */
-	void onHeaderClick(View view, @Nullable Object data, int position, boolean isHeader);
+	void onHeaderClick( int layout, View view, @Nullable Object data, int position, boolean isHeader);
 }

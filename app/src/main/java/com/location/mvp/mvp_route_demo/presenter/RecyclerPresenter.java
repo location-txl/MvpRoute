@@ -25,7 +25,12 @@ public class RecyclerPresenter extends RecyclerContract.Presenter {
 		DataBean bean1 = new DataBean();
 		bean1.setType(DataBean.TYPE_TEXT);
 		bean1.setMessage("dsadsa");
+		DataBean bean2 = new DataBean();
+		bean2.setType(DataBean.TYPE_IMAGE);
+		bean2.setMessage("dsadsa");
+
 		list.add(bean);
+		list.add(bean2);
 		list.add(bean1);
 		view.showData(list);
 	}

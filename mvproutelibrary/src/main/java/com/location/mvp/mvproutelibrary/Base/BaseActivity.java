@@ -150,7 +150,7 @@ protected final String TAG = getClass().getSimpleName();
     }
 
 
-    public interface KeyBordListener {
-        void onHideKeyBord();
-    }
+public interface KeyBordListener {
+    void onHideKeyBord();
+}
 }

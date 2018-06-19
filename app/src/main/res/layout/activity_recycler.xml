@@ -4,6 +4,7 @@
 	android:orientation="vertical"
 	android:layout_height="match_parent">
 	<LinearLayout
+		android:id="@+id/id_lin"
 		android:orientation="horizontal"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
@@ -15,7 +16,7 @@
 			android:layout_height="wrap_content" />
 		<Button
 			android:id="@+id/recy_remove"
-			android:text="减少"
+			android:text="刷新"
 			android:layout_weight="1"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" />

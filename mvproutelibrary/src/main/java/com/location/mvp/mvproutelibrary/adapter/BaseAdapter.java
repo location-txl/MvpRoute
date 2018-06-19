@@ -10,10 +10,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+
+import com.location.mvp.mvproutelibrary.R;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -41,8 +45,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	protected List<T> data;
 	//存储空View
 	private View emptyView;
-
-
 	//头尾布局点击事件
 	private OnHeaderClickListener onHeaderClickListener;
 
@@ -55,6 +57,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	//标记type类型
 	public static final int TYPE_EMPTY = -999999999;
 	private final int TYPE_NOMAL = 0;
+
+	private SparseIntArray spLayout;
 
 	/**
 	 * 存储子View的点击事件
@@ -80,43 +84,43 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
 	//布局数组
 	protected @LayoutRes
-	int[] layouts;
+	int layouts;
 
-	public BaseAdapter(int[] layouts) {
-		this.layouts = layouts;
-		data = new ArrayList<>();
-	}
-
-
-	public BaseAdapter(Collection<T> data, int[] layouts) {
-		this.data = new ArrayList<>(data);
-		this.layouts = layouts;
-	}
 
 	public BaseAdapter(int layout) {
-		this.layouts = new int[]{layout};
-		data = new ArrayList<>();
+		this(null, layout, null);
 	}
 
 	public BaseAdapter(Collection<T> data, int layout) {
-		this.data = new ArrayList<>(data);
-		this.layouts = new int[]{layout};
+		this(data, layout, null);
 	}
 
-
-	public BaseAdapter(Collection<T> data, int[] layouts, AbsListView.OnItemClickListener listener) {
-		this.data = new ArrayList<>(data);
-		this.layouts = layouts;
-		this.listener = listener;
-	}
 
 	public BaseAdapter(Collection<T> data, int layout, AbsListView.OnItemClickListener listener) {
-		this.data = new ArrayList<>(data);
-		this.layouts = new int[]{layout};
+		this.data = new ArrayList<>();
+		if (data != null) {
+			this.data.addAll(data);
+		}
+		this.layouts = layout;
 		this.listener = listener;
+		spLayout = new SparseIntArray();
+		spLayout.put(TYPE_NOMAL, this.layouts);
 	}
 
+
 	protected AbsListView.OnItemClickListener listener;
+
+	/**
+	 * 绑定布局
+	 *
+	 * @param type
+	 * @param layouts
+	 * @return
+	 */
+	public BaseAdapter addType(@IntRange(from = 0) int type, @LayoutRes int layouts) {
+		spLayout.put(type, layouts);
+		return this;
+	}
 
 	/**
 	 * view的点击事件
@@ -131,11 +135,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	/**
 	 * 头尾布局点击事件
 	 * 参数查看{@link OnHeaderClickListener }
+	 *
 	 * @param onHeaderClickListener
 	 */
 	public void setOnHeaderClickListener(OnHeaderClickListener onHeaderClickListener) {
 		this.onHeaderClickListener = onHeaderClickListener;
 	}
+
 	/**
 	 * 添加字view的点击事件
 	 *
@@ -179,11 +185,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		if (viewType == TYPE_EMPTY) {
 			return new ViewHolder(emptyView);
 		}
-		if (layouts.length > 1) {
-			view = LayoutInflater.from(parent.getContext()).inflate(layouts[viewType], parent, false);
-		} else {
-			view = LayoutInflater.from(parent.getContext()).inflate(layouts[0], parent, false);
-		}
+		view = LayoutInflater.from(parent.getContext()).inflate(spLayout.get(viewType), parent, false);
 		ViewHolder holder = new ViewHolder(view, listener, listenerSparseArray, getHeaderCount());
 		return holder;
 	}
@@ -202,7 +204,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 			onBindHeaderViewHolder(holder, headerList.get(position).getResponse(), headerList.get
 					(position).getLayout());
 			if (onHeaderClickListener != null) {
-				holder.registListener(onHeaderClickListener, headerList.get(position).getResponse(), getIndex(headerList, position),true);
+				holder.registListener(holder.getItemViewType(),onHeaderClickListener, headerList.get(position).getResponse(), getIndex(headerList, position), true);
 			}
 			return;
 		}
@@ -210,7 +212,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 			onBindFooterViewHolder(holder, footerList.get(position - headerList.size() - data.size()).getResponse(), footerList.get
 					(position - headerList.size() - data.size()).getLayout());
 			if (onHeaderClickListener != null) {
-				holder.registListener(onHeaderClickListener, headerList.get(position - headerList.size() - data.size()).getResponse(), getIndex(headerList, position - headerList.size() - data.size()),false);
+				holder.registListener(holder.getItemViewType(),onHeaderClickListener, headerList.get(position - headerList.size() - data.size()).getResponse(), getIndex(headerList, position - headerList.size() - data.size()), false);
 			}
 			return;
 		}
@@ -301,7 +303,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
 	@Override
 	public final int getItemCount() {
-
 		if (emptyModle == EMPTY_MODLE_NOMAL) {
 			if (data.isEmpty() && data.size() == 0 && emptyView != null && headerList.isEmpty() && footerList.isEmpty()) {
 				return 1;
@@ -312,7 +313,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 			}
 		}
 
-		return data.size() + getHeaderCount() + getHeaderCount();
+		return data.size() + getHeaderCount() + getFooterCount();
 	}
 
 	/**
@@ -366,7 +367,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
 	/**
 	 * 加入final 禁止子类重写
-	 * 如果需要多布局  请重写  {@link #getItemType(int)}
+	 * 如果需要多布局
 	 *
 	 * @param position
 	 * @return
@@ -386,19 +387,15 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		if (isFooterPos(position)) {
 			return footerList.get(position - data.size() - headerList.size()).getLayout();
 		}
-		return getItemType(position - headerList.size());
-	}
-
-	/**
-	 * 多布局时  请子类实现这个方法来控制多布局
-	 *
-	 * @param position
-	 * @return
-	 */
-	protected @IntRange(from = 0)
-	int getItemType(int position) {
+		int dataPosition = position - getHeaderCount();
+		LogUtils.i("position==>"+position+"\nheadercount===>"+getHeaderCount());
+		T t = data.get(dataPosition);
+		if (t instanceof MulitTypeListener) {
+			return ((MulitTypeListener) t).getItemType();
+		}
 		return TYPE_NOMAL;
 	}
+
 
 	/**
 	 * 增加数据
@@ -532,4 +529,22 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	public @interface EmptyModle {
 	}
 
+
+	public T getData(@IntRange(from = 0) int position) {
+		if (position >= data.size()) return null;
+		return data.get(position);
+	}
+
+	public int getlastGroupPosition(int indexPosition) {
+		if (indexPosition >=data.size()) return -1;
+		if(indexPosition==data.size()-1)return indexPosition;
+		int groupId = ((MulitGroupListener) data.get(indexPosition)).bindAdapterGroupId();
+		for (int i = indexPosition + 1; i < data.size(); i++) {
+			int id = ((MulitGroupListener) data.get(i)).bindAdapterGroupId();
+			if (groupId != id) {
+				return i - 1;
+			}
+		}
+		return data.size() - 1;
+	}
 }
