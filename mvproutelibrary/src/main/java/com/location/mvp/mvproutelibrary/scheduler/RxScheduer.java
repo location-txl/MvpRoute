@@ -29,9 +29,9 @@ public class RxScheduer {
 
 		@Override
 		public T apply(BaseBean<T> tBaseBean) throws Exception {
-			if (!tBaseBean.isOk()) {
-				throw new ExceptionHandle.ServerException(tBaseBean.getCode(), ResponseCodeUtils.getMsg(tBaseBean.getCode()));
-			}
+//			if (!tBaseBean.isOk()) {
+//				throw new ExceptionHandle.ServerException(tBaseBean.getCode(), ResponseCodeUtils.getMsg(tBaseBean.getCode()));
+//			}
 			return tBaseBean.getData();
 		}
 	}

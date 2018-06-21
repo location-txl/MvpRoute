@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<declare-styleable name="BannerView">
+		<attr name="tab_margin" format="dimension" />
+		<attr name="tab_bottom_margin" format="dimension" />
+		<attr name="intervalTime" format="integer" />
+		<attr name="tab_select" format="reference" />
+		<attr name="start_plary" format="boolean" />
+		<attr name="viewpager_speed" format="integer" />
+		<attr name="tab_width" format="dimension" />
+		<attr name="tab_height" format="dimension" />
+	</declare-styleable>
+
+</resources>

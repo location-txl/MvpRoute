@@ -4,14 +4,18 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
+
+
 /**
- * 项目名称: MvpRoute
+ * 项目名称: 趣租部落
  * 类描述:  基础viewholder类  类中方法自行扩展
  * 创建人: 田晓龙
  * 创建时间: 2018/5/25 0025 23:26
@@ -21,17 +25,17 @@ import android.widget.TextView;
  */
 
 
-public class ViewHolder extends RecyclerView.ViewHolder {
-	public View itemView;
+public final class ViewHolder extends RecyclerView.ViewHolder {
+	private View itemView;
+	private SparseArray<View> viewCache;
 
-	public ViewHolder(View itemView, final AbsListView.OnItemClickListener listener, SparseArray<OnChildListener> sparseArray) {
-		super(itemView);
-		this.itemView = itemView;
+	public ViewHolder(View itemView, final AbsListView.OnItemClickListener listener, SparseArray<OnChildClickListener> sparseArray, final int headerSize) {
+		this(itemView);
 		if (listener != null) {
 			this.itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					listener.onItemClick(null, v, getAdapterPosition(), -1);
+					listener.onItemClick(null, v, getAdapterPosition() - headerSize, -1);
 				}
 			});
 		}
@@ -39,28 +43,48 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 			int length = sparseArray.size();
 			for (int i = 0; i < length; i++) {
 				int ids = sparseArray.keyAt(i);
-				final OnChildListener onChildListener = sparseArray.valueAt(i);
+				final OnChildClickListener onChildClickListener = sparseArray.valueAt(i);
 				final View childView = this.itemView.findViewById(ids);
-				if (childView != null && onChildListener != null) {
+				if (childView != null && onChildClickListener != null) {
 					childView.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							onChildListener.onChildClcikListener(ViewHolder.this, childView, getAdapterPosition());
+							onChildClickListener.onChildClcik(ViewHolder.this, childView, getAdapterPosition() - headerSize);
 						}
 					});
 				}
-
 			}
 		}
+	}
+
+	public ViewHolder(View itemView, OnHeaderClickListener listener, BaseAdapter baseAdapter) {
+		this(itemView);
+
 	}
 
 	public ViewHolder(View itemView) {
 		super(itemView);
 		this.itemView = itemView;
+		viewCache = new SparseArray<>();
 	}
 
 	public <T extends View> T findViewById(@IdRes int ids) {
-		return itemView.findViewById(ids);
+		View view = viewCache.get(ids);
+		if (view == null) {
+			view = itemView.findViewById(ids);
+			viewCache.put(ids, view);
+		}
+		return (T) view;
+	}
+
+	public void registListener(final int layout, final OnHeaderClickListener onHeaderClickListener, final Object data, final int position, final boolean isHeader) {
+		itemView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				LogUtils.i("response===>"+data);
+				onHeaderClickListener.onHeaderClick(layout,itemView, data, position, isHeader);
+			}
+		});
 	}
 
 	public void setText(@IdRes int ids, CharSequence charSequence) {
@@ -70,6 +94,9 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 		}
 	}
 
+	public View getItemView() {
+		return itemView;
+	}
 
 	public void setText(@IdRes int ids, String message) {
 		View view = findViewById(ids);
@@ -92,5 +119,6 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 			((ImageView) view).setImageResource(resouce);
 		}
 	}
+
 
 }

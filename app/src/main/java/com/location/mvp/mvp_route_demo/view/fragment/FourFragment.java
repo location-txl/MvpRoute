@@ -24,8 +24,6 @@ public class FourFragment extends BaseFragment {
 
 	@Override
 	protected void initView(View view) {
-		TextView textView = view.findViewById(R.id.fragment_button);
-		textView.setText("FOUR");
 	}
 
 	@Override

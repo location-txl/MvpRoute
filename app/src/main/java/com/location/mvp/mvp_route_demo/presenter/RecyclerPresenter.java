@@ -4,6 +4,7 @@ import com.location.mvp.mvp_route_demo.contract.RecyclerContract;
 import com.location.mvp.mvp_route_demo.modle.bean.DataBean;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,10 +23,15 @@ public class RecyclerPresenter extends RecyclerContract.Presenter {
 		bean.setMessage("你好啊");
 
 		DataBean bean1 = new DataBean();
-		bean1.setType(DataBean.TYPE_IMAGE);
+		bean1.setType(DataBean.TYPE_TEXT);
 		bean1.setMessage("dsadsa");
-//		list.add(bean);
-//		list.add(bean1);
+		DataBean bean2 = new DataBean();
+		bean2.setType(DataBean.TYPE_IMAGE);
+		bean2.setMessage("dsadsa");
+
+		list.add(bean);
+		list.add(bean2);
+		list.add(bean1);
 		view.showData(list);
 	}
 

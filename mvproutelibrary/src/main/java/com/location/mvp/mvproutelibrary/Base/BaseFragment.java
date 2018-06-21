@@ -30,6 +30,29 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     protected final String TAG = getClass().getSimpleName();
     protected BaseActivity activity;
 
+
+    public static <T extends BaseFragment> T newInstance(Class<? extends T> clazz){
+        try {
+            return (T) clazz.newInstance();
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static <T extends BaseFragment> T newInstance(Class<? extends T> clazz,Bundle bundle){
+        try {
+            T t = clazz.newInstance();
+            t.setArguments(bundle);
+            return t;
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

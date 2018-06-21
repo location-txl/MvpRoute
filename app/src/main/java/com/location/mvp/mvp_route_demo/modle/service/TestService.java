@@ -23,7 +23,7 @@ import retrofit2.http.Query;
 
 
 public interface TestService {
-    @GET("userInfo")
+    @GET("userinfo")
     Observable<BaseBean<UserBean>> get(@Query("dsa") String string);
 
     @FormUrlEncoded
