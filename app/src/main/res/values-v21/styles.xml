@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+	<!-- Base application theme. -->
+	<style name="AppTheme" parent="Base.AppTheme">
+
+		<!-- 这个属性之所以注释掉是因为它只能在5.0之后使用，所以一定要定义它的话需要在/res/valuse-v21/sytles.xml中进行定义 -->
+		 <item name="android:navigationBarColor">@color/accent_material_light</item>
+	</style>
+</resources>

@@ -11,6 +11,7 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.location.mvp.mvproutelibrary.R;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 
@@ -81,8 +82,8 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		itemView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				LogUtils.i("response===>"+data);
-				onHeaderClickListener.onHeaderClick(layout,itemView, data, position, isHeader);
+				LogUtils.i("response===>" + data);
+				onHeaderClickListener.onHeaderClick(layout, itemView, data, position, isHeader);
 			}
 		});
 	}
@@ -117,6 +118,20 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		View view = findViewById(ids);
 		if (view instanceof ImageView) {
 			((ImageView) view).setImageResource(resouce);
+		}
+	}
+
+	public void setVisibility(@IdRes int ids) {
+		View view = findViewById(ids);
+		if (view != null) {
+			view.setVisibility(View.VISIBLE);
+		}
+	}
+
+	public void setGone(@IdRes int ids) {
+		View view = findViewById(ids);
+		if (view != null) {
+			view.setVisibility(View.GONE);
 		}
 	}
 

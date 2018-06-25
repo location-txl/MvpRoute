@@ -1,5 +1,6 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
+import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.IntRange;
@@ -16,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 
-import com.location.mvp.mvproutelibrary.R;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.lang.annotation.Retention;
@@ -37,27 +37,54 @@ import java.util.List;
 
 
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
-	//当数据没有时显示即使已经添加了头布局尾布局
-	public static final int ERMTY_MODLE_HEADERS = 0x001;
-	//当没有数据 并且头尾布局都没有的情况下显示
+	/**
+	 * 当数据没有时显示即使已经添加了头布局尾布局
+	 */
+	public static final int EMPTY_MODLE_HEADERS = 0x001;
+	/**
+	 * 当没有数据 并且头尾布局都没有的情况下显示
+	 */
 	public static final int EMPTY_MODLE_NOMAL = 0x002;
-	//存储数据
+	/**
+	 * 列表数据
+	 */
 	protected List<T> data;
-	//存储空View
+	/**
+	 * 存储空View
+	 */
 	private View emptyView;
-	//头尾布局点击事件
+	/**
+	 * 头尾布局点击事件
+	 */
 	private OnHeaderClickListener onHeaderClickListener;
 
-	private int emptyModle = ERMTY_MODLE_HEADERS;
-	//存储头布局
+	private int emptyModle = EMPTY_MODLE_HEADERS;
+	/**
+	 * 存储头布局
+	 */
 	private ArrayList<DataBean> headerList = new ArrayList<>();
-	//存储尾布局
+	/**
+	 * 存储尾部局
+	 */
 	private ArrayList<DataBean> footerList = new ArrayList<>();
 
-	//标记type类型
+
+	//布局数组
+	protected @LayoutRes
+	int layouts;
+
+	/**
+	 * 标记type类型
+	 */
 	public static final int TYPE_EMPTY = -999999999;
+	/**
+	 * 默认类型
+	 */
 	private final int TYPE_NOMAL = 0;
 
+	/**
+	 * 存储多布局
+	 */
 	private SparseIntArray spLayout;
 
 	/**
@@ -66,6 +93,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	private SparseArray<OnChildClickListener> listenerSparseArray;
 
 
+	/**
+	 * 是否绘制头尾布局分割线
+	 */
 	private boolean isDrawHeaderFooterLine = true;
 
 
@@ -82,21 +112,17 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		return isDrawHeaderFooterLine;
 	}
 
-	//布局数组
-	protected @LayoutRes
-	int layouts;
 
-
-	public BaseAdapter(int layout) {
+	public BaseAdapter(@LayoutRes int layout) {
 		this(null, layout, null);
 	}
 
-	public BaseAdapter(Collection<T> data, int layout) {
+	public BaseAdapter(Collection<T> data, @LayoutRes  int layout) {
 		this(data, layout, null);
 	}
 
 
-	public BaseAdapter(Collection<T> data, int layout, AbsListView.OnItemClickListener listener) {
+	public BaseAdapter(Collection<T> data, @LayoutRes int layout, AbsListView.OnItemClickListener listener) {
 		this.data = new ArrayList<>();
 		if (data != null) {
 			this.data.addAll(data);
@@ -108,7 +134,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	}
 
 
-	protected AbsListView.OnItemClickListener listener;
+	private AbsListView.OnItemClickListener listener;
 
 	/**
 	 * 绑定布局
@@ -148,7 +174,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	 * @param ids      子view的id
 	 * @param listener 点击回调事件
 	 */
-
 	public void setOnChildClickListener(@IdRes int ids, @NonNull OnChildClickListener listener) {
 		if (listenerSparseArray == null) {
 			listenerSparseArray = new SparseArray<>();
@@ -199,12 +224,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	 */
 	@Override
 	public final void onBindViewHolder(ViewHolder holder, int position) {
-		if (getItemViewType(position) == TYPE_EMPTY) return;
+		if (getItemViewType(position) == TYPE_EMPTY) {
+			return;
+		}
 		if (isHeaderPos(position)) {
 			onBindHeaderViewHolder(holder, headerList.get(position).getResponse(), headerList.get
 					(position).getLayout());
 			if (onHeaderClickListener != null) {
-				holder.registListener(holder.getItemViewType(),onHeaderClickListener, headerList.get(position).getResponse(), getIndex(headerList, position), true);
+				holder.registListener(holder.getItemViewType(), onHeaderClickListener, headerList.get(position).getResponse(), getIndex(headerList, position), true);
 			}
 			return;
 		}
@@ -212,7 +239,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 			onBindFooterViewHolder(holder, footerList.get(position - headerList.size() - data.size()).getResponse(), footerList.get
 					(position - headerList.size() - data.size()).getLayout());
 			if (onHeaderClickListener != null) {
-				holder.registListener(holder.getItemViewType(),onHeaderClickListener, headerList.get(position - headerList.size() - data.size()).getResponse(), getIndex(headerList, position - headerList.size() - data.size()), false);
+				holder.registListener(holder.getItemViewType(), onHeaderClickListener, headerList.get(position - headerList.size() - data.size()).getResponse(), getIndex(headerList, position - headerList.size() - data.size()), false);
 			}
 			return;
 		}
@@ -254,8 +281,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 					} else if (isFooterPos(position)) {
 						return gridLayoutManager.getSpanCount();
 					}
-					if (spanSizeLookup != null)
+					if (spanSizeLookup != null) {
 						return spanSizeLookup.getSpanSize(position);
+					}
 					return 1;
 				}
 			});
@@ -301,8 +329,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 			layout) {
 	}
 
+	@CallSuper
 	@Override
-	public final int getItemCount() {
+	public int getItemCount() {
 		if (emptyModle == EMPTY_MODLE_NOMAL) {
 			if (data.isEmpty() && data.size() == 0 && emptyView != null && headerList.isEmpty() && footerList.isEmpty()) {
 				return 1;
@@ -322,13 +351,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	 * @param t      数据实体类
 	 * @param layout 头尾布局的layoutID
 	 */
-	public final void addHeaderView(Object t, @LayoutRes int layout) {
-		DataBean dataBean = new DataBean(t, layout);
+	public final void addHeaderView(Object data, @LayoutRes int layout) {
+		DataBean dataBean = new DataBean(data, layout);
 		headerList.add(dataBean);
 	}
 
-	public final void addFooterView(Object t, @LayoutRes int layout) {
-		DataBean dataBean = new DataBean(t, layout);
+	public final void addFooterView(Object data, @LayoutRes int layout) {
+		DataBean dataBean = new DataBean(data, layout);
 		footerList.add(dataBean);
 	}
 
@@ -342,7 +371,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
 	/**
 	 * 无数据时视图显示模式
-	 * 默认模式为   {@link #ERMTY_MODLE_HEADERS}  当数据没有时显示
+	 * 默认模式为   {@link #EMPTY_MODLE_HEADERS}  当数据没有时显示
 	 * 即使已经添加了头布局尾布局
 	 * 可选模式     {@link #EMPTY_MODLE_NOMAL}  当没有数据 并且头尾布局都没有的情况下显示
 	 *
@@ -388,7 +417,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 			return footerList.get(position - data.size() - headerList.size()).getLayout();
 		}
 		int dataPosition = position - getHeaderCount();
-		LogUtils.i("position==>"+position+"\nheadercount===>"+getHeaderCount());
+		LogUtils.i("position==>" + position + "\nheadercount===>" + getHeaderCount());
+		if (dataPosition >= data.size()) {
+			return TYPE_NOMAL;
+		}
 		T t = data.get(dataPosition);
 		if (t instanceof MulitTypeListener) {
 			return ((MulitTypeListener) t).getItemType();
@@ -489,6 +521,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		return footerList.size();
 	}
 
+
+	/**
+	 * 获取头布局所对应的数据
+	 *
+	 * @param type
+	 * @return
+	 */
 	private @Nullable
 	DataBean getHeaderData(int type) {
 		for (DataBean dataBean : headerList) {
@@ -500,6 +539,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	}
 
 
+	/**
+	 * 获取尾部局所对应的data
+	 *
+	 * @param type
+	 * @return
+	 */
 	private @Nullable
 	DataBean getFooterData(int type) {
 		for (DataBean dataBean : footerList) {
@@ -510,7 +555,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		return null;
 	}
 
-
+	/**
+	 * 获取当前相同头尾部所出现的次数
+	 *
+	 * @param dataBeans
+	 * @param position
+	 * @return
+	 */
 	private int getIndex(List<DataBean> dataBeans, int position) {
 		int dex = 0;
 		int layout = dataBeans.get(position).getLayout();
@@ -524,20 +575,22 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		return dex;
 	}
 
-	@IntDef({EMPTY_MODLE_NOMAL, ERMTY_MODLE_HEADERS})
-	@Retention(RetentionPolicy.SOURCE)
-	public @interface EmptyModle {
-	}
-
 
 	public T getData(@IntRange(from = 0) int position) {
 		if (position >= data.size()) return null;
 		return data.get(position);
 	}
 
+
+	/**
+	 * group分组时  获取分组的最后一项的索引
+	 *
+	 * @param indexPosition
+	 * @return
+	 */
 	public int getlastGroupPosition(int indexPosition) {
-		if (indexPosition >=data.size()) return -1;
-		if(indexPosition==data.size()-1)return indexPosition;
+		if (indexPosition >= data.size()) return -1;
+		if (indexPosition == data.size() - 1) return indexPosition;
 		int groupId = ((MulitGroupListener) data.get(indexPosition)).bindAdapterGroupId();
 		for (int i = indexPosition + 1; i < data.size(); i++) {
 			int id = ((MulitGroupListener) data.get(i)).bindAdapterGroupId();
@@ -546,5 +599,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 			}
 		}
 		return data.size() - 1;
+	}
+
+
+	@IntDef({EMPTY_MODLE_NOMAL, EMPTY_MODLE_HEADERS})
+	@Retention(RetentionPolicy.SOURCE)
+	public @interface EmptyModle {
 	}
 }

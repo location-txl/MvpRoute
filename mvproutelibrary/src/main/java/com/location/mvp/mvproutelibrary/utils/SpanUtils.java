@@ -9,6 +9,8 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
+import android.text.style.SubscriptSpan;
+import android.text.style.SuperscriptSpan;
 import android.text.style.UnderlineSpan;
 
 /**
@@ -137,6 +139,26 @@ public class SpanUtils {
 	 */
 	public SpanUtils setClick(ClickableSpan click) {
 		span.setSpan(click, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+		return this;
+	}
+
+	/**
+	 * 为文字设置上标
+	 * @return
+	 */
+	public SpanUtils setSuperscript(){
+		SuperscriptSpan superscriptSpan = new SuperscriptSpan();
+		span.setSpan(superscriptSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+		return this;
+	}
+
+	/**
+	 * 为文字设置下标
+	 * @return
+	 */
+	public SpanUtils setSubscriptSpan(){
+		SubscriptSpan subscriptSpan = new SubscriptSpan();
+		span.setSpan(subscriptSpan, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 		return this;
 	}
 

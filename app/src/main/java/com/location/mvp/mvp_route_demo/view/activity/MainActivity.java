@@ -1,47 +1,51 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.location.mvp.mvp_route_demo.R;
-import com.location.mvp.mvp_route_demo.presenter.MainPresenter;
-import com.location.mvp.mvp_route_demo.view.fragment.TestFragment;
+import com.location.mvp.mvp_route_demo.weight.TestView;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
+import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
-public class MainActivity extends BaseActivity<MainPresenter> {
+/**
+ * 项目:趣租部落
+ *
+ * @author：田晓龙 time：2018/6/25 11:35
+ * description：
+ */
 
+public class MainActivity extends BaseActivity {
 
+	private TestView testView;
 
+	@Override
+	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
 
-    @Override
-    protected int getLayout() {
-        return R.layout.activity_main;
-    }
+	}
 
-    @Override
-    protected void initView() {
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        TestFragment testFragment = new TestFragment();
-        fragmentTransaction.add(R.id.id_fre, testFragment);
-        fragmentTransaction.commit();
-    }
+	@Override
+	protected int getLayout() {
+		return R.layout.activity_main;
+	}
 
-    @Override
-    protected void loadData() {
+	@Override
+	protected void initView() {
 
-    }
+	}
 
-    @NonNull
-    @Override
-    protected MainPresenter createPresenter() {
-        return null;
-    }
+	@Override
+	protected void loadData() {
 
-    @Override
-    public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
+	}
 
-    }
+	@NonNull
+	@Override
+	protected BasePresenter createPresenter() {
+		return null;
+	}
+
 }
