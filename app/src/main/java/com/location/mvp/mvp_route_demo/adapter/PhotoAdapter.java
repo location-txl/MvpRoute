@@ -11,6 +11,7 @@ import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 项目:趣租部落
