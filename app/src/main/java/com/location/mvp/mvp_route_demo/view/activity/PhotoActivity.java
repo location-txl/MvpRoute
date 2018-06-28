@@ -20,6 +20,7 @@ import com.location.mvp.mvp_route_demo.adapter.PhotoAdapter;
 import com.location.mvp.mvp_route_demo.bean.PictureBean;
 import com.location.mvp.mvp_route_demo.pz.GlideImageLoader;
 import com.location.mvp.mvproutelibrary.adapter.OnChildClickListener;
+import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 import com.location.mvp.mvproutelibrary.listener.OnNoDoubleClickListener;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
@@ -44,7 +45,7 @@ import io.reactivex.functions.Function;
  * description：
  */
 
-public class PhotoActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, OnChildClickListener, View.OnClickListener {
+public class PhotoActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, OnChildClickListener, View.OnClickListener, OnItemClickListener {
 
 	private final int REQUEST_CODE_SELECT = 0x001;
 	private final int REQUEST_CODE_PREVIEW = 0x002;
@@ -196,17 +197,7 @@ public class PhotoActivity extends AppCompatActivity implements AdapterView.OnIt
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		if (position >= beanList.size()) {
-			//选择图片
-			popwindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
-		} else {
 
-			Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
-			intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, data);
-			intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
-			intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
-			startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
-		}
 	}
 
 	/**
@@ -243,5 +234,20 @@ public class PhotoActivity extends AppCompatActivity implements AdapterView.OnIt
 			default:
 		}
 		popwindow.dismiss();
+	}
+
+	@Override
+	public void onItemClick(ViewHolder viewHolder, View view, int position) {
+		if (position >= beanList.size()) {
+			//选择图片
+			popwindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+		} else {
+
+			Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
+			intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, data);
+			intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+			intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
+			startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
+		}
 	}
 }

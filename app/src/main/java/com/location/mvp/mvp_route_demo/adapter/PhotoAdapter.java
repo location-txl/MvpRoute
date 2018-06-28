@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.bean.PictureBean;
 import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;
+import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 
 import java.util.Collection;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 
 public class PhotoAdapter extends BaseAdapter<PictureBean> {
-	public PhotoAdapter(Collection<PictureBean> data, int layout, AdapterView.OnItemClickListener listener) {
+	public PhotoAdapter(Collection<PictureBean> data, int layout, OnItemClickListener listener) {
 		super(data, layout, listener);
 	}
 

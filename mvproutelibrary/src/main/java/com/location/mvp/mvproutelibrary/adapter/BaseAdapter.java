@@ -122,7 +122,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	}
 
 
-	public BaseAdapter(Collection<T> data, @LayoutRes int layout, AbsListView.OnItemClickListener listener) {
+	public BaseAdapter(Collection<T> data, @LayoutRes int layout, OnItemClickListener listener) {
 		this.data = new ArrayList<>();
 		if (data != null) {
 			this.data.addAll(data);
@@ -134,7 +134,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	}
 
 
-	private AbsListView.OnItemClickListener listener;
+	private OnItemClickListener listener;
 
 	/**
 	 * 绑定布局
@@ -153,7 +153,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	 *
 	 * @param listener
 	 */
-	public void setOnItemClickListener(AbsListView.OnItemClickListener listener) {
+	public void setOnItemClickListener(OnItemClickListener listener) {
 		this.listener = listener;
 	}
 

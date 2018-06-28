@@ -11,7 +11,6 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.location.mvp.mvproutelibrary.R;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 
@@ -30,13 +29,13 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 	private View itemView;
 	private SparseArray<View> viewCache;
 
-	public ViewHolder(View itemView, final AbsListView.OnItemClickListener listener, SparseArray<OnChildClickListener> sparseArray, final int headerSize) {
+	public ViewHolder(View itemView, final OnItemClickListener listener, SparseArray<OnChildClickListener> sparseArray, final int headerSize) {
 		this(itemView);
 		if (listener != null) {
 			this.itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					listener.onItemClick(null, v, getAdapterPosition() - headerSize, -1);
+					listener.onItemClick(ViewHolder.this, v, getAdapterPosition() - headerSize);
 				}
 			});
 		}
