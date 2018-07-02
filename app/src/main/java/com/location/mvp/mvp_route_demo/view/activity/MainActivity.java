@@ -1,12 +1,8 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import com.location.mvp.mvp_route_demo.R;
-import com.location.mvp.mvp_route_demo.weight.TestView;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
