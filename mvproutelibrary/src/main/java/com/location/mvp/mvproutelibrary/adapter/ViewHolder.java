@@ -1,13 +1,12 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
+import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +27,12 @@ import com.location.mvp.mvproutelibrary.utils.LogUtils;
 public final class ViewHolder extends RecyclerView.ViewHolder {
 	private View itemView;
 	private SparseArray<View> viewCache;
+
+	private Context context;
+
+	public Context getContext() {
+		return context;
+	}
 
 	public ViewHolder(View itemView, final OnItemClickListener listener, SparseArray<OnChildClickListener> sparseArray, final int headerSize) {
 		this(itemView);
@@ -66,6 +71,7 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		super(itemView);
 		this.itemView = itemView;
 		viewCache = new SparseArray<>();
+		this.context = this.itemView.getContext();
 	}
 
 	public <T extends View> T findViewById(@IdRes int ids) {

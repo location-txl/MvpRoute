@@ -94,18 +94,18 @@ public class LogUtils {
         return result;
     }
 
-    public static class LogUtilsBuilder {
-        public LogUtilsBuilder setisLogcat(boolean isLocat) {
+    public static class Builder {
+        public Builder setisLogcat(boolean isLocat) {
             LogUtils.islogcat = isLocat;
             return this;
         }
 
-        public LogUtilsBuilder setPrintLine(boolean isLine) {
+        public Builder setPrintLine(boolean isLine) {
             LogUtils.isPrintLine = isLine;
             return this;
         }
 
-        public LogUtilsBuilder setPrintClass(boolean isclass) {
+        public Builder setPrintClass(boolean isclass) {
             LogUtils.isPrintClassName = isclass;
             return this;
         }
