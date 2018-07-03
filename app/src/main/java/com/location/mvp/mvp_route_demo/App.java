@@ -19,7 +19,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        new RetrofitClient.Builder("http://www.baidu.com/").build();
+        new RetrofitClient.Builder("http://www.baidu.com/").build().createApiService();
 
 
     }

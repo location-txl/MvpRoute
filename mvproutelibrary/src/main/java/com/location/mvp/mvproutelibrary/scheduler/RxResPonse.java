@@ -23,7 +23,7 @@ import okhttp3.ResponseBody;
 
 public  class RxResPonse {
 	
-	public abstract static class RxGsonResponse<T> implements Function<ResponseBody,T>{
+	public  abstract static class RxGsonResponse<T> implements Function<ResponseBody,T>{
 		private final Type mType;
 		public RxGsonResponse() {
 			Type myclass = getClass().getGenericSuperclass();
