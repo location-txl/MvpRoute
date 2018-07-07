@@ -14,6 +14,7 @@ import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +68,12 @@ public class PictureActivity extends BaseActivity<PictureContract.Presenter> imp
 
     @Override
     public void showData(List<PictureBean.ResultsBean> response) {
-        data.addAll(response);
-        adapter.refresh(data);
+//        data.addAll(response);
+//        adapter.refresh(data);
+
+        LogUtils.d("d--tag");
+        LogUtils.i("i--tag");
+        LogUtils.e("e--tag");
 
     }
 
