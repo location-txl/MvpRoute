@@ -68,12 +68,9 @@ public class PictureActivity extends BaseActivity<PictureContract.Presenter> imp
 
     @Override
     public void showData(List<PictureBean.ResultsBean> response) {
-//        data.addAll(response);
-//        adapter.refresh(data);
+        data.addAll(response);
+        adapter.refresh(data);
 
-        LogUtils.d("d--tag");
-        LogUtils.i("i--tag");
-        LogUtils.e("e--tag");
 
     }
 
