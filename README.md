@@ -5,7 +5,7 @@
 ![image](https://img.shields.io/badge/Mvp_Route-v1.0.0-brightgreen.svg)
 
 Android项目开发框架 基于Mvp
-
+[bata测试版](https://github.com/TLocation/Mvp_Route_Demo/tree/dev)
 ## 简介
   1. 基础Presenter View BaseActivity BaseFragment 利用RxJava快速绑定生命周期
   2. Retrofit和RxJava完美封装 
