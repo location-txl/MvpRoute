@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:name=".App"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".view.activity.PictureActivity"
+        <activity android:name=".view.activity.DataActivity"
          >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
