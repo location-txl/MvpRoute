@@ -13,12 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.ThemedSpinnerAdapter;
 
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 
 /**
- * 项目:趣租部落
+ * 项目:Mvp_Route_Demo
  * 类描述:  加阴影的工具类
  * 创建人: txl
  * 创建时间: 2017/8/15 18:25
@@ -52,6 +53,40 @@ public class BobPopwindow extends PopupWindow {
 		getContentView().findViewById(viewid).setOnClickListener(onClickListener);
 	}
 
+	public void setOnClick(@IdRes final int viewid, final OnClickListener onClickListener) {
+		getContentView().findViewById(viewid).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (onClickListener != null) {
+					onClickListener.onClick(BobPopwindow.this, v);
+				}
+			}
+		});
+	}
+
+	public void setText(@IdRes int viewid, String content) {
+		View contentView = getContentView();
+		View viewById = contentView.findViewById(viewid);
+		if (viewById instanceof TextView) {
+			((TextView) viewById).setText(content);
+		}
+
+	}
+
+	public void setVisible(@IdRes int viewid) {
+		View view = getContentView().findViewById(viewid);
+		if (view != null) {
+			view.setVisibility(View.VISIBLE);
+		}
+	}
+
+	public void setGone(@IdRes int viewid) {
+		View view = getContentView().findViewById(viewid);
+		if (view != null) {
+			view.setVisibility(View.GONE);
+		}
+	}
+
 	public BobPopwindow(View contentView) {
 		super(contentView);
 	}
@@ -78,6 +113,7 @@ public class BobPopwindow extends PopupWindow {
 		this.alpha = alpha;
 	}
 
+
 	public void setActivity(Activity activity) {
 		this.activity = activity;
 	}
@@ -87,10 +123,11 @@ public class BobPopwindow extends PopupWindow {
 	public void showAtLocation(View parent, int gravity, int x, int y) {
 		super.showAtLocation(parent, gravity, x, y);
 		darken();
-
-
 	}
 
+	public <T extends View> T getChildView(@IdRes int viewid) {
+		return getContentView().findViewById(viewid);
+	}
 
 	@Override
 	public void showAsDropDown(View anchor, int xoff, int yoff, int gravity) {
@@ -168,6 +205,11 @@ public class BobPopwindow extends PopupWindow {
 			return this;
 		}
 
+		public Builder getChildView(@IdRes int viewid, BobDataView dataView) {
+			View childView = popwindow.getChildView(viewid);
+			dataView.setView(childView);
+			return this;
+		}
 
 		public Builder setOutsideTouchable(boolean outsideTouchable) {
 			popwindow.setOutsideTouchable(outsideTouchable);
@@ -176,6 +218,16 @@ public class BobPopwindow extends PopupWindow {
 
 		public Builder setTouchable(boolean touchable) {
 			popwindow.setTouchable(touchable);
+			return this;
+		}
+
+		public Builder setGone(@IdRes int viewid) {
+			popwindow.setGone(viewid);
+			return this;
+		}
+
+		public Builder setVisible(@IdRes int viewid) {
+			popwindow.setVisible(viewid);
 			return this;
 		}
 
@@ -205,10 +257,36 @@ public class BobPopwindow extends PopupWindow {
 			return this;
 		}
 
+		public Builder setViewClick(@IdRes int viewid, OnClickListener onClickListener) {
+			popwindow.setOnClick(viewid, onClickListener);
+			return this;
+		}
+
+		public Builder setText(@IdRes int id, String content) {
+			popwindow.setText(id, content);
+			return this;
+		}
+
 		public BobPopwindow create() {
 			return popwindow;
 		}
 
 	}
 
+
+	public interface OnClickListener {
+		void onClick(BobPopwindow bobPopwindow, View veiw);
+	}
+
+	public static class BobDataView {
+		private View view;
+
+		public View getView() {
+			return view;
+		}
+
+		public void setView(View view) {
+			this.view = view;
+		}
+	}
 }

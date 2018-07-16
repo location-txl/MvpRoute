@@ -1,13 +1,12 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
+import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,9 +14,9 @@ import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 
 /**
- * 项目名称: 趣租部落
+ * 项目名称: Mvp_Route_Demo
  * 类描述:  基础viewholder类  类中方法自行扩展
- * 创建人: 田晓龙
+ * 创建人: location
  * 创建时间: 2018/5/25 0025 23:26
  * 修改人:
  * 修改内容:
@@ -29,13 +28,19 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 	private View itemView;
 	private SparseArray<View> viewCache;
 
-	public ViewHolder(View itemView, final AbsListView.OnItemClickListener listener, SparseArray<OnChildClickListener> sparseArray, final int headerSize) {
+	private Context context;
+
+	public Context getContext() {
+		return context;
+	}
+
+	public ViewHolder(View itemView, final OnItemClickListener listener, SparseArray<OnChildClickListener> sparseArray, final int headerSize) {
 		this(itemView);
 		if (listener != null) {
 			this.itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					listener.onItemClick(null, v, getAdapterPosition() - headerSize, -1);
+					listener.onItemClick(ViewHolder.this, v, getAdapterPosition() - headerSize);
 				}
 			});
 		}
@@ -66,6 +71,7 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		super(itemView);
 		this.itemView = itemView;
 		viewCache = new SparseArray<>();
+		this.context = this.itemView.getContext();
 	}
 
 	public <T extends View> T findViewById(@IdRes int ids) {
@@ -81,8 +87,8 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		itemView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				LogUtils.i("response===>"+data);
-				onHeaderClickListener.onHeaderClick(layout,itemView, data, position, isHeader);
+				LogUtils.i("response===>" + data);
+				onHeaderClickListener.onHeaderClick(layout, itemView, data, position, isHeader);
 			}
 		});
 	}
@@ -117,6 +123,20 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		View view = findViewById(ids);
 		if (view instanceof ImageView) {
 			((ImageView) view).setImageResource(resouce);
+		}
+	}
+
+	public void setVisibility(@IdRes int ids) {
+		View view = findViewById(ids);
+		if (view != null) {
+			view.setVisibility(View.VISIBLE);
+		}
+	}
+
+	public void setGone(@IdRes int ids) {
+		View view = findViewById(ids);
+		if (view != null) {
+			view.setVisibility(View.GONE);
 		}
 	}
 

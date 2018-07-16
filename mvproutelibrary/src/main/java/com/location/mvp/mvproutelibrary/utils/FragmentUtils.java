@@ -14,8 +14,8 @@ import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BaseFragment;
 
 /**
- * 项目:趣租部落
- * author：田晓龙
+ * 项目:Mvp_Route_Demo
+ * author：location
  * time：2018/5/24 13:12
  * description：
  */

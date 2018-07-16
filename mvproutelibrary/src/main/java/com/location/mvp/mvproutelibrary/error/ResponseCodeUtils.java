@@ -1,7 +1,7 @@
 package com.location.mvp.mvproutelibrary.error;
 
 /**
- * @author Kevin 服务器返回的错误码
+ * @author location
  */
 public class ResponseCodeUtils {
 

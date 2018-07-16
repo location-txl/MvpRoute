@@ -13,6 +13,9 @@ import java.net.UnknownHostException;
 import retrofit2.HttpException;
 
 
+/**
+ * @author location
+ */
 public class ExceptionHandle {
 
 	private static final int UNAUTHORIZED = 401;
