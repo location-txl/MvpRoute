@@ -5,7 +5,7 @@ import android.util.Log;
 
 /**
  * 项目:logUtils
- * author：田晓龙
+ * author：location
  * time：2018/5/25 17:12
  * description：
  */

@@ -14,8 +14,8 @@ import android.text.style.SuperscriptSpan;
 import android.text.style.UnderlineSpan;
 
 /**
- * 项目:趣租部落
- * author：田晓龙
+ * 项目:Mvp_Route_Demo
+ * author：location
  * description：文字工具类
  */
 

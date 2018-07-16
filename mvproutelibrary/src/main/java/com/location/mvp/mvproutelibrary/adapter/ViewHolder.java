@@ -14,9 +14,9 @@ import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 
 /**
- * 项目名称: 趣租部落
+ * 项目名称: Mvp_Route_Demo
  * 类描述:  基础viewholder类  类中方法自行扩展
- * 创建人: 田晓龙
+ * 创建人: location
  * 创建时间: 2018/5/25 0025 23:26
  * 修改人:
  * 修改内容:

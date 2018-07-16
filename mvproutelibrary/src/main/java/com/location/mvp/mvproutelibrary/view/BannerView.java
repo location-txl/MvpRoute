@@ -38,8 +38,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 /**
- * 项目:趣租部落
- * author：田晓龙
+ * 项目:Mvp_Route_Demo
+ * author：location
  * time：2018/6/6 18:31
  * description： 自定义轮播图 基于RxJava
  * 默认轮播图标志位在中间  查看此方法 @see {@link #BannerView(Context, AttributeSet, int)}

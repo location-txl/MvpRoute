@@ -1,7 +1,7 @@
 package com.location.mvp.mvp_route_demo.bean;
 
 /**
- * 项目:趣租部落
+ * 项目:Mvp_Route_Demo
  *
  * @author：location time：2018/7/12 17:23
  * description：

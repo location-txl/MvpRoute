@@ -15,8 +15,8 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
 /**
- * 项目:趣租部落
- * author：田晓龙
+ * 项目:Mvp_Route_Demo
+ * author：location
  * time：2018/6/4 11:13
  * description：
  */

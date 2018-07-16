@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 项目:趣租部落
+ * 项目:Mvp_Route_Demo
  *
  * @author：location time：2018/7/12 14:42
  * description：
@@ -63,7 +63,6 @@ public class MyRealayout extends RelativeLayout {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-//		super.onDraw(canvas);
 		isOndraw = true;
 		int width = getMeasuredWidth();
 		int height = getMeasuredHeight();

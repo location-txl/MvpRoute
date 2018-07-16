@@ -24,7 +24,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
 /**
- * 项目:趣租部落
+ * 项目:Mvp_Route_Demo
  *
  * @author：location time：2018/7/12 17:22
  * description：
