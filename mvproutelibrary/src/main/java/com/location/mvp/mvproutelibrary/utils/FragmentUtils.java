@@ -261,7 +261,28 @@ public class FragmentUtils {
 
 
 	public class FragmentWrapper {
+		/**
+		 * 设置Fragmnet 转场动画
+		 *
+		 * @param startAn
+		 * @param exitan
+		 * @return
+		 */
+		public FragmentWrapper addAnim(@AnimRes @AnimatorRes int startAn, @AnimRes @AnimatorRes int
+				exitan) {
+			transaction.setCustomAnimations(startAn, exitan);
+			return this;
+		}
 
+		public FragmentWrapper addAnimStart(@AnimRes @AnimatorRes int startAn) {
+			transaction.setCustomAnimations(startAn, 0);
+			return this;
+		}
+
+		public FragmentWrapper addAnimEnd(@AnimRes @AnimatorRes int endAn) {
+			transaction.setCustomAnimations(0, endAn);
+			return this;
+		}
 
 		/**
 		 * 设置背景色
@@ -357,28 +378,7 @@ public class FragmentUtils {
 		}
 
 
-		/**
-		 * 设置Fragmnet 转场动画
-		 *
-		 * @param startAn
-		 * @param exitan
-		 * @return
-		 */
-		public FragmentResponse addAnim(@AnimRes @AnimatorRes int startAn, @AnimRes @AnimatorRes int
-				exitan) {
-			transaction.setCustomAnimations(startAn, exitan);
-			return this;
-		}
 
-		public FragmentResponse addAnimStart(@AnimRes @AnimatorRes int startAn) {
-			transaction.setCustomAnimations(startAn, 0);
-			return this;
-		}
-
-		public FragmentResponse addAnimEnd(@AnimRes @AnimatorRes int endAn) {
-			transaction.setCustomAnimations(0, endAn);
-			return this;
-		}
 
 		public void commit() {
 			transaction.commit();
