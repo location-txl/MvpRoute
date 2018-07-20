@@ -1,7 +1,9 @@
 package com.location.mvp.mvp_route_demo.adapter;
 
 import android.support.annotation.Nullable;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.bean.NoMessageBean;
 import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;
@@ -24,5 +26,6 @@ public class MessageAdapter extends BaseAdapter<NoMessageBean> {
 	@Override
 	public void conver(ViewHolder holder, @Nullable NoMessageBean data, int viewType) {
 		holder.setText(R.id.item_content, data.getName());
+		Glide.with(holder.getContext()).load("dsa").into(new ImageView(holder.getContext()));
 	}
 }

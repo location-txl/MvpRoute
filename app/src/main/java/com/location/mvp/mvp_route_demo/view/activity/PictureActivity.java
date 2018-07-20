@@ -14,6 +14,7 @@ import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
+import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ public class PictureActivity extends BaseActivity<PictureContract.Presenter> imp
         data = new ArrayList<>();
         adapter = new PictureAdapter(data, R.layout.item_picture, this);
         recyclerView.setAdapter(adapter);
+        
+
     }
 
     @Override
