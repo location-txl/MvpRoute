@@ -3,6 +3,7 @@ package com.location.mvp.mvp_route_demo;
 import android.app.Application;
 
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
+import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 /**
  * 项目名称: MvpRoute
@@ -20,7 +21,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         new RetrofitClient.Builder("http://www.baidu.com/").build().createApiService();
-
+        ToastUtils.init(this);
 
     }
 }

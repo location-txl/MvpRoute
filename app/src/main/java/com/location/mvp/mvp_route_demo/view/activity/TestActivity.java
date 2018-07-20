@@ -1,5 +1,6 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -29,10 +30,11 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 	@Override
 	public void onClick(View v) {
 		Bundle bundle = new Bundle();
-//		FragmentUtils instance = FragmentUtils.getInstance(this);
-		switch (v.getId()){
+		switch (v.getId()) {
 			case R.id.id_1:
-
+				Intent intent = new Intent();
+				setResult(RESULT_OK,intent);
+				finish();
 				break;
 			case R.id.id_2:
 				break;
@@ -40,7 +42,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 				break;
 			case R.id.id_4:
 				break;
-				default:
+			default:
 		}
 
 

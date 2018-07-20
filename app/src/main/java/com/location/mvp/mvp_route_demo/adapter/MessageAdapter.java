@@ -26,6 +26,6 @@ public class MessageAdapter extends BaseAdapter<NoMessageBean> {
 	@Override
 	public void conver(ViewHolder holder, @Nullable NoMessageBean data, int viewType) {
 		holder.setText(R.id.item_content, data.getName());
-	
+
 	}
 }
