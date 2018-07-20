@@ -4,6 +4,10 @@ import android.view.View;
 
 import java.util.Calendar;
 
+/**
+ * @author location
+ * 防止多次点击
+ */
 public abstract class OnNoDoubleClickListener implements View.OnClickListener {
 
 	public static final int MIN_CLICK_DELAY_TIME = 1000;

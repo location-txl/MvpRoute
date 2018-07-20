@@ -20,6 +20,7 @@ import com.location.mvp.mvproutelibrary.Base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 项目:Mvp_Route_Demo
@@ -196,8 +197,6 @@ public class FragmentUtils {
 	}
 
 
-
-
 	/**
 	 * 获取所有fragment  不会查询底部嵌套fragment
 	 *
@@ -340,7 +339,6 @@ public class FragmentUtils {
 
 		/**
 		 * 传递数据
-		 * 如果检测到Fragment已经创建则  不会传递数据
 		 *
 		 * @param bundle
 		 * @return
@@ -349,6 +347,11 @@ public class FragmentUtils {
 			if (!baseFragment.isAdded()) {
 				baseFragment.setArguments(bundle);
 			} else {
+				Bundle arguments = baseFragment.getArguments();
+				if (arguments != null) {
+					arguments.putAll(bundle);
+				}
+
 			}
 			return this;
 		}

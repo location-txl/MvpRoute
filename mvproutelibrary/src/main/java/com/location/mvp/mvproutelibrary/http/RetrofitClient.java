@@ -31,47 +31,47 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RetrofitClient {
-    public static final String HEADER_URL = "header_url";
-    public static final String DEFAULT_URL = "default";
-    private static final String TAG = "Retrofit";
+	public static final String HEADER_URL = "header_url";
+	public static final String DEFAULT_URL = "default";
+	private static final String TAG = "Retrofit";
 
 
-    private static RetrofitClient instance;
-    private Retrofit client;
+	private static RetrofitClient instance;
+	private Retrofit client;
 
-    private ApiService apiService;
+	private ApiService apiService;
 
 
-    @SuppressLint("NewApi")
-    private RetrofitClient(@NonNull String baseUrl, @NonNull final OkHttpClient.Builder
-            builder) {
-        builder.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-                HttpUrl oldUrl = request.url();
-                Request.Builder newBuilder = request.newBuilder();
-                List<String> headers = request.headers(HEADER_URL);
-                if (headers != null && !headers.isEmpty() && !DEFAULT_URL.equals(headers.get(0))) {
-                    newBuilder.removeHeader(HEADER_URL);
-                    String urlname = headers.get(0);
-                    HttpUrl httpUrl = HttpUrl.parse(urlname);
-                    HttpUrl newHttpurl = oldUrl.newBuilder()
-                            .scheme(httpUrl.scheme())
-                            .host(httpUrl.host())
-                            .port(httpUrl.port())
-                            .build();
-                    //TODO  需要解决
-                    String replace = newHttpurl.toString().replace("%2F", "/");
-                    newBuilder.url(replace);
-                    return chain.proceed(newBuilder.build());
-                } else {
-                    if (headers != null) newBuilder.removeHeader(HEADER_URL);
-                    return chain.proceed(newBuilder.build());
-                }
+	@SuppressLint("NewApi")
+	private RetrofitClient(@NonNull String baseUrl, @NonNull final OkHttpClient.Builder
+			builder) {
+		builder.addInterceptor(new Interceptor() {
+			@Override
+			public Response intercept(Chain chain) throws IOException {
+				Request request = chain.request();
+				HttpUrl oldUrl = request.url();
+				Request.Builder newBuilder = request.newBuilder();
+				List<String> headers = request.headers(HEADER_URL);
+				if (headers != null && !headers.isEmpty() && !DEFAULT_URL.equals(headers.get(0))) {
+					newBuilder.removeHeader(HEADER_URL);
+					String urlname = headers.get(0);
+					HttpUrl httpUrl = HttpUrl.parse(urlname);
+					HttpUrl newHttpurl = oldUrl.newBuilder()
+							.scheme(httpUrl.scheme())
+							.host(httpUrl.host())
+							.port(httpUrl.port())
+							.build();
+					//TODO  需要解决
+					String replace = newHttpurl.toString().replace("%2F", "/");
+					newBuilder.url(replace);
+					return chain.proceed(newBuilder.build());
+				} else {
+					if (headers != null) newBuilder.removeHeader(HEADER_URL);
+					return chain.proceed(newBuilder.build());
+				}
 
-            }
-        });
+			}
+		});
 //        builder.addInterceptor(new Interceptor() {
 //            @Override
 //            public Response intercept(Chain chain) throws IOException {
@@ -92,63 +92,64 @@ public class RetrofitClient {
 //                        .build();
 //            }
 //        });
-        client = new Retrofit.Builder()
-                .client(builder.build())
-                .baseUrl(baseUrl)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+		client = new Retrofit.Builder()
+				.client(builder.build())
+				.baseUrl(baseUrl)
+				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+				.addConverterFactory(GsonConverterFactory.create())
+				.build();
 
-    }
+	}
 
-    public static RetrofitClient getInstance() {
-        if (instance == null) {
-            throw new RuntimeException("you need initialize RetrofitClient");
-        }
-        return instance;
-    }
+	public static RetrofitClient getInstance() {
+		if (instance == null) {
+			throw new RuntimeException("you need initialize RetrofitClient");
+		}
+		return instance;
+	}
 
-    /**
-     * 设置内置Apiservice方法  只需要在app中国调用一次
-     */
-    public void createApiService() {
-        apiService = client.create(ApiService.class);
-    }
-
-
-    public @NonNull
-    ParamsBuilder get() {
-        return new ParamsBuilder(apiService, ParamsBuilder.METHOD_GET);
-    }
-
-    private static RetrofitClient getRetrofitClient(@NonNull String baseurl, @NonNull
-            OkHttpClient.Builder
-            builder) {
-        if (instance == null) {
-            synchronized (RetrofitClient.class) {
-                if (instance == null) {
-                    instance = new RetrofitClient(baseurl, builder);
-                }
-            }
-        }
-        return instance;
-    }
-
-    public <T> T createApi(Class<? extends T> clazz) {
-        return client.create(clazz);
-    }
+	/**
+	 * 设置内置Apiservice方法  只需要在app只需要调用一次
+	 */
+	public void createApiService() {
+		apiService = client.create(ApiService.class);
+	}
 
 
-    public static class Builder {
-        private OkHttpClient.Builder builder;
-        private String baseUrl;
+	public @NonNull
+	ParamsBuilder get() {
+		return new ParamsBuilder(apiService, ParamsBuilder.METHOD_GET);
+	}
 
-        public Builder(String baseurl) {
-            this.baseUrl = baseurl;
-            builder = new OkHttpClient.Builder();
-        }
-        public RetrofitClient build() {
-            return RetrofitClient.getRetrofitClient(baseUrl, builder);
-        }
-    }
+	private static RetrofitClient getRetrofitClient(@NonNull String baseurl, @NonNull
+			OkHttpClient.Builder
+			builder) {
+		if (instance == null) {
+			synchronized (RetrofitClient.class) {
+				if (instance == null) {
+					instance = new RetrofitClient(baseurl, builder);
+				}
+			}
+		}
+		return instance;
+	}
+
+	public <T> T createApi(Class<? extends T> clazz) {
+		return client.create(clazz);
+	}
+
+
+	public static class Builder {
+		private OkHttpClient.Builder builder;
+		private String baseUrl;
+
+		public Builder(String baseurl) {
+			this.baseUrl = baseurl;
+			builder = new OkHttpClient.Builder();
+		}
+
+		public RetrofitClient build() {
+			return RetrofitClient.getRetrofitClient(baseUrl, builder);
+		}
+	}
 }

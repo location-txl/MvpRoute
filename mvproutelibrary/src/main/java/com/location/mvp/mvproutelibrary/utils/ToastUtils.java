@@ -2,11 +2,7 @@ package com.location.mvp.mvproutelibrary.utils;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Toast;
-
-import com.location.mvp.mvproutelibrary.R;
 
 /**
  * 项目:Mvp_Route_Demo
@@ -18,7 +14,7 @@ import com.location.mvp.mvproutelibrary.R;
 public class ToastUtils {
 	private static Context context;
 	private static Toast toast;
-	private static final String error = "you need initialize ToastUtils in Application ";
+	private static final String ERROR = "you need initialize ToastUtils in Application ";
 
 	public static void init(Context context) {
 		ToastUtils.context = context;
@@ -37,7 +33,7 @@ public class ToastUtils {
 	}
 
 	public static void showShort(@StringRes int stringid) {
-		if(context==null)	throw new NullPointerException(error);
+		if(context==null)	throw new NullPointerException(ERROR);
 		show(context.getResources().getString(stringid),Toast.LENGTH_SHORT);
 	}
 
@@ -46,13 +42,13 @@ public class ToastUtils {
 
 	}
 	public static  void showLong(@StringRes int stringid){
-		if(context==null)	throw new NullPointerException(error);
+		if(context==null)	throw new NullPointerException(ERROR);
 		show(context.getResources().getString(stringid),Toast.LENGTH_LONG);
 
 	}
 	private static boolean init(String message,int duration) {
 		if (context == null) {
-			throw new NullPointerException(error);
+			throw new NullPointerException(ERROR);
 		}
 		if (toast == null) {
 			toast = Toast.makeText(context, message, duration);
