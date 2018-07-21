@@ -67,10 +67,10 @@ public class LogUtils {
     private static void log(int live, String tag, String message) {
         if (!islogcat) return;
         if (TextUtils.isEmpty(tag)) tag = getClassName();
-        if (isPrintLine) Log.println(live, tag, "--------------------------------------------");
-        if (isPrintClassName) Log.println(live, tag, callMethodAndLine());
+//        if (isPrintLine) Log.println(live, tag, "--------------------------------------------");
+//        if (isPrintClassName) Log.println(live, tag, callMethodAndLine());
         Log.println(live, tag, message);
-        if (isPrintLine) Log.println(live, tag, "--------------------------------------------");
+//        if (isPrintLine) Log.println(live, tag, "--------------------------------------------");
     }
 
 

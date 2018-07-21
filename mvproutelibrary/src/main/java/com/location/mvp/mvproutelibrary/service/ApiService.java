@@ -29,7 +29,11 @@ public interface ApiService {
             params, @HeaderMap Map<String,String> headers);
 
     @FormUrlEncoded
-    @POST("path")
+    @POST("{path}")
     Observable<ResponseBody> post(@Path("path") String pathurl, @FieldMap Map<String, String>
             params, @HeaderMap Map<String, String> headers);
+
+//    @Multipart
+//    @POST("{path}")
+//    Observable<ResponseBody>
 }

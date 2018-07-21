@@ -15,7 +15,6 @@ import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
@@ -348,7 +347,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	/**
 	 * 添加头布局 尾布局
 	 *
-	 * @param t      数据实体类
 	 * @param layout 头尾布局的layoutID
 	 */
 	public final void addHeaderView(Object data, @LayoutRes int layout) {

@@ -188,6 +188,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 			boolean isSuccful = request != null && request.request() == requestCode && (request.result() == -100 || (request.result() == resultCode));
 			if (isSuccful) {
 				try {
+					if(data==null){
+						data = new Intent();
+					}
 					declaredMethod.invoke(this, data);
 				} catch (IllegalAccessException e) {
 					LogUtils.d("error==>" + e.getMessage());
