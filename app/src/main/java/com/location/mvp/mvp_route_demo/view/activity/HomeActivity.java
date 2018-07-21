@@ -46,6 +46,7 @@ public class HomeActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration
                 .VERTICAL_LIST, 5, Color.parseColor("#999999")));
+
         homeAdapter = new HomeAdapter(R.layout.item_home);
         recyclerView.setAdapter(homeAdapter);
 

@@ -2,6 +2,7 @@ package com.location.mvp.mvp_route_demo.adapter;
 
 import android.support.annotation.Nullable;
 
+import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 
@@ -16,13 +17,15 @@ import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
  */
 
 
-public class HomeAdapter extends BaseAdapter<String>{
+public class HomeAdapter extends BaseAdapter<String> {
+
+
     public HomeAdapter(int layout) {
         super(layout);
     }
 
     @Override
     public void conver(ViewHolder holder, @Nullable String data, int viewType) {
-
+        holder.setText(R.id.home_text, data);
     }
 }
