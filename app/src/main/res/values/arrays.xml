@@ -8,5 +8,13 @@
 		<item>我的运动</item>
 		<item>关于我们</item>
 	</string-array>
+	<string-array name="home_list">
+<item>adapter</item>
+<item>FragmentUtils</item>
+<item>SpanUtils</item>
+<item>LogUtils</item>
+<item>SPutils</item>
+<item>Banner</item>
+	</string-array>
 
 </resources>
