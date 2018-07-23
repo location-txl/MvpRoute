@@ -11,6 +11,7 @@ import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.DividerItemDecoration;
+import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,43 +28,71 @@ import java.util.List;
 
 
 public class HomeActivity extends BaseActivity {
-    private RecyclerView recyclerView;
-    private HomeAdapter homeAdapter;
+	private RecyclerView recyclerView;
+	private HomeAdapter homeAdapter;
 
-    @Override
-    public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
+	@Override
+	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
 
-    }
+	}
 
-    @Override
-    protected int getLayout() {
-        return R.layout.activity_home;
-    }
+	@Override
+	protected int getLayout() {
+		return R.layout.activity_home;
+	}
 
-    @Override
-    protected void initView() {
-        recyclerView = findViewById(R.id.home_RecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration
-                .VERTICAL_LIST, 5, Color.parseColor("#999999")));
+	@Override
+	protected void initView() {
+		recyclerView = findViewById(R.id.home_RecyclerView);
+		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+		recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration
+				.VERTICAL_LIST, 5, Color.parseColor("#999999")));
 
-        homeAdapter = new HomeAdapter(R.layout.item_home);
-        recyclerView.setAdapter(homeAdapter);
+		homeAdapter = new HomeAdapter(R.layout.item_home);
+		recyclerView.setAdapter(homeAdapter);
 
-    }
+		FragmentUtils.
+				//activity 或者fragment  开启管理
+						getInstance(this)
+				//申明对哪个fragment做操作
+				.start(MyFragment.class)
+				//动画 可以不用
+//				.addAnim()
+				//显示到哪个布局上  内部做好了view的分发
+				.add(R.id.id_recyclerview)
+				//需要传数据
+//				.setBundle()
+				//回退栈
+//		        .addToBack()
+				//提交事务
+				.commit();
 
-    @Override
-    protected void loadData() {
-        String[] stringArray = getResources().getStringArray(R.array.home_list);
-        List<String> list = Arrays.asList(stringArray);
-        homeAdapter.refresh(list);
-    }
+		FragmentUtils
+				//上下文
+				.getInstance(this)
+				//隐藏的fragment
+				.hideFragmnet(MyFragment.class);
+		FragmentUtils
+				//上下文
+				.getInstance(this)
+				//隐藏的fragment  根据tag隐藏
+				.hideFragmnet("1321");
 
-    @NonNull
-    @Override
-    protected BasePresenter createPresenter() {
-        return null;
-    }
+
+	}
+
+	@Override
+	protected void loadData() {
+		String[] stringArray = getResources().getStringArray(R.array.home_list);
+		List<String> list = Arrays.asList(stringArray);
+		homeAdapter.refresh(list);
+	}
+
+	@NonNull
+	@Override
+	protected BasePresenter createPresenter() {
+		return null;
+	}
 
 
 }
