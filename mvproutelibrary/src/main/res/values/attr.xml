@@ -2,19 +2,29 @@
 <resources>
 
 	<declare-styleable name="BannerView">
+		<!--tab 之间的距离-->
 		<attr name="tab_margin" format="dimension" />
+		<!--指示器到下方的距离-->
 		<attr name="tab_bottom_margin" format="dimension" />
+		<!--动画轮播间隔时间 单位秒-->
 		<attr name="intervalTime" format="integer" />
+		<!--tab选择器 可以直接shape属性设置样式-->
 		<attr name="tab_select" format="reference" />
+		<!--是否自动轮播-->
 		<attr name="start_plary" format="boolean" />
+		<!--轮播页面切换的时间  单位毫秒-->
 		<attr name="viewpager_speed" format="integer" />
+		<!--指示器的宽度 高度-->
 		<attr name="tab_width" format="dimension" />
 		<attr name="tab_height" format="dimension" />
+		<attr name="nav_gravity">
+			<flag name="left" value="1" />
+			<flag name="right" value="2" />
+			<flag name="center" value="3" />
+		</attr>
 	</declare-styleable>
 
 
-	<attr name="horn_width" format="dimension" />
-	<attr name="horn_color" format="color"/>
 
 
 

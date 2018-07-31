@@ -2,7 +2,7 @@ package com.location.mvp.mvproutelibrary.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.media.Image;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
@@ -11,8 +11,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +24,9 @@ import com.location.mvp.mvproutelibrary.R;
 import com.location.mvp.mvproutelibrary.listener.OnNoDoubleClickListener;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observer;
@@ -38,7 +34,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 /**
- * 项目:Mvp_Route_Demo
+ * 项目:趣租部落
  * author：location
  * time：2018/6/6 18:31
  * description： 自定义轮播图 基于RxJava
@@ -94,10 +90,10 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 	/**
 	 * 绑定数据源
 	 */
-	private BinderViewAdapter binderViewAdapter;
+	private LoadImageListener loadImageListener;
 
-	public void setBinderViewAdapter(BinderViewAdapter binderViewAdapter) {
-		this.binderViewAdapter = binderViewAdapter;
+	public void setLoadImageListener(LoadImageListener loadImageListener) {
+		this.loadImageListener = loadImageListener;
 	}
 
 	private BannerOnItemClickListener onItemClickListener;
@@ -159,6 +155,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 			intervalTime = typedArray.getInt(R.styleable.BannerView_intervalTime, DEFAULT_INTERVATIME);
 			tabWidth = typedArray.getDimensionPixelSize(R.styleable.BannerView_tab_width, DEFAULT_TAB_WIDTH);
 			tabHeight = typedArray.getDimensionPixelSize(R.styleable.BannerView_tab_height, DEFAULT_TAB_HEIGHT);
+
 		} finally {
 			typedArray.recycle();
 		}
@@ -167,26 +164,31 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 		viewpager = new ViewPager(context);
 		//设置viewpager的切换时间  默认切换时间为1000 单位毫秒
 		setPageChangeDuration(speed);
+		//设置viewpager的页面切换监听
 		viewpager.addOnPageChangeListener(this);
 		viewpager.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+		//添加view
 		addView(viewpager);
+		//创建指示器控件
 		radioGroup = new RadioGroup(context);
 		radioGroup.setOrientation(RadioGroup.HORIZONTAL);
 		LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		//设置下方偏移量
 		params.setMargins(0, 0, 0, tabBottomMargin);
+		//设置相对属性
 		params.addRule(RelativeLayout.CENTER_HORIZONTAL);
 		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		radioGroup.setLayoutParams(params);
 		addView(radioGroup);
 	}
 
-	public void setData(List<String> datas) {
+	public void setData(List datas) {
 		radioGroup.removeAllViews();
 		imgs.clear();
 		int length = datas.size();
 		for (int i = 0; i < length; i++) {
-			String url = datas.get(i);
-			RadioButton radioButton = instData(length, i, url);
+			//这里初始化适配器 初始化指示器  构造view
+			RadioButton radioButton = initData(length, i, datas.get(i));
 			radioGroup.addView(radioButton);
 		}
 		bannerAdapter = new BannerAdapter(imgs);
@@ -198,12 +200,12 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 	}
 
 	@NonNull
-	private RadioButton instData(int length, int i, String url) {
+	private RadioButton initData(int length, int i, Object imagepath) {
 		View view = null;
-		if (binderViewAdapter == null) {
-			view = getDefaultView(url);
+		if (loadImageListener == null) {
+			view = getDefaultView(imagepath);
 		} else {
-			view = binderViewAdapter.onBindView(viewpager, getView(), url, i);
+			view = loadImageListener.onLoadImageListener(viewpager, getView(), imagepath);
 		}
 		if (onItemClickListener != null) {
 			final int finalI = i;
@@ -232,16 +234,32 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 		return radioButton;
 	}
 
+	/**
+	 * 支持类型 url Integer bitmap
+	 *
+	 * @param imagePath
+	 * @return
+	 */
 	@NonNull
-	private ImageView getDefaultView(String url) {
+	private ImageView getDefaultView(Object imagePath) {
 		final ImageView imageView = getView();
-		imageView.setImageURI(Uri.parse(url));
+		if (imagePath instanceof String) {
+			imageView.setImageURI(Uri.parse((String) imagePath));
+		}
+		if (imagePath instanceof Integer) {
+			imageView.setImageResource((Integer) imagePath);
+		}
+
+		if (imagePath instanceof Bitmap) {
+			imageView.setImageBitmap((Bitmap) imagePath);
+		}
 		return imageView;
 	}
 
 
 	private ImageView getView() {
 		ImageView imageView = new ImageView(context);
+		imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		return imageView;
 	}
@@ -269,6 +287,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 
 					@Override
 					public void onNext(Long value) {
+						//重新设置指示器未知
 						int currentItem = viewpager.getCurrentItem();
 						viewpager.setCurrentItem(currentItem + 1);
 					}
@@ -284,29 +303,6 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 					}
 				});
 
-	}
-
-	/**
-	 * 这里可以直接传实体类的集合 在对应的回调里面返回String类型
-	 *
-	 * @param datas
-	 * @param listener
-	 * @param <T>
-	 */
-	public <T> void setData(List<T> datas, DataListener<T> listener) {
-
-		int length = datas.size();
-		for (int i = 0; i < length; i++) {
-			String data = listener.setDataListener(datas.get(i));
-			RadioButton radioButton = instData(length, i, data);
-			radioGroup.addView(radioButton);
-		}
-		bannerAdapter = new BannerAdapter(imgs);
-		viewpager.setAdapter(bannerAdapter);
-		viewpager.setCurrentItem(DEFAULT_NUMBER / 2);
-		if (isPlayStart) {
-			startPlay();
-		}
 	}
 
 
@@ -342,6 +338,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 			e.printStackTrace();
 		}
 	}
+
 
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -395,10 +392,6 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 		}
 	}
 
-	interface DataListener<T> {
-		String setDataListener(T data);
-	}
-
 
 	class BannerScroller extends Scroller {
 		private int mDuration = 1000;
@@ -424,8 +417,16 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 		void onItemClickListener(View view, int position);
 	}
 
-	public interface BinderViewAdapter {
-		View onBindView(ViewGroup parent, View view, String url, int position);
+	public interface LoadImageListener {
+		/**
+		 * 设置图片加载器
+		 *
+		 * @param parent    父布局  这里默认是viewpager
+		 * @param imageView 默认的imageview
+		 * @param url       这里强转成你自己的url
+		 * @return
+		 */
+		View onLoadImageListener(ViewGroup parent, ImageView imageView, Object url);
 	}
 
 }
