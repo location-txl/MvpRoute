@@ -3,6 +3,7 @@ package com.location.mvp.mvproutelibrary.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
@@ -11,6 +12,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
+import android.widget.TextView;
 
 import com.location.mvp.mvproutelibrary.R;
 import com.location.mvp.mvproutelibrary.listener.OnNoDoubleClickListener;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -34,13 +38,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 /**
- * 项目:趣租部落
+ * 项目:Mvp_Route_Demo
  * author：location
  * time：2018/6/6 18:31
  * description： 自定义轮播图 基于RxJava
  * 默认轮播图标志位在中间  查看此方法 @see {@link #BannerView(Context, AttributeSet, int)}
  * 需要设定其他位置的需要自己编写对外方法提供位置
  * 下方table是使用的radiobutton
+ *
+ * 7/31 添加  banner标题方法  注释setTitles()方法
+ * 维护2x
  */
 
 public class BannerView extends RelativeLayout implements ViewPager.OnPageChangeListener {
@@ -81,6 +88,8 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 
 	private LinkedList<View> imgs;
 
+	private LinkedList<String> titles;
+
 	private BannerAdapter bannerAdapter;
 	private Disposable disposable;
 	private int tabMargin;
@@ -91,6 +100,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 	 * 绑定数据源
 	 */
 	private LoadImageListener loadImageListener;
+	private TextView textView;
 
 	public void setLoadImageListener(LoadImageListener loadImageListener) {
 		this.loadImageListener = loadImageListener;
@@ -155,12 +165,16 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 			intervalTime = typedArray.getInt(R.styleable.BannerView_intervalTime, DEFAULT_INTERVATIME);
 			tabWidth = typedArray.getDimensionPixelSize(R.styleable.BannerView_tab_width, DEFAULT_TAB_WIDTH);
 			tabHeight = typedArray.getDimensionPixelSize(R.styleable.BannerView_tab_height, DEFAULT_TAB_HEIGHT);
+//			int type = typedArray.get(R.styleable.BannerView_nav_gravity,);
+//			LogUtils.d("type==>" + type);
 
 		} finally {
 			typedArray.recycle();
 		}
 
 		imgs = new LinkedList<>();
+		titles = new LinkedList<>();
+
 		viewpager = new ViewPager(context);
 		//设置viewpager的切换时间  默认切换时间为1000 单位毫秒
 		setPageChangeDuration(speed);
@@ -182,15 +196,40 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 		addView(radioGroup);
 	}
 
+//
+//	public void setTitles(Collection<String> title) {
+//		titles.clear();
+//		titles.addAll(title);
+//	}
+
 	public void setData(List datas) {
 		radioGroup.removeAllViews();
 		imgs.clear();
 		int length = datas.size();
-		for (int i = 0; i < length; i++) {
-			//这里初始化适配器 初始化指示器  构造view
-			RadioButton radioButton = initData(length, i, datas.get(i));
-			radioGroup.addView(radioButton);
+		if (!titles.isEmpty()) {
+			removeView(radioGroup);
+			textView = new TextView(context);
+			LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
+			params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+			textView.setLayoutParams(params);
+			textView.setGravity(Gravity.CENTER_VERTICAL);
+			textView.setPadding(5, 5, 5, 5);
+			textView.setTextColor(Color.WHITE);
+			textView.setBackgroundColor(Color.parseColor("#4d000000"));
+			addView(textView);
+			LogUtils.d("添加数据源");
+			for (int i = 0; i < length; i++) {
+				initImageView(i, datas.get(i));
+			}
+
+		} else {
+			for (int i = 0; i < length; i++) {
+				//这里初始化适配器 初始化指示器  构造view
+				RadioButton radioButton = initData(length, i, datas.get(i));
+				radioGroup.addView(radioButton);
+			}
 		}
+
 		bannerAdapter = new BannerAdapter(imgs);
 		viewpager.setAdapter(bannerAdapter);
 		viewpager.setCurrentItem(DEFAULT_NUMBER / 2);
@@ -201,6 +240,23 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 
 	@NonNull
 	private RadioButton initData(int length, int i, Object imagepath) {
+		initImageView(i, imagepath);
+		RadioButton radioButton = new RadioButton(context);
+		if (selectTab != 0) {
+			radioButton.setBackgroundResource(selectTab);
+			radioButton.setButtonDrawable(context.getResources().getDrawable(android.R.color.transparent));
+		}
+		RadioGroup.LayoutParams buttonParams = new RadioGroup.LayoutParams(tabWidth, tabHeight);
+		if (i != length - 1) {
+			buttonParams.setMargins(0, 0, tabMargin, 0);
+		}
+		radioButton.setLayoutParams(buttonParams);
+		radioButton.setId(i);
+		if (i == 0) radioButton.setChecked(true);
+		return radioButton;
+	}
+
+	private void initImageView(int i, Object imagepath) {
 		View view = null;
 		if (loadImageListener == null) {
 			view = getDefaultView(imagepath);
@@ -219,19 +275,6 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 		}
 
 		imgs.add(view);
-		RadioButton radioButton = new RadioButton(context);
-		if (selectTab != 0) {
-			radioButton.setBackgroundResource(selectTab);
-			radioButton.setButtonDrawable(context.getResources().getDrawable(android.R.color.transparent));
-		}
-		RadioGroup.LayoutParams buttonParams = new RadioGroup.LayoutParams(tabWidth, tabHeight);
-		if (i != length - 1) {
-			buttonParams.setMargins(0, 0, tabMargin, 0);
-		}
-		radioButton.setLayoutParams(buttonParams);
-		radioButton.setId(i);
-		if (i == 0) radioButton.setChecked(true);
-		return radioButton;
 	}
 
 	/**
@@ -314,8 +357,14 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 	@Override
 	public void onPageSelected(int position) {
 		int index = position % imgs.size();
-		RadioButton childAt = (RadioButton) radioGroup.getChildAt(index);
-		childAt.setChecked(true);
+		if (!titles.isEmpty()) {
+			textView.setText(titles.get(index));
+
+		} else {
+
+			RadioButton childAt = (RadioButton) radioGroup.getChildAt(index);
+			childAt.setChecked(true);
+		}
 	}
 
 	@Override
@@ -413,7 +462,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 	}
 
 
-	interface BannerOnItemClickListener {
+	public interface BannerOnItemClickListener {
 		void onItemClickListener(View view, int position);
 	}
 

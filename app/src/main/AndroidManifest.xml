@@ -29,6 +29,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.TestActivity"/>
+        <activity android:name=".view.activity.ResultActivity"/>
+        <activity android:name=".view.activity.BackActivity"/>
     </application>
 
 </manifest>

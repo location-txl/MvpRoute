@@ -1,17 +1,22 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.HomeAdapter;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
+import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
+import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.DividerItemDecoration;
 import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +32,7 @@ import java.util.List;
  */
 
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements OnItemClickListener {
 	private RecyclerView recyclerView;
 	private HomeAdapter homeAdapter;
 
@@ -50,33 +55,7 @@ public class HomeActivity extends BaseActivity {
 
 		homeAdapter = new HomeAdapter(R.layout.item_home);
 		recyclerView.setAdapter(homeAdapter);
-
-		FragmentUtils.
-				//activity 或者fragment  开启管理
-						getInstance(this)
-				//申明对哪个fragment做操作
-				.start(MyFragment.class)
-				//动画 可以不用
-//				.addAnim()
-				//显示到哪个布局上  内部做好了view的分发
-				.add(R.id.id_recyclerview)
-				//需要传数据
-//				.setBundle()
-				//回退栈
-//		        .addToBack()
-				//提交事务
-				.commit();
-
-		FragmentUtils
-				//上下文
-				.getInstance(this)
-				//隐藏的fragment
-				.hideFragmnet(MyFragment.class);
-		FragmentUtils
-				//上下文
-				.getInstance(this)
-				//隐藏的fragment  根据tag隐藏
-				.hideFragmnet("1321");
+		homeAdapter.setOnItemClickListener(this);
 
 
 	}
@@ -95,4 +74,21 @@ public class HomeActivity extends BaseActivity {
 	}
 
 
+	@Override
+	public void onItemClick(ViewHolder viewHolder, View view, int position) {
+		switch (position) {
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 6:
+				//activity回传分发
+				startActivity(new Intent(this, ResultActivity.class));
+				break;
+			default:
+				LogUtils.d("未知");
+		}
+	}
 }

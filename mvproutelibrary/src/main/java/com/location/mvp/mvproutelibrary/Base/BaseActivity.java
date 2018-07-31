@@ -19,6 +19,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 项目名称: MvpRoute
@@ -34,6 +37,10 @@ import java.lang.reflect.Method;
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
 	protected T presenter;
 	protected final String TAG = getClass().getSimpleName();
+
+	public static final String EXERA_RESULT = "result";
+
+	public static final String EXERA_REQUEST = "request";
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -175,22 +182,32 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 	public @interface Request {
 		int request();
 
-		int result() default -100;
+		int[] result() default {-1};
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		Class<? extends BaseActivity> aClass = getClass();
+
 		Method[] declaredMethods = aClass.getDeclaredMethods();
 		for (Method declaredMethod : declaredMethods) {
 			Request request = declaredMethod.getAnnotation(Request.class);
-			boolean isSuccful = request != null && request.request() == requestCode && (request.result() == -100 || (request.result() == resultCode));
+			List<Integer> results = new ArrayList<>();
+			if (request != null) {
+				for (int i : request.result()) {
+					results.add(i);
+				}
+			}
+			boolean isSuccful = request != null && request.request() == requestCode && (request.result()[0] == -1 || (results.contains(resultCode)));
 			if (isSuccful) {
+				declaredMethod.setAccessible(true);
 				try {
-					if(data==null){
+					if (data == null) {
 						data = new Intent();
 					}
+					data.putExtra(EXERA_REQUEST, requestCode);
+					data.putExtra(EXERA_RESULT, resultCode);
 					declaredMethod.invoke(this, data);
 				} catch (IllegalAccessException e) {
 					LogUtils.d("error==>" + e.getMessage());
