@@ -7,13 +7,104 @@
 	<include layout="@layout/baseview" />
 
 	<TextView
-		android:layout_width="wrap_content"
+		android:id="@+id/span_max_size"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="滑动以调整大小" />
+		android:layout_marginTop="5dp"
+		android:gravity="center_horizontal"
+		android:text="滑动以调整大小"
+		android:textColor="@color/black"
+		android:textSize="16sp" />
 
 	<SeekBar
 		android:id="@+id/span_seekbar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
 		android:max="100" />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="5dp"
+		android:orientation="horizontal"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp">
+
+		<TextView
+			android:id="@+id/span_text_back"
+			style="@style/textStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="设置某段文字背景色" />
+
+		<Button
+			android:id="@+id/span_color_click"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="10dp"
+			android:text="随机更改颜色" />
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/span_color_text"
+		style="@style/textStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="15dp"
+		android:text="@string/span_forget_text" />
+
+	<TextView
+		style="@style/textStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:paddingLeft="15dp"
+		android:text="也支持设置删除线 下划线  粗体分割" />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="15dp"
+		android:orientation="horizontal"
+		android:paddingLeft="15dp">
+
+		<TextView
+			android:id="@+id/span_style_one"
+			style="@style/textStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="下划线" />
+
+		<TextView
+			android:id="@+id/span_style_two"
+			style="@style/textStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="15dp"
+			android:text="删除线" />
+
+		<TextView
+			android:id="@+id/span_style_three"
+			style="@style/textStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="15dp"
+			android:text="粗体" />
+	</LinearLayout>
+
+	<TextView
+		android:paddingLeft="15dp"
+		android:text="可以分文字设置不同的点击事件"
+		style="@style/textStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+	<TextView
+		style="@style/textStyle"
+		android:paddingLeft="15dp"
+		android:layout_marginTop="5dp"
+		android:id="@+id/span_text_clcik"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="西游记和水浒传" />
 </LinearLayout>

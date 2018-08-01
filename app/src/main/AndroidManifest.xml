@@ -31,6 +31,7 @@
         <activity android:name=".view.activity.TestActivity"/>
         <activity android:name=".view.activity.ResultActivity"/>
         <activity android:name=".view.activity.BackActivity"/>
+        <activity android:name=".view.activity.SpanActivity"/>
     </application>
 
 </manifest>

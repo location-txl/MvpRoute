@@ -14,11 +14,22 @@ public interface SpanContract {
 	public interface View extends BaseView {
 		void showMaxText(CharSequence charSequence);
 
+		void showBackText(CharSequence charSequence);
+
+		void showColorText(CharSequence charSequence);
+
+		void showClickText(CharSequence charSequence);
 	}
 
 	public abstract class Presenter extends BasePresenter<View> {
 		public abstract void setMaxtext(String message,float textsize);
 
+		public abstract int randomColor();
 
+		public abstract void setBackTextColor(String message);
+
+		public abstract void setForgetTextColor(String message);
+
+		public abstract  void setSpanClick(String message);
 	}
 }

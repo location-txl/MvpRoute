@@ -83,7 +83,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener {
 				break;
 			case 2:
 				//Spanutils
-
+startActivity(SpanActivity.class);
 				break;
 			case 6:
 				//activity回传分发

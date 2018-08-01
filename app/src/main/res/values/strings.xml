@@ -3,5 +3,6 @@
 
 	<string name="result_since">MvpRoute简化对于Activity,Fragment中跳转回传所需要的一切switch判断
     使用Mvproute自带的Request注解一行代码实现回传自动分发 减少代码冗余量</string>
+	<string name="span_forget_text">或者某段文字颜色为红色</string>
 
 </resources>
