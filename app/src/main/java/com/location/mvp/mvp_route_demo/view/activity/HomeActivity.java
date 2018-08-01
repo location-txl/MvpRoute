@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.HomeAdapter;
+import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
@@ -32,7 +33,7 @@ import java.util.List;
  */
 
 
-public class HomeActivity extends BaseActivity implements OnItemClickListener {
+public class HomeActivity extends BaseToActivity implements OnItemClickListener {
 	private RecyclerView recyclerView;
 	private HomeAdapter homeAdapter;
 
@@ -47,7 +48,13 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener {
 	}
 
 	@Override
+	protected String getTooBarTitle() {
+		return "Mvproute简易的项目框架";
+	}
+
+	@Override
 	protected void initView() {
+		super.initView();
 		recyclerView = findViewById(R.id.home_RecyclerView);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration
@@ -83,7 +90,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener {
 				break;
 			case 2:
 				//Spanutils
-startActivity(SpanActivity.class);
+				startActivity(SpanActivity.class);
 				break;
 			case 6:
 				//activity回传分发

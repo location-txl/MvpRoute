@@ -12,7 +12,7 @@
 		<item>adapter</item>
 		<item>FragmentUtils</item>
 		<item>SpanUtils</item>
-		<item>LogUtils</item>
+		<item>BobPopWindow</item>
 		<item>SPutils</item>
 		<item>Banner</item>
 		<item>自动分发onActivityResult</item>
