@@ -1,6 +1,7 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
 import android.support.annotation.CallSuper;
+import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.IntRange;
@@ -16,13 +17,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.location.mvp.mvproutelibrary.R;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 项目名称: MvpRoute
@@ -116,7 +123,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		this(null, layout, null);
 	}
 
-	public BaseAdapter(Collection<T> data, @LayoutRes  int layout) {
+	public BaseAdapter(Collection<T> data, @LayoutRes int layout) {
 		this(data, layout, null);
 	}
 
@@ -214,6 +221,62 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		return holder;
 	}
 
+	/**
+	 * 更新头布局内容
+	 *
+	 * @param data    数据源
+	 * @param layouts 刷新的头布局id
+	 */
+	public void updateHeader(Object data, @LayoutRes int layouts) {
+		updateHeader(Collections.singletonList(data), layouts, 0);
+	}
+
+	/**
+	 * 如果有多个相同的头布局 更新头布局内容
+	 * 如果  数据集合和布局索引个数不匹配  将不会刷新布局
+	 *
+	 * @param datas   数据集合
+	 * @param layouts 布局
+	 * @param index   布局索引 相对于布局
+	 */
+	public void updateHeader(List datas, @LayoutRes int layouts, @IntRange(to = 0) Integer... index) {
+		refreshHeader(datas, layouts, index);
+	}
+
+
+	public void updateAllHeader(List datas, @LayoutRes int layouts) {
+		refreshHeader(datas, layouts, null);
+	}
+
+	private void refreshHeader(List datas, @LayoutRes int layouts, Integer[] index) {
+		if(index==null)
+		if (datas.size() != index.length) {
+			return;
+		}
+		Iterator<Object> dataiter = datas.iterator();
+		List<Integer> indexs = new ArrayList<>();
+		indexs.addAll(Arrays.asList(index));
+		Collections.sort(indexs);
+		Iterator<Integer> iterator = indexs.iterator();
+		int indexHeader = iterator.next();
+		int count = headerList.size();
+		int headerIndex = 0;
+		for (int i = 0; i < count; i++) {
+			DataBean dataBean = headerList.get(i);
+			if (dataBean.getLayout() == layouts && headerIndex == indexHeader) {
+				headerIndex++;
+				dataBean.setResponse(dataiter.next());
+				notifyItemChanged(i);
+				if (!iterator.hasNext()) {
+					return;
+				} else {
+					indexHeader = iterator.next();
+				}
+			} else if (dataBean.getLayout() == layouts) {
+				headerIndex++;
+			}
+		}
+	}
 
 	/**
 	 * @param holder

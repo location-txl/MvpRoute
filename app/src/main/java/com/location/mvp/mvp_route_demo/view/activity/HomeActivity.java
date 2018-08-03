@@ -10,6 +10,7 @@ import android.view.View;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.HomeAdapter;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
+import com.location.mvp.mvp_route_demo.view.activity.adapteractivity.HomeAdaptrActivity;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
@@ -85,6 +86,7 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 	public void onItemClick(ViewHolder viewHolder, View view, int position) {
 		switch (position) {
 			case 0:
+				startActivity(HomeAdaptrActivity.class);
 				break;
 			case 1:
 				break;

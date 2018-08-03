@@ -32,6 +32,7 @@
         <activity android:name=".view.activity.ResultActivity"/>
         <activity android:name=".view.activity.BackActivity"/>
         <activity android:name=".view.activity.SpanActivity"/>
+        <activity android:name=".view.activity.adapteractivity.HomeAdaptrActivity"/>
     </application>
 
 </manifest>
