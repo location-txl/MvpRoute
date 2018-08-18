@@ -9,14 +9,13 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.View;
 
-import com.location.mvp.mvproutelibrary.Base.BaseActivity;
-import com.location.mvp.mvproutelibrary.Base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class FragmentUtils {
 	 * 键值对  key----布局id
 	 * value---fragment
 	 */
-	private SparseArray<BaseFragment> sparseIntArray;
+	private SparseArray<Fragment> sparseIntArray;
 
 
 	private String simpleName;
@@ -51,7 +50,7 @@ public class FragmentUtils {
 
 	private FragmentTransaction transaction;
 
-	private BaseFragment baseFragment;
+	private Fragment baseFragment;
 
 
 	private @IdRes
@@ -68,7 +67,7 @@ public class FragmentUtils {
 	 * @param activity
 	 * @return
 	 */
-	public static FragmentUtils getInstance(BaseActivity activity) {
+	public static FragmentUtils getInstance(FragmentActivity activity) {
 		newInstance();
 		fragmentManager = activity.getSupportFragmentManager();
 		return instance;
@@ -80,7 +79,7 @@ public class FragmentUtils {
 	 * @param fragment
 	 * @return
 	 */
-	public static FragmentUtils getInstance(BaseFragment fragment) {
+	public static FragmentUtils getInstance(Fragment fragment) {
 		newInstance();
 		fragmentManager = fragment.getChildFragmentManager();
 		return instance;
@@ -93,10 +92,10 @@ public class FragmentUtils {
 	 * @param clazz
 	 * @return
 	 */
-	public FragmentWrapper start(Class<? extends BaseFragment> clazz) {
+	public FragmentWrapper start(Class<? extends Fragment> clazz) {
 		transaction = fragmentManager.beginTransaction();
 		simpleName = clazz.getSimpleName();
-		baseFragment = (BaseFragment) fragmentManager.findFragmentByTag(simpleName);
+		baseFragment =  fragmentManager.findFragmentByTag(simpleName);
 		if (baseFragment == null) {
 			try {
 				baseFragment = clazz.newInstance();
@@ -115,14 +114,14 @@ public class FragmentUtils {
 	 * @param clazz
 	 * @return
 	 */
-	public FragmentWrapper start(Class<? extends BaseFragment> clazz, String tag) {
+	public FragmentWrapper start(Class<? extends Fragment> clazz, String tag) {
 		transaction = fragmentManager.beginTransaction();
 		if (TextUtils.isEmpty(tag)) {
 			simpleName = clazz.getSimpleName();
 		} else {
 			simpleName = tag;
 		}
-		baseFragment = (BaseFragment) fragmentManager.findFragmentByTag(simpleName);
+		baseFragment =  fragmentManager.findFragmentByTag(simpleName);
 		if (baseFragment == null) {
 			try {
 				baseFragment = clazz.newInstance();
@@ -141,7 +140,7 @@ public class FragmentUtils {
 	 *
 	 * @param clazz 取类名作为tag
 	 */
-	public void hideFragmnet(Class<? extends BaseFragment> clazz) {
+	public void hideFragmnet(Class<? extends Fragment> clazz) {
 		transaction = fragmentManager.beginTransaction();
 		if (fragmentManager.findFragmentByTag(clazz.getSimpleName()) != null) {
 			transaction.hide(fragmentManager.findFragmentByTag(clazz.getSimpleName()));
@@ -165,7 +164,7 @@ public class FragmentUtils {
 	 *
 	 * @param clazz
 	 */
-	public void showFragment(Class<? extends BaseFragment> clazz) {
+	public void showFragment(Class<? extends Fragment> clazz) {
 		transaction = fragmentManager.beginTransaction();
 		if (fragmentManager.findFragmentByTag(clazz.getSimpleName()) != null) {
 			transaction.show(fragmentManager.findFragmentByTag(clazz.getSimpleName()));
@@ -191,7 +190,7 @@ public class FragmentUtils {
 	 * @param <T>
 	 * @return
 	 */
-	public <T extends BaseFragment> T findFragment(Class<? extends T> clazz) {
+	public <T extends Fragment> T findFragment(Class<? extends T> clazz) {
 
 		return (T) fragmentManager.findFragmentByTag(clazz.getSimpleName());
 	}
@@ -245,7 +244,7 @@ public class FragmentUtils {
 	 * @param <T>
 	 * @return
 	 */
-	public <T extends BaseFragment> T findFragment(String tag) {
+	public <T extends Fragment> T findFragment(String tag) {
 		return (T) fragmentManager.findFragmentByTag(tag);
 	}
 

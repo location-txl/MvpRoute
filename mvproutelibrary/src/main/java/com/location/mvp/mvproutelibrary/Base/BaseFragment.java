@@ -1,6 +1,7 @@
 package com.location.mvp.mvproutelibrary.Base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -13,6 +14,15 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.location.mvp.mvproutelibrary.utils.KeyBoardUtils;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_REQUEST;
+import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_RESULT;
 
 /**
  * 项目名称: MvpRoute
@@ -214,5 +224,40 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 		}
 	}
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		Class<? extends BaseFragment> aClass = getClass();
 
+		Method[] declaredMethods = aClass.getDeclaredMethods();
+		for (Method declaredMethod : declaredMethods) {
+			Request request = declaredMethod.getAnnotation(Request.class);
+			List<Integer> results = new ArrayList<>();
+			if (request != null) {
+				for (int i : request.result()) {
+					results.add(i);
+				}
+			}
+			boolean isSuccful = request != null && request.request() == requestCode && (request.result()[0] == -1 || (results.contains(resultCode)));
+			if (isSuccful) {
+				declaredMethod.setAccessible(true);
+				try {
+					if (data == null) {
+						data = new Intent();
+					}
+					data.putExtra(EXERA_REQUEST, requestCode);
+					data.putExtra(EXERA_RESULT, resultCode);
+					declaredMethod.invoke(this, data);
+				} catch (IllegalAccessException e) {
+					LogUtils.d("error==>" + e.getMessage());
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					LogUtils.d("InvocationTargetException==>" + e.getTargetException().getMessage());
+					e.printStackTrace();
+				}
+				return;
+			}
+
+		}
+	}
 }

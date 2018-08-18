@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_REQUEST;
+import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_RESULT;
+
 /**
  * 项目名称: MvpRoute
  * 类描述:
@@ -38,9 +41,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 	protected T presenter;
 	protected final String TAG = getClass().getSimpleName();
 
-	public static final String EXERA_RESULT = "result";
 
-	public static final String EXERA_REQUEST = "request";
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -177,13 +178,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 		void onHideKeyBord();
 	}
 
-	@Retention(RetentionPolicy.RUNTIME)
-	@Target(ElementType.METHOD)
-	public @interface Request {
-		int request();
 
-		int[] result() default {-1};
-	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
