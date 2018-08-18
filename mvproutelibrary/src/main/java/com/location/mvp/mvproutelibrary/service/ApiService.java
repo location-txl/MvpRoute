@@ -3,12 +3,15 @@ package com.location.mvp.mvproutelibrary.service;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 
@@ -25,11 +28,16 @@ import retrofit2.http.QueryMap;
 
 public interface ApiService {
     @GET("{path}")
-    Observable<ResponseBody> get(@Path("path") String pathurl, @QueryMap Map<String,String>
-            params, @HeaderMap Map<String,String> headers);
+    Observable<ResponseBody> get(@Path("path") String pathurl, @QueryMap Map<String, String>
+            params, @HeaderMap Map<String, String> headers);
 
     @FormUrlEncoded
-    @POST("path")
+    @POST("{path}")
     Observable<ResponseBody> post(@Path("path") String pathurl, @FieldMap Map<String, String>
+            params, @HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @POST("{path}")
+    Observable<ResponseBody> upload(@Path("path") String pathurl, @PartMap Map<String, RequestBody>
             params, @HeaderMap Map<String, String> headers);
 }

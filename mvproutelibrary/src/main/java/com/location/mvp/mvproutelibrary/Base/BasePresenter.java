@@ -21,6 +21,7 @@ public abstract class BasePresenter<T extends BaseView> {
 
 	protected void unRegist() {
 		rxManager.clear();
+		view = null;
 	}
 
 	protected void regist(T view) {

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+	android:orientation="vertical"
+	android:layout_height="match_parent">
+	<include layout="@layout/baseview"/>
+<Button
+	android:text="更换头布局"
+	android:id="@+id/test_clcik"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" />
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/home_adapter_recyclerView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+</LinearLayout>

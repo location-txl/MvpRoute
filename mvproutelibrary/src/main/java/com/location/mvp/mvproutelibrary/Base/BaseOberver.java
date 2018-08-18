@@ -1,7 +1,5 @@
 package com.location.mvp.mvproutelibrary.Base;
 
-import android.util.Log;
-
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.manager.RxManager;
 
@@ -31,6 +29,9 @@ public abstract class BaseOberver<T> implements Observer<T> {
     @Override
     public void onSubscribe(Disposable d) {
         rxManager.add(d);
+        if(baseView instanceof BaseActivity && ((BaseActivity) baseView).isFinishing()){
+            rxManager.clear();
+        }
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.location.mvp.mvp_route_demo.adapter.MessageAdapter;
 import com.location.mvp.mvp_route_demo.bean.NoMessageBean;
 import com.location.mvp.mvproutelibrary.adapter.OnChildClickListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
+import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class DataActivity extends AppCompatActivity implements OnChildClickListe
 			data.add(new NoMessageBean("测试" + i, i));
 		}
 		adapter.refresh(data);
+
 	}
 
 	/**

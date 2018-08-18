@@ -11,11 +11,11 @@ import android.util.Log;
  */
 
 public class LogUtils {
-    public static final int LIVE_V = Log.VERBOSE;
-    public static final int LIVE_D = Log.DEBUG;
-    public static final int LIVE_I = Log.INFO;
-    public static final int LIVE_W = Log.WARN;
-    public static final int LIVE_E = Log.ERROR;
+    private static final int LIVE_V = Log.VERBOSE;
+    private static final int LIVE_D = Log.DEBUG;
+    private static final int LIVE_I = Log.INFO;
+    private static final int LIVE_W = Log.WARN;
+    private static final int LIVE_E = Log.ERROR;
 
 
     private static boolean islogcat = true;
@@ -85,27 +85,27 @@ public class LogUtils {
 
 
     private static String callMethodAndLine() {
-        String result = "at ";
+        String result = "at .";
         StackTraceElement thisMethodStack = (new Exception()).getStackTrace()[3];
-        result += thisMethodStack.getClassName() + ".";
+//        result += thisMethodStack.getClassName().lastIndexOf(".",1) + ".";
         result += thisMethodStack.getMethodName();
         result += "(" + thisMethodStack.getFileName();
         result += ":" + thisMethodStack.getLineNumber() + ")  ";
         return result;
     }
 
-    public static class Builder {
-        public Builder setisLogcat(boolean isLocat) {
+    public static class LogUtilsBuilder {
+        public LogUtilsBuilder setisLogcat(boolean isLocat) {
             LogUtils.islogcat = isLocat;
             return this;
         }
 
-        public Builder setPrintLine(boolean isLine) {
+        public LogUtilsBuilder setPrintLine(boolean isLine) {
             LogUtils.isPrintLine = isLine;
             return this;
         }
 
-        public Builder setPrintClass(boolean isclass) {
+        public LogUtilsBuilder setPrintClass(boolean isclass) {
             LogUtils.isPrintClassName = isclass;
             return this;
         }

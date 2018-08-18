@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IdRes;
 import android.util.AttributeSet;
@@ -14,12 +13,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.ThemedSpinnerAdapter;
-
-import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 
 /**
- * 项目:Mvp_Route_Demo
+ * 项目:趣租部落
  * 类描述:  加阴影的工具类
  * 创建人: txl
  * 创建时间: 2017/8/15 18:25
@@ -86,6 +82,10 @@ public class BobPopwindow extends PopupWindow {
 			view.setVisibility(View.GONE);
 		}
 	}
+	public void showAtLocation(View parent, int gravity){
+		showAtLocation(parent,gravity,0,0);
+	}
+
 
 	public BobPopwindow(View contentView) {
 		super(contentView);
@@ -205,7 +205,7 @@ public class BobPopwindow extends PopupWindow {
 			return this;
 		}
 
-		public Builder getChildView(@IdRes int viewid, BobDataView dataView) {
+		public  Builder getChildView(@IdRes int viewid, BobDataView dataView) {
 			View childView = popwindow.getChildView(viewid);
 			dataView.setView(childView);
 			return this;
@@ -251,6 +251,7 @@ public class BobPopwindow extends PopupWindow {
 			popwindow.setAnimationStyle(anim);
 			return this;
 		}
+
 
 		public Builder setViewClick(@IdRes int viewid, View.OnClickListener onClickListener) {
 			popwindow.setOnClick(viewid, onClickListener);
