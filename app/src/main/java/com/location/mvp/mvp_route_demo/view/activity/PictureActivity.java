@@ -12,6 +12,7 @@ import com.location.mvp.mvp_route_demo.bean.PictureBean;
 import com.location.mvp.mvp_route_demo.contract.PictureContract;
 import com.location.mvp.mvp_route_demo.presenter.PicturePresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
+import com.location.mvp.mvproutelibrary.Base.Request;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;

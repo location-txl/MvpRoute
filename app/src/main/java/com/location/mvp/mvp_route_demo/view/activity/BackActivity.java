@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.location.mvp.mvp_route_demo.R;
+import com.location.mvp.mvp_route_demo.bean.PictureBean;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
@@ -34,6 +35,9 @@ public class BackActivity extends BaseActivity implements View.OnClickListener {
 
 	@Override
 	protected void loadData() {
+
+
+
 
 	}
 

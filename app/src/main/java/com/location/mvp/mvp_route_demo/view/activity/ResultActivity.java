@@ -10,8 +10,12 @@ import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.contract.ResultContract;
 import com.location.mvp.mvp_route_demo.presenter.ResultPresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
+import com.location.mvp.mvproutelibrary.Base.Request;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.SpanUtils;
+
+import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_REQUEST;
+import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_RESULT;
 
 /**
  * 项目:趣租部落

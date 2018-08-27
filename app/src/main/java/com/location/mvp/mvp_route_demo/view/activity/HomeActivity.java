@@ -65,6 +65,10 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 		recyclerView.setAdapter(homeAdapter);
 		homeAdapter.setOnItemClickListener(this);
 
+		homeAdapter.addHeaderView(3, 1, R.layout.header_view);
+		homeAdapter.addHeaderView(1, 1, R.layout.header_test_view);
+		homeAdapter.addHeaderView(0, 1, R.layout.header_view);
+
 
 	}
 
