@@ -74,7 +74,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	 */
 	private ArrayList<DataBean> footerList = new ArrayList<>();
 
-
+	//头布局的缓存集合
 	private SparseArray<DataBean> cacheHeaders;
 
 	//布局数组
@@ -691,18 +691,20 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	 */
 	@Override
 	public void add(int index, DataBean data, int count) {
-		int size = cacheHeaders.size();
-
-		for (int i = 0; i < size; i++) {
-			int keyAt = cacheHeaders.keyAt(i);
-			DataBean value = cacheHeaders.get(keyAt);
-			if (keyAt == count) {
-				cacheHeaders.remove(keyAt);
-				headerList.add(keyAt, value);
-				notifyItemInserted(keyAt);
-				break;
+		if(cacheHeaders!=null&&cacheHeaders.size()>0){
+			int size = cacheHeaders.size();
+			for (int i = 0; i < size; i++) {
+				int keyAt = cacheHeaders.keyAt(i);
+				DataBean value = cacheHeaders.get(keyAt);
+				if (keyAt == count) {
+					cacheHeaders.remove(keyAt);
+					headerList.add(keyAt, value);
+					notifyItemInserted(keyAt);
+					break;
+				}
 			}
 		}
+
 	}
 
 	/**
