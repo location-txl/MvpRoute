@@ -61,9 +61,20 @@ public class RxScheduer {
 		return new Function<Throwable, ObservableSource<T>>() {
 			@Override
 			public ObservableSource<T> apply(Throwable throwable) throws Exception {
+
+
 				return Observable.error(ExceptionHandle.handleException(throwable));
 			}
 		};
+	}
+
+
+	public static class HandlerException<T> implements Function<Throwable, Observable<T>> {
+
+		@Override
+		public Observable<T> apply(Throwable throwable) throws Exception {
+			return Observable.error(ExceptionHandle.handleException(throwable));
+		}
 	}
 
 

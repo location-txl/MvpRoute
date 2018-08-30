@@ -11,8 +11,12 @@ import android.widget.Toast;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.MessageAdapter;
 import com.location.mvp.mvp_route_demo.bean.NoMessageBean;
+import com.location.mvp.mvp_route_demo.bean.PictureBean;
+import com.location.mvp.mvproutelibrary.Base.BaseOberver;
 import com.location.mvp.mvproutelibrary.adapter.OnChildClickListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
+import com.location.mvp.mvproutelibrary.http.RetrofitClient;
+import com.location.mvp.mvproutelibrary.scheduler.RxResPonse;
 import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
@@ -50,6 +54,28 @@ public class DataActivity extends AppCompatActivity implements OnChildClickListe
 			data.add(new NoMessageBean("测试" + i, i));
 		}
 		adapter.refresh(data);
+
+		RetrofitClient.getInstance()
+				.get()
+				//后面的网址
+				.url("/login")
+				//针对这个请求替换baseurl
+				.setBaseUrl("http://www.wanandroid")
+				//参数
+				.addParams("key","value")
+				.addParams("key","value")
+				.addParams("key","value")
+				.create()
+
+				.compose(new RxResPonse.Compose<PictureBean>())
+
+				.subscribe(new BaseOberver<PictureBean>() {
+					@Override
+					public void onNext(PictureBean pictureBean) {
+
+					}
+				});
+
 
 	}
 
