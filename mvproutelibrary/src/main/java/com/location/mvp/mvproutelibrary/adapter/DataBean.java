@@ -14,6 +14,8 @@ public class DataBean {
 	private @Nullable Object response;
 	private @LayoutRes int layout;
 
+
+
 	public int getLayout() {
 		return layout;
 	}

@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -42,7 +43,7 @@ import java.util.Set;
  */
 
 
-public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
+public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> implements AdapterList.ChangeListener<DataBean> {
 	/**
 	 * 当数据没有时显示即使已经添加了头布局尾布局
 	 */
@@ -68,12 +69,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	/**
 	 * 存储头布局
 	 */
-	private ArrayList<DataBean> headerList = new ArrayList<>();
+	private AdapterList<DataBean> headerList = new AdapterList<>();
 	/**
 	 * 存储尾部局
 	 */
 	private ArrayList<DataBean> footerList = new ArrayList<>();
 
+	//头布局的缓存集合
+	private SparseArray<DataBean> cacheHeaders;
 
 	//布局数组
 	protected @LayoutRes
@@ -137,6 +140,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 		this.listener = listener;
 		spLayout = new SparseIntArray();
 		spLayout.put(TYPE_NOMAL, this.layouts);
+		headerList.addChangeListener(this);
 	}
 
 
@@ -249,10 +253,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	}
 
 	private void refreshHeader(List datas, @LayoutRes int layouts, Integer[] index) {
-		if(index==null)
-		if (datas.size() != index.length) {
+		if (index==null||datas.size() != index.length) {
 			return;
 		}
+
 		Iterator<Object> dataiter = datas.iterator();
 		List<Integer> indexs = new ArrayList<>();
 		indexs.addAll(Arrays.asList(index));
@@ -420,6 +424,24 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 	public final void addFooterView(Object data, @LayoutRes int layout) {
 		DataBean dataBean = new DataBean(data, layout);
 		footerList.add(dataBean);
+	}
+
+	/**
+	 * 添加头布局
+	 *
+	 * @param index  要添加的头布局的索引
+	 * @param data   数据源
+	 * @param layout 布局
+	 */
+	public void addHeaderView(int index, Object data, @LayoutRes int layout) {
+		if (index > headerList.size()) {
+			if (cacheHeaders == null) {
+				cacheHeaders = new SparseArray<>();
+			}
+			cacheHeaders.put(index, new DataBean(data, layout));
+		} else {
+			headerList.add(index, new DataBean(data, layout));
+		}
 	}
 
 	public final void addHeaderView(@LayoutRes int layout) {
@@ -660,6 +682,41 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 			}
 		}
 		return data.size() - 1;
+	}
+
+	/**
+	 * 集合状态增加
+	 *
+	 * @param index
+	 * @param data
+	 */
+	@Override
+	public void add(int index, DataBean data, int count) {
+		if(cacheHeaders!=null&&cacheHeaders.size()>0){
+			int size = cacheHeaders.size();
+			for (int i = 0; i < size; i++) {
+				int keyAt = cacheHeaders.keyAt(i);
+				DataBean value = cacheHeaders.get(keyAt);
+				if (keyAt == count) {
+					cacheHeaders.remove(keyAt);
+					headerList.add(keyAt, value);
+					notifyItemInserted(keyAt);
+					break;
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * 集合状态删除
+	 *
+	 * @param index
+	 * @param data
+	 */
+	@Override
+	public void remove(int index, DataBean data) {
+
 	}
 
 
