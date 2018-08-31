@@ -52,6 +52,7 @@ public class ToastUtils {
 		}
 		if (toast == null) {
 			toast = Toast.makeText(context, message, duration);
+			toast.show();
 			return false;
 		}
 		return true;

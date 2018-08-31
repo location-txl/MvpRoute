@@ -10,7 +10,7 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
 
 /**
- * 项目:趣租部落
+ * 项目:MvpRoute
  *
  * @author：location time：2018/7/20 17:30
  * description：

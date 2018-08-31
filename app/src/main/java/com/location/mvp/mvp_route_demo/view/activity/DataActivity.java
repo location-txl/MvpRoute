@@ -54,29 +54,6 @@ public class DataActivity extends AppCompatActivity implements OnChildClickListe
 			data.add(new NoMessageBean("测试" + i, i));
 		}
 		adapter.refresh(data);
-
-		RetrofitClient.getInstance()
-				.get()
-				//后面的网址
-				.url("/login")
-				//针对这个请求替换baseurl
-				.setBaseUrl("http://www.wanandroid")
-				//参数
-				.addParams("key","value")
-				.addParams("key","value")
-				.addParams("key","value")
-				.create()
-
-				.compose(new RxResPonse.Compose<PictureBean>())
-
-				.subscribe(new BaseOberver<PictureBean>() {
-					@Override
-					public void onNext(PictureBean pictureBean) {
-
-					}
-				});
-
-
 	}
 
 	/**

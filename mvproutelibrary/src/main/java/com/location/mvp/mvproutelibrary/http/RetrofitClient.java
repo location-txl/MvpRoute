@@ -1,8 +1,10 @@
 package com.location.mvp.mvproutelibrary.http;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 
+import com.location.mvp.mvproutelibrary.error.IResponseErrorMsg;
 import com.location.mvp.mvproutelibrary.service.ApiService;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
@@ -40,10 +42,26 @@ public class RetrofitClient {
 
 	private ApiService apiService;
 
+	private IResponseErrorMsg errorResponse;
+
+
+	/**
+	 * 初始化网络
+	 *
+	 * @param config
+	 */
+	public static void init(RetrofitConfig config) {
+		initRetrofitClient(config);
+	}
+
+	public IResponseErrorMsg getErrorResponse() {
+		return errorResponse;
+	}
 
 	@SuppressLint("NewApi")
-	private RetrofitClient(@NonNull String baseUrl, @NonNull final OkHttpClient.Builder
-			builder) {
+	private RetrofitClient(RetrofitConfig config) {
+		errorResponse = config.getiResponseErrorMsg();
+		OkHttpClient.Builder builder = config.getBuilder() == null ? new OkHttpClient.Builder() : config.getBuilder();
 		builder.addInterceptor(new Interceptor() {
 			@Override
 			public Response intercept(Chain chain) throws IOException {
@@ -71,29 +89,29 @@ public class RetrofitClient {
 
 			}
 		});
-        builder.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-                LogUtils.e(TAG, "url===>" + request.url().toString());
-                LogUtils.e(TAG, "method===>" + request.method());
-                LogUtils.e(TAG, "header===>" + request.headers().toString());
-                LogUtils.e(TAG, "response--------------------------------");
-                Response proceed = chain.proceed(request);
-                okhttp3.MediaType mediaType = proceed.body().contentType();
-                String content = proceed.body().string();
-                LogUtils.e(TAG, "time" + proceed.sentRequestAtMillis());
-                LogUtils.e(TAG, "message" + proceed.message());
-                LogUtils.e(TAG, "headers===>" + proceed.headers().toString());
-                LogUtils.e(TAG, "body===>" + content);
-                return proceed.newBuilder()
-                        .body(okhttp3.ResponseBody.create(mediaType, content))
-                        .build();
-            }
-        });
+		builder.addInterceptor(new Interceptor() {
+			@Override
+			public Response intercept(Chain chain) throws IOException {
+				Request request = chain.request();
+				LogUtils.e(TAG, "url===>" + request.url().toString());
+				LogUtils.e(TAG, "method===>" + request.method());
+				LogUtils.e(TAG, "header===>" + request.headers().toString());
+				LogUtils.e(TAG, "response--------------------------------");
+				Response proceed = chain.proceed(request);
+				okhttp3.MediaType mediaType = proceed.body().contentType();
+				String content = proceed.body().string();
+				LogUtils.e(TAG, "time" + proceed.sentRequestAtMillis());
+				LogUtils.e(TAG, "message" + proceed.message());
+				LogUtils.e(TAG, "headers===>" + proceed.headers().toString());
+				LogUtils.e(TAG, "body===>" + content);
+				return proceed.newBuilder()
+						.body(okhttp3.ResponseBody.create(mediaType, content))
+						.build();
+			}
+		});
 		client = new Retrofit.Builder()
 				.client(builder.build())
-				.baseUrl(baseUrl)
+				.baseUrl(config.getBaseUrl())
 				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 				.addConverterFactory(GsonConverterFactory.create())
 				.build();
@@ -120,13 +138,11 @@ public class RetrofitClient {
 		return new ParamsBuilder(apiService, ParamsBuilder.METHOD_GET);
 	}
 
-	private static RetrofitClient getRetrofitClient(@NonNull String baseurl, @NonNull
-			OkHttpClient.Builder
-			builder) {
+	private static RetrofitClient initRetrofitClient(RetrofitConfig retrofitConfig) {
 		if (instance == null) {
 			synchronized (RetrofitClient.class) {
 				if (instance == null) {
-					instance = new RetrofitClient(baseurl, builder);
+					instance = new RetrofitClient(retrofitConfig);
 				}
 			}
 		}
@@ -138,17 +154,4 @@ public class RetrofitClient {
 	}
 
 
-	public static class Builder {
-		private OkHttpClient.Builder builder;
-		private String baseUrl;
-
-		public Builder(String baseurl) {
-			this.baseUrl = baseurl;
-			builder = new OkHttpClient.Builder();
-		}
-
-		public RetrofitClient build() {
-			return RetrofitClient.getRetrofitClient(baseUrl, builder);
-		}
-	}
 }

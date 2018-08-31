@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 项目:趣租部落
+ * 项目:MvpRoute
  *
  * @author：location time：2018/8/18 0018 12:59
  * description：

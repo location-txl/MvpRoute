@@ -13,7 +13,7 @@ import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 import java.util.Random;
 
 /**
- * 项目:趣租部落
+ * 项目:MvpRoute
  *
  * @author：location time：2018/7/31 18:37
  * description：

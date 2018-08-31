@@ -1,8 +1,11 @@
 package com.location.mvp.mvproutelibrary.scheduler;
 
-import com.location.mvp.mvproutelibrary.Base.BaseBean;
+import android.text.TextUtils;
+
+import com.location.mvp.mvproutelibrary.IBaseBean;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.error.ResponseCodeUtils;
+import com.location.mvp.mvproutelibrary.error.IResponseErrorMsg;
+import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -25,26 +28,22 @@ import io.reactivex.schedulers.Schedulers;
 public class RxScheduer {
 
 
-	public static class map<T> implements Function<BaseBean<T>, T> {
+	public static class map<T> implements Function<IBaseBean<T>, T> {
 
 		@Override
-		public T apply(BaseBean<T> tBaseBean) throws Exception {
-//			if (!tBaseBean.isOk()) {
-//				throw new ExceptionHandle.ServerException(tBaseBean.getCode(), ResponseCodeUtils.getMsg(tBaseBean.getCode()));
-//			}
-			return tBaseBean.getData();
+		public T apply(IBaseBean<T> baseresponse) throws Exception {
+			if (!baseresponse.isOk()) {
+				String msg = (TextUtils.isEmpty(baseresponse.getErrorMsg()) ? RetrofitClient.getInstance().getErrorResponse() == null ? "not errorMsg" : RetrofitClient.getInstance().getErrorResponse().getErrorMsg(baseresponse.getStatusCode()) : baseresponse.getErrorMsg());
+				throw new ExceptionHandle.ServerException(baseresponse.getStatusCode(), msg);
+			}
+			return baseresponse.getData();
 		}
 	}
 
-	public static class compose<T> implements ObservableTransformer<BaseBean<T>, T> {
+	public static class compose<T> implements ObservableTransformer<IBaseBean<T>, T> {
 		@Override
 		public ObservableSource<T> apply(Observable upstream) {
-			return upstream.map(new Function<BaseBean<T>, T>() {
-				@Override
-				public T apply(BaseBean<T> tBaseBean) throws Exception {
-					return tBaseBean.getData();
-				}
-			}).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+			return upstream.map(new map<T>()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 		}
 	}
 
@@ -61,8 +60,6 @@ public class RxScheduer {
 		return new Function<Throwable, ObservableSource<T>>() {
 			@Override
 			public ObservableSource<T> apply(Throwable throwable) throws Exception {
-
-
 				return Observable.error(ExceptionHandle.handleException(throwable));
 			}
 		};

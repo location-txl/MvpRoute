@@ -18,7 +18,7 @@ import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_REQUEST;
 import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_RESULT;
 
 /**
- * 项目:趣租部落
+ * 项目:MvpRoute
  *
  * @author：location time：2018/7/31 16:02
  * description：

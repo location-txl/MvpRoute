@@ -9,7 +9,7 @@ import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 import java.util.Collection;
 
 /**
- * 项目:趣租部落
+ * 项目:MvpRoute
  *
  * @author：location time：2018/8/3 11:45
  * description：

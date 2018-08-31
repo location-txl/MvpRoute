@@ -11,7 +11,7 @@ import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
 /**
- * 项目:趣租部落
+ * 项目:MvpRoute
  *
  * @author：location time：2018/7/31 16:07
  * description：

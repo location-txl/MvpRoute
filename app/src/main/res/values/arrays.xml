@@ -16,6 +16,7 @@
 		<item>SPutils</item>
 		<item>Banner</item>
 		<item>自动分发onActivityResult</item>
+		<item>retrofit</item>
 	</string-array>
 
 </resources>
