@@ -26,7 +26,7 @@ public class BaseData<T> implements IBaseBean<T> {
 
 	@Override
 	public String getErrorMsg() {
-		return null;
+		return errorMsg;
 	}
 
 	@Override

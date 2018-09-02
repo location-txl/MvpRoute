@@ -34,6 +34,8 @@
         <activity android:name=".view.activity.SpanActivity"/>
         <activity android:name=".view.activity.adapteractivity.HomeAdaptrActivity"/>
         <activity android:name=".view.activity.NetActivity"/>
+        <activity android:name=".view.activity.ZcActivity"/>
+        <activity android:name=".view.activity.ZcChildActivity"/>
     </application>
 
 </manifest>

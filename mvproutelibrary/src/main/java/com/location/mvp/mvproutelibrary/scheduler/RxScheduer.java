@@ -40,6 +40,8 @@ public class RxScheduer {
 		}
 	}
 
+
+
 	public static class compose<T> implements ObservableTransformer<IBaseBean<T>, T> {
 		@Override
 		public ObservableSource<T> apply(Observable upstream) {
@@ -70,7 +72,12 @@ public class RxScheduer {
 
 		@Override
 		public Observable<T> apply(Throwable throwable) throws Exception {
-			return Observable.error(ExceptionHandle.handleException(throwable));
+			ExceptionHandle.ResponeThrowable responeThrowable = ExceptionHandle.handleException(throwable);
+			String msg = responeThrowable.msg;
+			if(msg.contains("请先登录")){
+
+			}
+			return Observable.error(responeThrowable);
 		}
 	}
 

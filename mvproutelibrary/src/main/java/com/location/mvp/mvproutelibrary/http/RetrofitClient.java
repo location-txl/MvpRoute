@@ -9,6 +9,7 @@ import com.location.mvp.mvproutelibrary.service.ApiService;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Proxy;
 import java.util.List;
 
 import okhttp3.HttpUrl;
@@ -44,6 +45,8 @@ public class RetrofitClient {
 
 	private IResponseErrorMsg errorResponse;
 
+	private IRefreshToken iRefreshToken;
+
 
 	/**
 	 * 初始化网络
@@ -61,6 +64,7 @@ public class RetrofitClient {
 	@SuppressLint("NewApi")
 	private RetrofitClient(RetrofitConfig config) {
 		errorResponse = config.getiResponseErrorMsg();
+		iRefreshToken = config.getiRefreshToken();
 		OkHttpClient.Builder builder = config.getBuilder() == null ? new OkHttpClient.Builder() : config.getBuilder();
 		builder.addInterceptor(new Interceptor() {
 			@Override
@@ -150,7 +154,11 @@ public class RetrofitClient {
 	}
 
 	public <T> T createApi(Class<? extends T> clazz) {
-		return client.create(clazz);
+		T t = client.create(clazz);
+		if(iRefreshToken==null){
+			return t;
+		}
+		return (T) Proxy.newProxyInstance(clazz.getClassLoader(),new Class[]{clazz},new ProxyHandler(t,iRefreshToken));
 	}
 
 

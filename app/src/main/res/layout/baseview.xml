@@ -40,7 +40,14 @@
 			android:paddingRight="10dp"
 			android:src="@drawable/category"
 			android:visibility="gone" />
-
+<TextView
+	android:layout_alignParentRight="true"
+	android:layout_centerVertical="true"
+	android:visibility="gone"
+	android:id="@+id/toobar_right_text"
+	android:text="完成"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" />
 	</RelativeLayout>
 
 

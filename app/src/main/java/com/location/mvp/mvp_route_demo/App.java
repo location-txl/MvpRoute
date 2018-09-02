@@ -3,6 +3,7 @@ package com.location.mvp.mvp_route_demo;
 import android.app.Application;
 
 import com.location.mvp.mvp_route_demo.base.ErrorResponse;
+import com.location.mvp.mvp_route_demo.base.RefreshToken;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 import com.location.mvp.mvproutelibrary.http.RetrofitConfig;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
@@ -26,6 +27,7 @@ public class App extends Application {
 		super.onCreate();
 		RetrofitConfig config = new RetrofitConfig("http://www.wanandroid.com/");
 		config.setErrorResponse(new ErrorResponse());
+		config.setiRefreshToken(new RefreshToken());
 		RetrofitClient.init(config);
 		ToastUtils.init(this);
 		SpUtils.init(this);

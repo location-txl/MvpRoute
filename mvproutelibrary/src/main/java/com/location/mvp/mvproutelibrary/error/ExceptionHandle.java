@@ -86,6 +86,7 @@ public class ExceptionHandle {
 		public ResponeThrowable(Throwable throwable, int result) {
 			super(throwable);
 			this.result = result;
+
 		}
 	}
 

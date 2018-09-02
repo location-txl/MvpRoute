@@ -101,7 +101,9 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 			case 7:
 				startActivity(NetActivity.class);
 				break;
-
+			case 8:
+				startActivity(ZcActivity.class);
+				break;
 			default:
 				LogUtils.d("未知");
 		}

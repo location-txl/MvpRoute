@@ -1,11 +1,16 @@
 package com.location.mvp.mvp_route_demo.presenter;
 
+import com.location.mvp.mvp_route_demo.KeyUtils;
+import com.location.mvp.mvp_route_demo.bean.CollectListBean;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.contract.NetContract;
 import com.location.mvp.mvp_route_demo.service.LoginService;
 import com.location.mvp.mvproutelibrary.Base.BaseOberver;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
+import com.location.mvp.mvproutelibrary.utils.SpUtils;
+
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
  * 项目:MvpRoute
@@ -31,10 +36,33 @@ public class NetPresenter extends NetContract.Presenter {
 				.subscribe(new BaseOberver<LoginResponse>(rxManager, view) {
 					@Override
 					public void onNext(LoginResponse loginResponse) {
-						view.showMessage("登录成功");
+						view.loginSuccful(loginResponse);
 					}
 				});
 
 
+	}
+
+	@Override
+	public void cleanLogin() {
+		SpUtils.getInstance().remove(KeyUtils.USERNAME);
+		SpUtils.getInstance().remove(KeyUtils.PASSWORLD);
+		SpUtils.getInstance().remove("test");
+		view.cleanLoginSuccful();
+
+	}
+
+	@Override
+	public void getCollectList(String page,String userNmae,String passwrold) {
+           loginService.getCollect(page,userNmae,passwrold)
+				   .map(new RxScheduer.map<CollectListBean>())
+				   .onErrorResumeNext(new RxScheduer.HandlerException<CollectListBean>())
+				   .compose(new RxScheduer.IO_MAIN<CollectListBean>())
+				   .subscribe(new BaseOberver<CollectListBean>(rxManager,view) {
+					   @Override
+					   public void onNext(CollectListBean collectListBean) {
+					       view.showCollectList(collectListBean);
+					   }
+				   });
 	}
 }

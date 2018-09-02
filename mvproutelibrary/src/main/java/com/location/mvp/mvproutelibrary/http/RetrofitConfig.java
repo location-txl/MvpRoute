@@ -18,6 +18,16 @@ public class RetrofitConfig {
 
 	private IResponseErrorMsg iResponseErrorMsg;
 
+private IRefreshToken iRefreshToken;
+
+
+	public IRefreshToken getiRefreshToken() {
+		return iRefreshToken;
+	}
+
+	public void setiRefreshToken(IRefreshToken iRefreshToken) {
+		this.iRefreshToken = iRefreshToken;
+	}
 
 	public void setErrorResponse(IResponseErrorMsg errorResponse) {
 		this.iResponseErrorMsg = errorResponse;

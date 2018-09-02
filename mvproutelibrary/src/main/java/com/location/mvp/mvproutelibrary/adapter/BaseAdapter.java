@@ -510,7 +510,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 		}
 		return TYPE_NOMAL;
 	}
-
+    public T getItem(int position){
+		T t = data.get(position);
+		return t;
+	}
+	public List<T> getItemList(){
+		return data;
+	}
 
 	/**
 	 * 增加数据
