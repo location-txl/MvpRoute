@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.location.mvp.mvproutelibrary.R;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.lang.annotation.Retention;
