@@ -94,6 +94,9 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 				//Spanutils
 				startActivity(SpanActivity.class);
 				break;
+			case 4:
+				startActivity(SpActivity.class);
+				break;
 			case 6:
 				//activity回传分发
 				startActivity(new Intent(this, ResultActivity.class));

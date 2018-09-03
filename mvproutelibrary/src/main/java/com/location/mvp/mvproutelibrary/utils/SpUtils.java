@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.text.TextUtils;
 import android.util.ArrayMap;
+import android.view.TextureView;
 
 import com.google.gson.Gson;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -81,11 +85,12 @@ public class SpUtils {
 		/**
 		 * 存储到集合
 		 */
-		sps.put(context.getPackageName(), sharedPreferences);
+		sps.put(getAppName(context), sharedPreferences);
 	}
 
 	/**
 	 * 初始化方法  在Application中初始化 防止内存泄露
+	 *
 	 * @param context
 	 */
 	public static void init(Context context) {
@@ -96,9 +101,9 @@ public class SpUtils {
 		/**
 		 * 如果上下文为空 没有初始化
 		 * 抛出异常
-		 * throw {@link RuntimeException}
+		 * throw {@link NullPointerException}
 		 */
-		if (context == null) throw new RuntimeException("you may Application init");
+		if (context == null) throw new NullPointerException("you may Application init");
 		/**
 		 * 判断当前key是否为空 为空则第一次加载  实例化
 		 */
@@ -113,13 +118,14 @@ public class SpUtils {
 	}
 
 	public static SpUtils getInstance() {
-		if (context == null) throw new RuntimeException("you may Application init");
-		sharedPreferences = sps.get(context.getPackageName());
+		if (context == null) throw new NullPointerException("you may Application init");
+		sharedPreferences = sps.get(getAppName(context));
 		return spUtils;
 	}
 
 	/**
 	 * 下面的重载方法都是存储在
+	 *
 	 * @param key
 	 * @param value
 	 */
@@ -150,9 +156,31 @@ public class SpUtils {
 		sharedPreferences.edit().putStringSet(key, value).apply();
 	}
 
+	/**
+	 * 存储Object类型
+	 * 方法内会检查项目是否存在Gson包
+	 * 如果存在就会使用Gson toJson方法转化成字符串存储
+	 *
+	 * @param key
+	 * @param object
+	 */
+	public void putValue(String key, Object object) {
+		String tojson = tojson(object);
+		if(TextUtils.isEmpty(tojson)){
+			return;
+		}
+		sharedPreferences.edit().putString(key, tojson).apply();
+	}
+
+
+
+	public void putValue(Object object) {
+		putValue(object.getClass().getSimpleName(), object);
+	}
 
 	/**
 	 * 下方都是获取值
+	 *
 	 * @param key
 	 * @return
 	 */
@@ -181,8 +209,39 @@ public class SpUtils {
 	}
 
 
+	public <T> T getObject(String key, Class<? extends T> aclass) {
+		String str = sharedPreferences.getString(key, DEFAULT_STRING);
+		if (TextUtils.isEmpty(str)) {
+			return null;
+		}
+		try {
+			Class<?> gsonClass = Class.forName("com.google.gson.Gson");
+			Object gsonObject = gsonClass.getConstructor().newInstance();
+			Method fromJson = gsonClass.getMethod("fromJson", String.class, Class.class);
+			T invoke = (T) fromJson.invoke(gsonObject, str, aclass);
+			return invoke;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+
+	public <T> T getObject(Class<? extends T> aclass) {
+		return getObject(aclass.getSimpleName(), aclass);
+	}
+
 	/**
-	 *  判断是否包含某个key值
+	 * 判断是否包含某个key值
 	 *
 	 * @param key
 	 * @return
@@ -199,8 +258,8 @@ public class SpUtils {
 	}
 
 	/**
-	 *
 	 * 删除掉某个key值
+	 *
 	 * @param key
 	 */
 	public void remove(String key) {
@@ -210,6 +269,7 @@ public class SpUtils {
 
 	/**
 	 * 获取所有存储的键值对
+	 *
 	 * @return
 	 */
 	public Map<String, ?> getAll() {
@@ -227,4 +287,28 @@ public class SpUtils {
 			return context.getPackageName();
 		}
 	}
+
+	private String tojson(Object object) {
+		try {
+			Class gsonclass = Class.forName("com.google.gson.Gson");
+			Object o = gsonclass.getConstructor().newInstance();
+			Method toJson = gsonclass.getMethod("toJson", Object.class);
+			toJson.setAccessible(true);
+			String invoke = (String) toJson.invoke(o, object);
+			return invoke;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
 }

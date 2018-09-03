@@ -7,7 +7,7 @@ android {
     }
     defaultConfig {
         applicationId "com.location.mvp.mvp_route_demo"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
