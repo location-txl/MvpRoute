@@ -1,6 +1,7 @@
 package com.location.mvp.mvproutelibrary.http;
 
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -38,42 +39,34 @@ public class ProxyHandler implements InvocationHandler {
 						return (Observable<?>) method.invoke(mPrObject, args);
 					}
 				}).retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
-			@Override
-			public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
-				return throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
 					@Override
-					public ObservableSource<?> apply(Throwable throwable) throws Exception {
+					public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+						return throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+							@Override
+							public ObservableSource<?> apply(Throwable throwable) throws Exception {
 
-						if (throwable instanceof ExceptionHandle.ServerException) {
-							ExceptionHandle.ServerException exception = (ExceptionHandle.ServerException) throwable;
-							if (iRefreshToken.isTokenException(exception.result, exception.msg)) {
+								if (throwable instanceof ExceptionHandle.ServerException) {
+									ExceptionHandle.ServerException exception = (ExceptionHandle.ServerException) throwable;
+									if (iRefreshToken.isTokenException(exception.result, exception.msg)) {
 
-								boolean b = iRefreshToken.refreshTokenSuccful();
-								if (b) {
-									return Observable.just(true);
+											return iRefreshToken.refreshTokenSuccful();
+
+
+									} else {
+										LogUtils.d("test", "不是异常");
+										return Observable.just(true);
+									}
+
 								} else {
-									return Observable.just("token refresh error");
+									LogUtils.d("test", "不是异常---");
+									return Observable.just(true);
 								}
 
+
 							}
-
-						}
-
-
-
-
-
-
-
-
-
-
-
-					return Observable.just(true);
+						});
 					}
 				});
-			}
-		});
 
-		}
 	}
+}

@@ -48,6 +48,8 @@ public class RetrofitClient {
 	private IRefreshToken iRefreshToken;
 
 
+
+
 	/**
 	 * 初始化网络
 	 *
@@ -65,6 +67,10 @@ public class RetrofitClient {
 	private RetrofitClient(RetrofitConfig config) {
 		errorResponse = config.getiResponseErrorMsg();
 		iRefreshToken = config.getiRefreshToken();
+		if(config.getGsonClass()==null){
+			throw new NullPointerException("gsonClazz is null");
+		}
+
 		OkHttpClient.Builder builder = config.getBuilder() == null ? new OkHttpClient.Builder() : config.getBuilder();
 		builder.addInterceptor(new Interceptor() {
 			@Override
@@ -117,7 +123,7 @@ public class RetrofitClient {
 				.client(builder.build())
 				.baseUrl(config.getBaseUrl())
 				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-				.addConverterFactory(GsonConverterFactory.create())
+				.addConverterFactory(com.location.mvp.mvproutelibrary.http.conver.GsonConverterFactory.create(config.getGsonClass()))
 				.build();
 
 	}

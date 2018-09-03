@@ -64,60 +64,60 @@ public class NetActivity extends BaseToActivity<NetContract.Presenter> implement
 		findViewById(R.id.net_collect).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				String username = "loginUserName="+SpUtils.getInstance().getString(KeyUtils.USERNAME);
-//				String passwrold = "loginUserPassword=" + SpUtils.getInstance().getString(KeyUtils.PASSWORLD);
-//				presenter.getCollectList("0",username,passwrold);
+				String username = "loginUserName="+SpUtils.getInstance().getString(KeyUtils.USERNAME);
+				String passwrold = "loginUserPassword=" + SpUtils.getInstance().getString(KeyUtils.PASSWORLD);
+				presenter.getCollectList("0",username,passwrold);
 
 
-				Observable.just("1")
-
-
-						.retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
-							@Override
-							public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
-								return throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
-									@Override
-									public ObservableSource<?> apply(Throwable throwable) throws Exception {
-										LogUtils.d("错误");
-									   SpUtils.getInstance().putValue("test","123");
-//										return Observable.just("!233");
-										return Observable.error(new RuntimeException("cuowu"));
-									}
-								});
-							}
-						})
-						.map(new Function<String, String>() {
-							@Override
-							public String apply(String s) throws Exception {
-								if(TextUtils.isEmpty(SpUtils.getInstance().getString("test"))){
-
-									LogUtils.d("map");
-									throw new RuntimeException("失败");
-								}
-								return s;
-							}
-						})
-						.subscribe(new Observer<Object>() {
-							@Override
-							public void onSubscribe(Disposable d) {
-
-							}
-
-							@Override
-							public void onNext(Object o) {
-ToastUtils.showShort("onnext"+o.toString());
-							}
-
-							@Override
-							public void onError(Throwable e) {
-ToastUtils.showShort("error");
-							}
-
-							@Override
-							public void onComplete() {
-
-							}
-						});
+//				Observable.just("1")
+//
+//
+//						.retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+//							@Override
+//							public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+//								return throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+//									@Override
+//									public ObservableSource<?> apply(Throwable throwable) throws Exception {
+//										LogUtils.d("错误");
+//									   SpUtils.getInstance().putValue("test","123");
+////										return Observable.just("!233");
+//										return Observable.error(new RuntimeException("cuowu"));
+//									}
+//								});
+//							}
+//						})
+//						.map(new Function<String, String>() {
+//							@Override
+//							public String apply(String s) throws Exception {
+//								if(TextUtils.isEmpty(SpUtils.getInstance().getString("test"))){
+//
+//									LogUtils.d("map");
+//									throw new RuntimeException("失败");
+//								}
+//								return s;
+//							}
+//						})
+//						.subscribe(new Observer<Object>() {
+//							@Override
+//							public void onSubscribe(Disposable d) {
+//
+//							}
+//
+//							@Override
+//							public void onNext(Object o) {
+//ToastUtils.showShort("onnext"+o.toString());
+//							}
+//
+//							@Override
+//							public void onError(Throwable e) {
+//ToastUtils.showShort("error");
+//							}
+//
+//							@Override
+//							public void onComplete() {
+//
+//							}
+//						});
 			}
 		});
 	}

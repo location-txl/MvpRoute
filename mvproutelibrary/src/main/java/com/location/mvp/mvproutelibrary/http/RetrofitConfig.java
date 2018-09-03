@@ -20,12 +20,8 @@ public class RetrofitConfig {
 
 	private IResponseErrorMsg iResponseErrorMsg;
 
-private IRefreshToken iRefreshToken;
-//private Class<? extends IBaseBean> clazz;
-
-
-
-
+	private IRefreshToken iRefreshToken;
+	private Class<? extends IBaseBean> clazz;
 
 
 	public IRefreshToken getiRefreshToken() {
@@ -45,12 +41,14 @@ private IRefreshToken iRefreshToken;
 	}
 
 
+	public void setGsonClass(Class<? extends IBaseBean> clazz) {
+		this.clazz = clazz;
+	}
 
-//	public void setGsonClazz(Class<? extends IBaseBean> clazz){
-//		this.clazz = clazz;
-//	}
+	public Class<? extends IBaseBean> getGsonClass() {
+		return clazz;
+	}
 
-//	public Class<? extends >
 	public String getBaseUrl() {
 		return baseUrl;
 	}

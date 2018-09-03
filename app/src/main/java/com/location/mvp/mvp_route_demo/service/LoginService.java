@@ -23,10 +23,10 @@ import retrofit2.http.Path;
 public interface LoginService {
 	@FormUrlEncoded
 	@POST("user/login")
-	Observable<BaseData<LoginResponse>> login(@Field("username") String username, @Field("password") String passworld);
+	Observable<LoginResponse> login(@Field("username") String username, @Field("password") String passworld);
 
 
 	@GET("lg/collect/list/{page}/json")
-	Observable<BaseData<CollectListBean>> getCollect(@Path("page") String page, @Header("Cookie") String username,@Header("Cookie") String passworld);
+	Observable<CollectListBean> getCollect(@Path("page") String page);
 
 }

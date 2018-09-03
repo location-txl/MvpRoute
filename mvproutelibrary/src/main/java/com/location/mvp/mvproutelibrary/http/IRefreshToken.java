@@ -13,7 +13,7 @@ import io.reactivex.Observable;
  */
 
 public interface IRefreshToken {
-	boolean refreshTokenSuccful();
+	Observable refreshTokenSuccful();
 
 	boolean isTokenException(int code,String errorMsg);
 }

@@ -8,6 +8,7 @@ import com.location.mvp.mvproutelibrary.IBaseBean;
 import com.location.mvp.mvproutelibrary.http.IRefreshToken;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
 
 import java.lang.reflect.InvocationHandler;
@@ -20,6 +21,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 /**
@@ -29,46 +31,52 @@ import io.reactivex.functions.Function;
  * description：
  */
 
-public class RefreshToken implements IRefreshToken{
+public class RefreshToken implements IRefreshToken {
 
 
 	@Override
-	public boolean refreshTokenSuccful() {
-		final boolean[] succful = new boolean[1];
+	public Observable refreshTokenSuccful() {
+		synchronized (RefreshToken.class){
+
+
+		final Throwable[] error = {null};
 		LoginService api = RetrofitClient.getInstance().createApi(LoginService.class);
-api.login("tianxiaolong","tianxiaolong")
-		.map(new RxScheduer.map<LoginResponse>())
-		.onErrorResumeNext(new RxScheduer.HandlerException<LoginResponse>())
-		.compose(new RxScheduer.IO_MAIN<LoginResponse>())
-		.subscribe(new Observer<LoginResponse>() {
-			@Override
-			public void onSubscribe(Disposable d) {
+		api.login("tianxiaolong", "tianxiaolong")
+				.onErrorResumeNext(new RxScheduer.HandlerException<LoginResponse>())
+				.compose(new RxScheduer.IO_MAIN<LoginResponse>())
+				.subscribe(new Observer<LoginResponse>() {
+					@Override
+					public void onSubscribe(Disposable d) {
 
-			}
+					}
 
-			@Override
-			public void onNext(LoginResponse response) {
-				SpUtils.getInstance().putValue(KeyUtils.USERNAME, response.getUsername());
-				SpUtils.getInstance().putValue(KeyUtils.PASSWORLD,response.getPassword());
-				succful[0] = true;
-			}
+					@Override
+					public void onNext(LoginResponse response) {
 
-			@Override
-			public void onError(Throwable e) {
-    succful[0] = false;
-			}
+					}
 
-			@Override
-			public void onComplete() {
+					@Override
+					public void onError(Throwable e) {
+						error[0] = new RuntimeException("dsadsadsa");
+					}
 
-			}
-		});
-		return succful[0];
+					@Override
+					public void onComplete() {
+
+					}
+				});
+
+		if (error[0] == null) {
+			return Observable.just(true);
+		} else {
+			return Observable.error(error[0]);
+		}
+		}
 	}
 
 	@Override
 	public boolean isTokenException(int code, String errorMsg) {
-		if("请先登录！".equals(errorMsg)){
+		if ("请先登录！".equals(errorMsg)) {
 			return true;
 		}
 		return false;
