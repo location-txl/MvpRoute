@@ -6,6 +6,8 @@ import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -48,18 +50,18 @@ public class ProxyHandler implements InvocationHandler {
 								if (throwable instanceof ExceptionHandle.ServerException) {
 									ExceptionHandle.ServerException exception = (ExceptionHandle.ServerException) throwable;
 									if (iRefreshToken.isTokenException(exception.result, exception.msg)) {
-
+										synchronized (ProxyHandler.class){
 											return iRefreshToken.refreshTokenSuccful();
 
-
+										}
 									} else {
 										LogUtils.d("test", "不是异常");
-										return Observable.just(true);
+										return Observable.error(throwable);
 									}
 
 								} else {
 									LogUtils.d("test", "不是异常---");
-									return Observable.just(true);
+									return Observable.error(throwable);
 								}
 
 

@@ -11,6 +11,8 @@ import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import java.io.IOException;
 import java.lang.reflect.Proxy;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -46,7 +48,6 @@ public class RetrofitClient {
 	private IResponseErrorMsg errorResponse;
 
 	private IRefreshToken iRefreshToken;
-
 
 
 
@@ -104,15 +105,15 @@ public class RetrofitClient {
 			public Response intercept(Chain chain) throws IOException {
 				Request request = chain.request();
 				LogUtils.e(TAG, "url===>" + request.url().toString());
-				LogUtils.e(TAG, "method===>" + request.method());
-				LogUtils.e(TAG, "header===>" + request.headers().toString());
-				LogUtils.e(TAG, "response--------------------------------");
+//				LogUtils.e(TAG, "method===>" + request.method());
+//				LogUtils.e(TAG, "header===>" + request.headers().toString());
+//				LogUtils.e(TAG, "response--------------------------------");
 				Response proceed = chain.proceed(request);
 				okhttp3.MediaType mediaType = proceed.body().contentType();
 				String content = proceed.body().string();
-				LogUtils.e(TAG, "time" + proceed.sentRequestAtMillis());
-				LogUtils.e(TAG, "message" + proceed.message());
-				LogUtils.e(TAG, "headers===>" + proceed.headers().toString());
+//				LogUtils.e(TAG, "time" + proceed.sentRequestAtMillis());
+//				LogUtils.e(TAG, "message" + proceed.message());
+//				LogUtils.e(TAG, "headers===>" + proceed.headers().toString());
 				LogUtils.e(TAG, "body===>" + content);
 				return proceed.newBuilder()
 						.body(okhttp3.ResponseBody.create(mediaType, content))

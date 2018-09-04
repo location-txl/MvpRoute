@@ -6,6 +6,7 @@ import com.location.mvp.mvp_route_demo.service.LoginService;
 import com.location.mvp.mvproutelibrary.Base.BaseOberver;
 import com.location.mvp.mvproutelibrary.IBaseBean;
 import com.location.mvp.mvproutelibrary.http.IRefreshToken;
+import com.location.mvp.mvproutelibrary.http.ProxyHandler;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
@@ -14,6 +15,8 @@ import com.location.mvp.mvproutelibrary.utils.SpUtils;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.xml.parsers.FactoryConfigurationError;
 
@@ -23,6 +26,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * 项目:趣租部落
@@ -32,46 +36,34 @@ import io.reactivex.functions.Function;
  */
 
 public class RefreshToken implements IRefreshToken {
-
-
+	private AtomicBoolean refresh = new AtomicBoolean(false);
+	private long time;
+    private PublishSubject<LoginResponse> publishSubject;
 	@Override
-	public Observable refreshTokenSuccful() {
-		synchronized (RefreshToken.class){
+	public synchronized Observable refreshTokenSuccful() {
+		if(refresh.compareAndSet(false,true)){
+			LogUtils.d("retrofit","刷新token");
 
+			LoginService api = RetrofitClient.getInstance().createApi(LoginService.class);
+			Observable<LoginResponse> loginResponseObservable = api.login("tianxiaolong", "tianxiaolong").doOnNext(new Consumer<LoginResponse>() {
+				@Override
+				public void accept(LoginResponse loginResponse) throws Exception {
+					refresh.set(false);
+				}
+			}).doOnError(new Consumer<Throwable>() {
+				@Override
+				public void accept(Throwable throwable) throws Exception {
+					refresh.set(false);
+				}
+			});
 
-		final Throwable[] error = {null};
-		LoginService api = RetrofitClient.getInstance().createApi(LoginService.class);
-		api.login("tianxiaolong", "tianxiaolong")
-				.onErrorResumeNext(new RxScheduer.HandlerException<LoginResponse>())
-				.compose(new RxScheduer.IO_MAIN<LoginResponse>())
-				.subscribe(new Observer<LoginResponse>() {
-					@Override
-					public void onSubscribe(Disposable d) {
-
-					}
-
-					@Override
-					public void onNext(LoginResponse response) {
-
-					}
-
-					@Override
-					public void onError(Throwable e) {
-						error[0] = new RuntimeException("dsadsadsa");
-					}
-
-					@Override
-					public void onComplete() {
-
-					}
-				});
-
-		if (error[0] == null) {
-			return Observable.just(true);
-		} else {
-			return Observable.error(error[0]);
+			loginResponseObservable.subscribe(publishSubject);
 		}
-		}
+//		return publishSubject;
+
+
+		return publishSubject;
+
 	}
 
 	@Override

@@ -66,7 +66,12 @@ public class NetActivity extends BaseToActivity<NetContract.Presenter> implement
 			public void onClick(View v) {
 				String username = "loginUserName="+SpUtils.getInstance().getString(KeyUtils.USERNAME);
 				String passwrold = "loginUserPassword=" + SpUtils.getInstance().getString(KeyUtils.PASSWORLD);
-				presenter.getCollectList("0",username,passwrold);
+
+				for(int i=0;i<5;i++){
+					presenter.getCollectList("0",username,passwrold);
+
+				}
+
 
 
 //				Observable.just("1")

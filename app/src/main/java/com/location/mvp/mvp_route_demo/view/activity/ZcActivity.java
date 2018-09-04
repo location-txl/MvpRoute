@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.location.mvp.mvp_route_demo.R;
+import com.location.mvp.mvp_route_demo.adapter.OnItemListener;
 import com.location.mvp.mvp_route_demo.adapter.ZcDataAdapter;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.bean.ZcChildBean;
@@ -29,7 +31,7 @@ import java.util.List;
  * description：
  */
 
-public class ZcActivity extends BaseToActivity<ZcContract.Presenter> implements OnItemClickListener, ZcContract.View {
+public class ZcActivity extends BaseToActivity<ZcContract.Presenter> implements  ZcContract.View, OnItemListener {
 	private final int CODE = 201;
 	public static final String EXTRA_DATA = "data_s_a";
 	public static final String EXTRA_POSITION = "data_s_position";
@@ -59,6 +61,7 @@ public class ZcActivity extends BaseToActivity<ZcContract.Presenter> implements 
 		zcDataAdapter = new ZcDataAdapter(data, R.layout.item_data, this);
 		recyclerView.setAdapter(zcDataAdapter);
 		findViewById(R.id.zc_add).setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				presenter.insertItem();
@@ -96,15 +99,21 @@ public class ZcActivity extends BaseToActivity<ZcContract.Presenter> implements 
 		return new ZcPresenter();
 	}
 
+
+	@Override
+	public void showData(List<ZcDataBean> response) {
+	}
+
+	@Override
+	public void insertItemSuccful(ZcDataBean zcDataBean) {
+		zcDataAdapter.loadItem(zcDataBean);
+	}
 	/**
 	 *  分为选择过的跳转和 没选数据的跳转，选择过的就不进行任何选择数据
-	 * @param viewHolder
-	 * @param view
 	 * @param position
 	 */
 	@Override
-	public void onItemClick(ViewHolder viewHolder, View view, int position) {
-
+	public void onItemClick(RecyclerView.ViewHolder holder, int position) {
 		if(position==zcDataAdapter.getItemList().size()-1||zcDataAdapter.getItem(position).getChildBean()==null){
 			if(position==zcDataAdapter.getItemList().size()-1&&zcDataAdapter.getItem(position).getChildBean()!=null){
 				selectList.remove(selectList.size()-1);
@@ -115,14 +124,5 @@ public class ZcActivity extends BaseToActivity<ZcContract.Presenter> implements 
 		if(zcDataAdapter.getItem(position).getChildBean()!=null){
 			presenter.openChildActivity(this, selectList);
 		}
-	}
-
-	@Override
-	public void showData(List<ZcDataBean> response) {
-	}
-
-	@Override
-	public void insertItemSuccful(ZcDataBean zcDataBean) {
-		zcDataAdapter.loadItem(zcDataBean);
 	}
 }
