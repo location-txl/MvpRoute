@@ -49,6 +49,8 @@ public class RetrofitClient {
 
 	private IRefreshToken iRefreshToken;
 
+	private ProxyHandler proxyHandler;
+
 
 
 	/**
@@ -71,7 +73,7 @@ public class RetrofitClient {
 		if(config.getGsonClass()==null){
 			throw new NullPointerException("gsonClazz is null");
 		}
-
+		proxyHandler = new ProxyHandler(iRefreshToken);
 		OkHttpClient.Builder builder = config.getBuilder() == null ? new OkHttpClient.Builder() : config.getBuilder();
 		builder.addInterceptor(new Interceptor() {
 			@Override
@@ -165,7 +167,8 @@ public class RetrofitClient {
 		if(iRefreshToken==null){
 			return t;
 		}
-		return (T) Proxy.newProxyInstance(clazz.getClassLoader(),new Class[]{clazz},new ProxyHandler(t,iRefreshToken));
+		proxyHandler.setObject(t);
+		return (T) Proxy.newProxyInstance(clazz.getClassLoader(),new Class[]{clazz},proxyHandler);
 	}
 
 

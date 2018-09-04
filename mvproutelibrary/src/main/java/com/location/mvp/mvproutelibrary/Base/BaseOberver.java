@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.manager.RxManager;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -38,7 +39,8 @@ public abstract class BaseOberver<T> implements Observer<T> {
 
     @Override
     public void onError(Throwable e) {
-        baseView.onshowError((ExceptionHandle.ResponeThrowable) e);
+        LogUtils.e("retrofit","error===>"+e.getMessage());
+//        baseView.onshowError((ExceptionHandle.ResponeThrowable) e);
     }
 
     @Override

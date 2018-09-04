@@ -41,28 +41,9 @@ public class RefreshToken implements IRefreshToken {
     private PublishSubject<LoginResponse> publishSubject;
 	@Override
 	public synchronized Observable refreshTokenSuccful() {
-		if(refresh.compareAndSet(false,true)){
-			LogUtils.d("retrofit","刷新token");
 
 			LoginService api = RetrofitClient.getInstance().createApi(LoginService.class);
-			Observable<LoginResponse> loginResponseObservable = api.login("tianxiaolong", "tianxiaolong").doOnNext(new Consumer<LoginResponse>() {
-				@Override
-				public void accept(LoginResponse loginResponse) throws Exception {
-					refresh.set(false);
-				}
-			}).doOnError(new Consumer<Throwable>() {
-				@Override
-				public void accept(Throwable throwable) throws Exception {
-					refresh.set(false);
-				}
-			});
-
-			loginResponseObservable.subscribe(publishSubject);
-		}
-//		return publishSubject;
-
-
-		return publishSubject;
+			return api.login("tianxiaolong", "tianxiaolong");
 
 	}
 
