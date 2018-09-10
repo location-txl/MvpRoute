@@ -248,8 +248,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	}
 
 
-	public void updateAllHeader(List datas, @LayoutRes int layouts) {
-		refreshHeader(datas, layouts, null);
+		public void updateAllHeader(List datas, @LayoutRes int layouts) {
+		Integer[] index = new Integer[datas.size()];
+		for(int i=0;i<datas.size();i++){
+			index[i] = i;
+		}
+		refreshHeader(datas, layouts, index);
 	}
 
 	private void refreshHeader(List datas, @LayoutRes int layouts, Integer[] index) {
@@ -550,6 +554,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 		notifyDataSetChanged();
 	}
 
+	public void refresh(@IntRange(from = 0) int position){
+		notifyItemChanged(getHeaderCount()+position);
+	}
 	/**
 	 * 重新设置数据
 	 *
