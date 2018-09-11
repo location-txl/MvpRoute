@@ -34,11 +34,11 @@ public class Denutils {
 		return (int) (sp*density+0.5f);
 	}
 
-public static  int pxtosp(Context context,float px){
-	float density = context.getResources().getDisplayMetrics().scaledDensity;
+	public static  int pxtosp(Context context,float px){
+		float density = context.getResources().getDisplayMetrics().scaledDensity;
 
-	return (int) (px/density+0.5f);
-}
+		return (int) (px/density+0.5f);
+	}
 
 
 

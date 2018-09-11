@@ -171,5 +171,9 @@ public class RetrofitClient {
 		return (T) Proxy.newProxyInstance(clazz.getClassLoader(),new Class[]{clazz},proxyHandler);
 	}
 
+	public <T> T createRefreshToken(Class<? extends T> clazz){
+		return client.create(clazz);
+	}
+
 
 }

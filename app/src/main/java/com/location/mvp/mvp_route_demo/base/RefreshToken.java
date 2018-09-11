@@ -27,6 +27,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.subjects.PublishSubject;
+import okhttp3.MultipartBody;
 
 /**
  * 项目:趣租部落
@@ -41,8 +42,7 @@ public class RefreshToken implements IRefreshToken {
     private PublishSubject<LoginResponse> publishSubject;
 	@Override
 	public synchronized Observable refreshTokenSuccful() {
-
-			LoginService api = RetrofitClient.getInstance().createApi(LoginService.class);
+			LoginService api = RetrofitClient.getInstance().createRefreshToken(LoginService.class);
 			return api.login("tianxiaolong", "tianxiaolong");
 
 	}

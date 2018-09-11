@@ -2,10 +2,12 @@ package com.location.mvp.mvproutelibrary.http;
 
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
+import com.location.mvp.mvproutelibrary.utils.TimeUtils;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -26,16 +28,17 @@ public class ProxyHandler implements InvocationHandler {
 
 
 	private IRefreshToken iRefreshToken;
-	private boolean isRefresh;
+	private long refreshTime;
 
-	public ProxyHandler( IRefreshToken iRefreshToken) {
+	public ProxyHandler(IRefreshToken iRefreshToken) {
 		this.iRefreshToken = iRefreshToken;
 	}
 
 
-	public void setObject(Object object){
+	public void setObject(Object object) {
 		this.mPrObject = object;
 	}
+
 	@Override
 	public Object invoke(Object proxy, final Method method, final Object[] args) throws Throwable {
 		return Observable.just(true)
@@ -53,19 +56,17 @@ public class ProxyHandler implements InvocationHandler {
 
 								if (throwable instanceof ExceptionHandle.ServerException) {
 									ExceptionHandle.ServerException exception = (ExceptionHandle.ServerException) throwable;
-									if (iRefreshToken.isTokenException(exception.result, exception.msg)) {
-										synchronized (ProxyHandler.class){
-											if(isRefresh){
-												ProxyHandler.this.wait();
-											}
-											isRefresh = true;
-											try {
 
-												return iRefreshToken.refreshTokenSuccful();
-											}finally {
-												isRefresh = false;
-												ProxyHandler.this.notifyAll();
-											}
+									if (iRefreshToken.isTokenException(exception.result, exception.msg)) {
+
+										synchronized (ProxyHandler.class) {
+                                              if((System.currentTimeMillis()-refreshTime)<1000){
+												  LogUtils.d("retrofit", "延迟分发");
+												  return Observable.timer(50, TimeUnit.MILLISECONDS);
+											  }else{
+                                                  refreshTime = System.currentTimeMillis();
+												  return iRefreshToken.refreshTokenSuccful();
+											  }
 
 										}
 									} else {
