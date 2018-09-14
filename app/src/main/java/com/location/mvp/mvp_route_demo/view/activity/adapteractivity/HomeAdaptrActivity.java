@@ -42,25 +42,13 @@ public class HomeAdaptrActivity extends BaseToActivity {
 			list.add("测试");
 		}
 		adapterHome = new AdapterHome(list, R.layout.item_home);
-		adapterHome.addHeaderView("20", R.layout.header_view);
-		adapterHome.addHeaderView(R.layout.header_test_view);
-		adapterHome.addHeaderView("20", R.layout.header_view);
-		adapterHome.addHeaderView("20", R.layout.header_view);
+//		adapterHome.addHeaderView("20", R.layout.header_view);
+		adapterHome.addHeaderView("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536907624520&di=f158e113581936a518a00b1705cf3662&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F838ba61ea8d3fd1f274bd7133d4e251f95ca5f5c.jpg",R.layout.header_test_view);
+		adapterHome.addHeaderView("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536907624544&di=23454473f3d04d1f3b95f23aef8417eb&imgtype=0&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fd000baa1cd11728becf9b70ec5fcc3cec2fd2cc1.jpg",R.layout.header_test_view);
+//		adapterHome.addHeaderView("20", R.layout.header_view);
+//		adapterHome.addHeaderView("20", R.layout.header_view);
 		recyclerView.setAdapter(adapterHome);
-		findViewById(R.id.test_clcik).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Random random = new Random();
-				int i = random.nextInt(100);
-				String data = String.valueOf(i);
-				List<String> list1= new ArrayList<>();
-				list1.add(data);
-				list1.add(data);
-				list1.add(data);
 
-				adapterHome.updateHeader(list1,R.layout.header_view,0,2,1);
-			}
-		});
 	}
 
 	@Override

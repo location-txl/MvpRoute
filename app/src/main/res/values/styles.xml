@@ -8,24 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!--&lt;!&ndash;去掉原来的ActionBar&ndash;&gt;-->
-        <!--<item name="windowActionBar">false</item>-->
-        <!--<item name="android:windowNoTitle">true</item>-->
-        <!--&lt;!&ndash; API Level 22 编译要去点android &ndash;&gt;-->
-        <!--<item name="windowNoTitle">true</item>-->
 
-        <!--&lt;!&ndash; Actionbar color &ndash;&gt;-->
-        <!--<item name="colorPrimary">@color/material_deep_teal_500</item>-->
-        <!--&lt;!&ndash;Status bar color&ndash;&gt;-->
-        <!--<item name="colorPrimaryDark">@color/material_deep_teal_500</item>-->
-        <!--&lt;!&ndash;Window color&ndash;&gt;-->
-        <!--<item name="android:windowBackground">@color/dim_foreground_material_dark</item>
-
-
-
-
-        -->
-
+        <item name="android:windowAnimationStyle">@style/AcitivityEnterAndExit</item>
         <item name="colorPrimary">@color/material_deep_teal_500</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
@@ -41,5 +25,10 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:singleLine">true</item>
     </style>
-
+    <style name="AcitivityEnterAndExit" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
+    </style>
 </resources>

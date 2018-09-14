@@ -90,8 +90,6 @@ public class PictureActivity extends BaseActivity<PictureContract.Presenter> imp
 	public void showData(List<PictureBean.ResultsBean> response) {
 		data.addAll(response);
 		adapter.refresh(data);
-
-
 	}
 
 	@Override

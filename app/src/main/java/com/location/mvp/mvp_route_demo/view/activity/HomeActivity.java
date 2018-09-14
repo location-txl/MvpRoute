@@ -10,9 +10,11 @@ import android.view.View;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.HomeAdapter;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
+import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.view.activity.adapteractivity.HomeAdaptrActivity;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
+import com.location.mvp.mvproutelibrary.adapter.OnChildClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
@@ -64,8 +66,6 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 		homeAdapter = new HomeAdapter(R.layout.item_home);
 		recyclerView.setAdapter(homeAdapter);
 		homeAdapter.setOnItemClickListener(this);
-
-
 	}
 
 	@Override
@@ -73,6 +73,8 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 		String[] stringArray = getResources().getStringArray(R.array.home_list);
 		List<String> list = Arrays.asList(stringArray);
 		homeAdapter.refresh(list);
+
+		LoginResponse loginResponse = new LoginResponse();
 	}
 
 	@NonNull
