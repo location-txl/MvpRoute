@@ -7,7 +7,7 @@ android {
     }
     defaultConfig {
         applicationId "com.location.mvp.mvp_route_demo"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -30,7 +30,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':mvproutelibrary')
     compile 'com.google.code.gson:gson:2.7'
-    debugCompile 'com.amitshekhar.android:debug-db:1.0.0'
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.0'
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.lzy.widget:imagepicker:0.6.1'
     compile 'com.googlecode.mp4parser:isoparser:1.1.21'

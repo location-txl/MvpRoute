@@ -1,7 +1,9 @@
 package com.location.mvp.mvproutelibrary.http;
 
+import com.location.mvp.mvproutelibrary.IBaseBean;
 import com.location.mvp.mvproutelibrary.error.IResponseErrorMsg;
 
+import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
 /**
@@ -18,6 +20,17 @@ public class RetrofitConfig {
 
 	private IResponseErrorMsg iResponseErrorMsg;
 
+	private IRefreshToken iRefreshToken;
+	private Class<? extends IBaseBean> clazz;
+
+
+	public IRefreshToken getiRefreshToken() {
+		return iRefreshToken;
+	}
+
+	public void setiRefreshToken(IRefreshToken iRefreshToken) {
+		this.iRefreshToken = iRefreshToken;
+	}
 
 	public void setErrorResponse(IResponseErrorMsg errorResponse) {
 		this.iResponseErrorMsg = errorResponse;
@@ -27,6 +40,14 @@ public class RetrofitConfig {
 		this.baseUrl = baseUrl;
 	}
 
+
+	public void setGsonClass(Class<? extends IBaseBean> clazz) {
+		this.clazz = clazz;
+	}
+
+	public Class<? extends IBaseBean> getGsonClass() {
+		return clazz;
+	}
 
 	public String getBaseUrl() {
 		return baseUrl;

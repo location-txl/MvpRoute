@@ -9,7 +9,10 @@ import com.location.mvp.mvproutelibrary.service.ApiService;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Proxy;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -44,6 +47,11 @@ public class RetrofitClient {
 
 	private IResponseErrorMsg errorResponse;
 
+	private IRefreshToken iRefreshToken;
+
+	private ProxyHandler proxyHandler;
+
+
 
 	/**
 	 * 初始化网络
@@ -61,6 +69,11 @@ public class RetrofitClient {
 	@SuppressLint("NewApi")
 	private RetrofitClient(RetrofitConfig config) {
 		errorResponse = config.getiResponseErrorMsg();
+		iRefreshToken = config.getiRefreshToken();
+		if(config.getGsonClass()==null){
+			throw new NullPointerException("gsonClazz is null");
+		}
+		proxyHandler = new ProxyHandler(iRefreshToken);
 		OkHttpClient.Builder builder = config.getBuilder() == null ? new OkHttpClient.Builder() : config.getBuilder();
 		builder.addInterceptor(new Interceptor() {
 			@Override
@@ -94,15 +107,15 @@ public class RetrofitClient {
 			public Response intercept(Chain chain) throws IOException {
 				Request request = chain.request();
 				LogUtils.e(TAG, "url===>" + request.url().toString());
-				LogUtils.e(TAG, "method===>" + request.method());
-				LogUtils.e(TAG, "header===>" + request.headers().toString());
-				LogUtils.e(TAG, "response--------------------------------");
+//				LogUtils.e(TAG, "method===>" + request.method());
+//				LogUtils.e(TAG, "header===>" + request.headers().toString());
+//				LogUtils.e(TAG, "response--------------------------------");
 				Response proceed = chain.proceed(request);
 				okhttp3.MediaType mediaType = proceed.body().contentType();
 				String content = proceed.body().string();
-				LogUtils.e(TAG, "time" + proceed.sentRequestAtMillis());
-				LogUtils.e(TAG, "message" + proceed.message());
-				LogUtils.e(TAG, "headers===>" + proceed.headers().toString());
+//				LogUtils.e(TAG, "time" + proceed.sentRequestAtMillis());
+//				LogUtils.e(TAG, "message" + proceed.message());
+//				LogUtils.e(TAG, "headers===>" + proceed.headers().toString());
 				LogUtils.e(TAG, "body===>" + content);
 				return proceed.newBuilder()
 						.body(okhttp3.ResponseBody.create(mediaType, content))
@@ -113,7 +126,7 @@ public class RetrofitClient {
 				.client(builder.build())
 				.baseUrl(config.getBaseUrl())
 				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-				.addConverterFactory(GsonConverterFactory.create())
+				.addConverterFactory(com.location.mvp.mvproutelibrary.http.conver.GsonConverterFactory.create(config.getGsonClass()))
 				.build();
 
 	}
@@ -150,6 +163,15 @@ public class RetrofitClient {
 	}
 
 	public <T> T createApi(Class<? extends T> clazz) {
+		T t = client.create(clazz);
+		if(iRefreshToken==null){
+			return t;
+		}
+		proxyHandler.setObject(t);
+		return (T) Proxy.newProxyInstance(clazz.getClassLoader(),new Class[]{clazz},proxyHandler);
+	}
+
+	public <T> T createRefreshToken(Class<? extends T> clazz){
 		return client.create(clazz);
 	}
 

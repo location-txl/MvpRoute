@@ -17,6 +17,7 @@
 		<item>Banner</item>
 		<item>自动分发onActivityResult</item>
 		<item>retrofit</item>
+		<item>zcList</item>
 	</string-array>
 
 </resources>

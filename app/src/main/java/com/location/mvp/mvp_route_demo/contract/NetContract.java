@@ -1,5 +1,7 @@
 package com.location.mvp.mvp_route_demo.contract;
 
+import com.location.mvp.mvp_route_demo.bean.CollectListBean;
+import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseView;
 
@@ -14,10 +16,18 @@ public interface NetContract {
 
 
 	interface View extends BaseView {
-		void showMessage(String msg);
+		void loginSuccful(LoginResponse response);
+
+		void showCollectList(CollectListBean response);
+
+		void cleanLoginSuccful();
 	}
 
 	abstract class Presenter extends BasePresenter<View> {
 		public abstract void loginWanAndroid(String userNmae, String passworld);
+
+		public abstract void cleanLogin();
+
+		public abstract void getCollectList(String page,String username,String passworld);
 	}
 }

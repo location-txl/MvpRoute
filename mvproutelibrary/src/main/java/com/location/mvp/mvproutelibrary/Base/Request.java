@@ -14,9 +14,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Request {
-	  String EXERA_RESULT = "result";
+	String EXERA_RESULT = "result";
 
-	 String EXERA_REQUEST = "request";
+	String EXERA_REQUEST = "request";
+
 	int request();
 
 	int[] result() default {-1};

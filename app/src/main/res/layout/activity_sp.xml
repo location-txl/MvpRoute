@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+	android:orientation="vertical"
+	android:layout_height="match_parent">
+<include layout="@layout/baseview" android:id="@+id/sp_baseview"/>
+	<EditText
+		android:hint="输入key值"
+		android:id="@+id/sp_key"
+		android:layout_below="@id/sp_baseview"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+	<EditText
+		android:layout_below="@id/sp_baseview"
+		android:layout_toRightOf="@id/sp_key"
+		android:hint="输入value值"
+		android:id="@+id/sp_value"
+		android:layout_marginLeft="@dimen/margin_10"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+	<Button
+		android:text="保存"
+		android:id="@+id/sp_save"
+		android:layout_marginLeft="@dimen/margin_10"
+		android:layout_below="@id/sp_value"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+	<Button
+		android:layout_below="@id/sp_value"
+		android:layout_toRightOf="@id/sp_save"
+		android:id="@+id/sp_delete"
+		android:text="删除"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+	<TextView
+		android:id="@+id/sp_hint"
+
+		android:textSize="20sp"
+		android:layout_below="@id/sp_save"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+</RelativeLayout>

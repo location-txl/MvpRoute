@@ -92,6 +92,21 @@ public class LoginResponse  {
 	}
 
 	public void setCollectIds(List<Integer> collectIds) {
+
 		this.collectIds = collectIds;
+	}
+
+	@Override
+	public String toString() {
+		return "LoginResponse{" +
+				"email='" + email + '\'' +
+				", icon='" + icon + '\'' +
+				", id=" + id +
+				", password='" + password + '\'' +
+				", token='" + token + '\'' +
+				", type=" + type +
+				", username='" + username + '\'' +
+				", collectIds=" + collectIds +
+				'}';
 	}
 }

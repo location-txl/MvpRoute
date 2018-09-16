@@ -8,6 +8,7 @@ import android.view.View;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.AdapterHome;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
+import com.location.mvp.mvp_route_demo.bean.ItemTypeResponse;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
@@ -37,30 +38,21 @@ public class HomeAdaptrActivity extends BaseToActivity {
 		super.initView();
 		recyclerView = findViewById(R.id.home_adapter_recyclerView);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		List<String> list = new ArrayList<>();
+		List<ItemTypeResponse> list = new ArrayList<>();
 		for (int i = 0; i < 20; i++) {
-			list.add("测试");
+			ItemTypeResponse response = new ItemTypeResponse(i%2,"测试"+i);
+			list.add(response);
 		}
 		adapterHome = new AdapterHome(list, R.layout.item_home);
-		adapterHome.addHeaderView("20", R.layout.header_view);
-		adapterHome.addHeaderView(R.layout.header_test_view);
-		adapterHome.addHeaderView("20", R.layout.header_view);
-		adapterHome.addHeaderView("20", R.layout.header_view);
-		recyclerView.setAdapter(adapterHome);
-		findViewById(R.id.test_clcik).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Random random = new Random();
-				int i = random.nextInt(100);
-				String data = String.valueOf(i);
-				List<String> list1= new ArrayList<>();
-				list1.add(data);
-				list1.add(data);
-				list1.add(data);
+		//绑定多布局
+		adapterHome.addType(0,R.layout.item_home);
+		adapterHome.addType(1,R.layout.item_button);
+		adapterHome.setEmptyModle();
 
-				adapterHome.updateHeader(list1,R.layout.header_view,0,2,1);
-			}
-		});
+		adapterHome.addHeaderView("123",R.layout.header_test_view);
+		adapterHome.addHeaderView("123",R.layout.header_test_view);
+		recyclerView.setAdapter(adapterHome);
+
 	}
 
 	@Override

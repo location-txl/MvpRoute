@@ -73,7 +73,7 @@ public class ExceptionHandle {
 			ex.msg = "网络连接异常，请检查您的网络状态";
 		} else {
 			ex = new ResponeThrowable(e, ERROR.UNKNOWN);
-			ex.msg = "未知错误";
+			ex.msg ="未知错误" ;
 		}
 		return ex;
 	}
@@ -86,6 +86,7 @@ public class ExceptionHandle {
 		public ResponeThrowable(Throwable throwable, int result) {
 			super(throwable);
 			this.result = result;
+
 		}
 	}
 
