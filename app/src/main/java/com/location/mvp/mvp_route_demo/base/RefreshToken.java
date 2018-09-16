@@ -37,13 +37,10 @@ import okhttp3.MultipartBody;
  */
 
 public class RefreshToken implements IRefreshToken {
-	private AtomicBoolean refresh = new AtomicBoolean(false);
-	private long time;
-    private PublishSubject<LoginResponse> publishSubject;
 	@Override
 	public synchronized Observable refreshTokenSuccful() {
 			LoginService api = RetrofitClient.getInstance().createRefreshToken(LoginService.class);
-			return api.login("tianxiaolong", "tianxiaolong");
+			return api.login("tianxiaolong", "123");
 
 	}
 

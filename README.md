@@ -1,27 +1,37 @@
-# Mvp_Route_Demo
-
-![image](https://travis-ci.org/Alamofire/Alamofire.svg?branch=master)
-![image](https://img.shields.io/badge/API-14+-brightgreen.svg)
-![image](https://img.shields.io/badge/Mvp_Route-v1.0.0-brightgreen.svg)
+# Mvp_Route
 
 Android项目开发框架 基于Mvp
 [bata测试版](https://github.com/TLocation/Mvp_Route_Demo/tree/dev)
+
 ## 简介
-  1. 基础Presenter View BaseActivity BaseFragment 利用RxJava快速绑定生命周期
-  2. Retrofit和RxJava完美封装 
-     1. 可以自主下载好Modle使用它DataSouce实现 自行扩展
-     2.  使用内置ParamsBuilder实现网络请求（扩展性小）
-  3. RecyclerView万能适配器  支持EmptyView HeaderView FooterView 刷新动画
-     多布局  友好扩展ViewHolder
-  4. 封装多种工具类 LogUtils SpUtils SpanUtils ToastUtils FragmentUtils
-  5. 封装Popwindow像dialog一样使用popwindow
+   MvpRoute是一款轻量级的项目开发框架
+
+1.   包含了Mvp框架的简易分装  实现了  自动注册  Base类  对软键盘  Activity跳转回传实现了二次封装
+
+2.   基础网络框架（Retrofit+RxJava） 自定义异常处理   cookie验证  自动刷新Token等多种功能
+
+3.   基础Recycler适配器  比原生RecyclerAdapter少了50%代码  支持头布局  尾部局  空布局  自定义Holder
+
+    头部 尾部 item item子view点击事件  自定义头部复用 Group分组等多种样式
+
+4.   基础BobPopWindow  仿Dialog样式Popwindow 支持窗口蒙层  采用构建者模式 链式调用
+
+5.   基础 SharedPreferences 工具类  Sputils 简化sp存储方式 支持存储未序列化的实体类对象 
+
+6.   基础FragmentUtils 工具类  简化Fragment使用  一键实现app主页多Fragment样式  仿Glide调用方式 防止调用冲突 异常
+
+7.   基础SpanUtils 工具类  链式调用  多种textView样式 优化布局层次 
+
+8.   BannerVIew（测试） 自定义轮播图  采用RxJava调度 支持页面切换长度 切换时间  自定义指示器
+
+
 
 ## 使用的第三方
 
 
 
 
-```
+```groovy
 compile 'io.reactivex.rxjava2:rxjava:2.1.0'
 
 compile 'io.reactivex.rxjava2:rxandroid:2.0.1'

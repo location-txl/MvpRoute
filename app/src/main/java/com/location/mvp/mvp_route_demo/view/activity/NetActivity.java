@@ -31,10 +31,10 @@ import io.reactivex.functions.Function;
  */
 
 public class NetActivity extends BaseToActivity<NetContract.Presenter> implements NetContract.View {
+
 	@Override
 	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
 		ToastUtils.showShort(baseThrowable.msg);
-		LogUtils.d("失败===>" + baseThrowable.msg);
 	}
 
 	@Override
@@ -71,58 +71,6 @@ public class NetActivity extends BaseToActivity<NetContract.Presenter> implement
 					presenter.getCollectList("0",username,passwrold);
 
 				}
-
-
-
-//				Observable.just("1")
-//
-//
-//						.retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
-//							@Override
-//							public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
-//								return throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
-//									@Override
-//									public ObservableSource<?> apply(Throwable throwable) throws Exception {
-//										LogUtils.d("错误");
-//									   SpUtils.getInstance().putValue("test","123");
-////										return Observable.just("!233");
-//										return Observable.error(new RuntimeException("cuowu"));
-//									}
-//								});
-//							}
-//						})
-//						.map(new Function<String, String>() {
-//							@Override
-//							public String apply(String s) throws Exception {
-//								if(TextUtils.isEmpty(SpUtils.getInstance().getString("test"))){
-//
-//									LogUtils.d("map");
-//									throw new RuntimeException("失败");
-//								}
-//								return s;
-//							}
-//						})
-//						.subscribe(new Observer<Object>() {
-//							@Override
-//							public void onSubscribe(Disposable d) {
-//
-//							}
-//
-//							@Override
-//							public void onNext(Object o) {
-//ToastUtils.showShort("onnext"+o.toString());
-//							}
-//
-//							@Override
-//							public void onError(Throwable e) {
-//ToastUtils.showShort("error");
-//							}
-//
-//							@Override
-//							public void onComplete() {
-//
-//							}
-//						});
 			}
 		});
 	}
@@ -149,6 +97,12 @@ public class NetActivity extends BaseToActivity<NetContract.Presenter> implement
 
 	@Override
 	public void cleanLoginSuccful() {
+
 		ToastUtils.showShort("清除登录状态成功");
+	}
+
+	@Override
+	public int[] hideSoftByEditViewIds() {
+		return super.hideSoftByEditViewIds();
 	}
 }

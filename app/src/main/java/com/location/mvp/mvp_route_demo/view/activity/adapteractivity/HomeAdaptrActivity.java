@@ -8,6 +8,7 @@ import android.view.View;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.AdapterHome;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
+import com.location.mvp.mvp_route_demo.bean.ItemTypeResponse;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
@@ -37,16 +38,19 @@ public class HomeAdaptrActivity extends BaseToActivity {
 		super.initView();
 		recyclerView = findViewById(R.id.home_adapter_recyclerView);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		List<String> list = new ArrayList<>();
+		List<ItemTypeResponse> list = new ArrayList<>();
 		for (int i = 0; i < 20; i++) {
-			list.add("测试");
+			ItemTypeResponse response = new ItemTypeResponse(i%2,"测试"+i);
+			list.add(response);
 		}
 		adapterHome = new AdapterHome(list, R.layout.item_home);
-//		adapterHome.addHeaderView("20", R.layout.header_view);
-		adapterHome.addHeaderView("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536907624520&di=f158e113581936a518a00b1705cf3662&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F838ba61ea8d3fd1f274bd7133d4e251f95ca5f5c.jpg",R.layout.header_test_view);
-		adapterHome.addHeaderView("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536907624544&di=23454473f3d04d1f3b95f23aef8417eb&imgtype=0&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fd000baa1cd11728becf9b70ec5fcc3cec2fd2cc1.jpg",R.layout.header_test_view);
-//		adapterHome.addHeaderView("20", R.layout.header_view);
-//		adapterHome.addHeaderView("20", R.layout.header_view);
+		//绑定多布局
+		adapterHome.addType(0,R.layout.item_home);
+		adapterHome.addType(1,R.layout.item_button);
+		adapterHome.setEmptyModle();
+
+		adapterHome.addHeaderView("123",R.layout.header_test_view);
+		adapterHome.addHeaderView("123",R.layout.header_test_view);
 		recyclerView.setAdapter(adapterHome);
 
 	}

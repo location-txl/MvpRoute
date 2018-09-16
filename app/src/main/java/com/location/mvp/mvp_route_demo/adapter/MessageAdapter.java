@@ -28,4 +28,9 @@ public class MessageAdapter extends BaseAdapter<NoMessageBean> {
 		holder.setText(R.id.item_content, data.getName());
 
 	}
+
+	@Override
+	public void onBindHeaderViewHolder(ViewHolder viewHolder, @Nullable Object response, int layout) {
+
+	}
 }

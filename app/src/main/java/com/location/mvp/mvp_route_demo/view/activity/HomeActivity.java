@@ -2,7 +2,9 @@ package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.HardwarePropertiesManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.location.mvp.mvp_route_demo.view.activity.adapteractivity.HomeAdaptrA
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.adapter.OnChildClickListener;
+import com.location.mvp.mvproutelibrary.adapter.OnHeaderClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
@@ -66,6 +69,19 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 		homeAdapter = new HomeAdapter(R.layout.item_home);
 		recyclerView.setAdapter(homeAdapter);
 		homeAdapter.setOnItemClickListener(this);
+		homeAdapter.setOnChildClickListener(R.id.id_1, new OnChildClickListener() {
+			@Override
+			public void onChildClcik(ViewHolder viewHolder, View view, int position) {
+
+			}
+		});
+		homeAdapter.setOnHeaderClickListener(new OnHeaderClickListener() {
+			@Override
+			public void onHeaderClick(int layout, View view, @Nullable Object data, int position, boolean isHeader) {
+
+			}
+		});
+
 	}
 
 	@Override
