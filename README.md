@@ -48,7 +48,6 @@ compile 'com.squareup.retrofit2:converter-gson:2.2.0'
 ---|---
 基础组件base|[使用方式](https://github.com/TLocation/Mvp_Route_Demo/blob/master/README/README.md)
 网络框架  |[Souce方式](https://github.com/TLocation/Mvp_Route_Demo/blob/master/README/net.md)
-   ||[Builder方式](https://github.com/TLocation/Mvp_Route_Demo/blob/master/README/paramBuilder.md)
 适配器|[BaseAdapter](https://github.com/TLocation/Mvp_Route_Demo/blob/master/README/baseAdapter.md)
 工具类|[Utils](https://github.com/TLocation/Mvp_Route_Demo/blob/master/README/utils.md)
 View |[BobPopwindow](https://github.com/TLocation/Mvp_Route_Demo/blob/master/README/BopPopwindow.md)

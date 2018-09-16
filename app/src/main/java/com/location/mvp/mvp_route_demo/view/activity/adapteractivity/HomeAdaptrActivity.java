@@ -47,7 +47,6 @@ public class HomeAdaptrActivity extends BaseToActivity {
 		//绑定多布局
 		adapterHome.addType(0,R.layout.item_home);
 		adapterHome.addType(1,R.layout.item_button);
-		adapterHome.setEmptyModle();
 
 		adapterHome.addHeaderView("123",R.layout.header_test_view);
 		adapterHome.addHeaderView("123",R.layout.header_test_view);

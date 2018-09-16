@@ -3,11 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Mvp_Route_Demo.iml" filepath="$PROJECT_DIR$/Mvp_Route_Demo.iml" />
-      <module fileurl="file://D:\project\Mvp_Route_Demo\Mvp_Route_Demo.iml" filepath="D:\project\Mvp_Route_Demo\Mvp_Route_Demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\project\Mvp_Route_Demo\app\app.iml" filepath="D:\project\Mvp_Route_Demo\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvproutelibrary/mvproutelibrary.iml" filepath="$PROJECT_DIR$/mvproutelibrary/mvproutelibrary.iml" />
-      <module fileurl="file://D:\project\Mvp_Route_Demo\mvproutelibrary\mvproutelibrary.iml" filepath="D:\project\Mvp_Route_Demo\mvproutelibrary\mvproutelibrary.iml" />
     </modules>
   </component>
 </project>
