@@ -12,7 +12,7 @@ Android项目开发框架 基于Mvp
 
 3.   基础Recycler适配器  比原生RecyclerAdapter少了50%代码  支持头布局  尾部局  空布局  自定义Holder
 
-    头部 尾部 item item子view点击事件  自定义头部复用 Group分组等多种样式
+       头部 尾部 item item子view点击事件  自定义头部复用 Group分组等多种样式
 
 4.   基础BobPopWindow  仿Dialog样式Popwindow 支持窗口蒙层  采用构建者模式 链式调用
 
