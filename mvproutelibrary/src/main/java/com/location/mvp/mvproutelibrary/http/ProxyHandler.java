@@ -16,7 +16,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
 /**
- * 项目:趣租部落
+ * 项目:MvpRoute
  *
  * @author：location time：2018/9/2 12:52
  * description：
@@ -61,7 +61,7 @@ public class ProxyHandler implements InvocationHandler {
 
 										synchronized (ProxyHandler.class) {
                                               if((System.currentTimeMillis()-refreshTime)<1000){
-												  LogUtils.d("retrofit", "延迟分发");
+
 												  return Observable.timer(50, TimeUnit.MILLISECONDS);
 											  }else{
                                                   refreshTime = System.currentTimeMillis();
@@ -70,12 +70,10 @@ public class ProxyHandler implements InvocationHandler {
 
 										}
 									} else {
-										LogUtils.d("test", "不是异常");
 										return Observable.error(throwable);
 									}
 
 								} else {
-									LogUtils.d("test", "不是异常---");
 									return Observable.error(throwable);
 								}
 

@@ -12,6 +12,8 @@ import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
+import java.time.temporal.ValueRange;
+
 import okhttp3.OkHttpClient;
 
 /**
@@ -40,5 +42,17 @@ public class App extends Application {
 		ToastUtils.init(this);
 		SpUtils.init(this);
 		new LogUtils.LogUtilsBuilder().setPrintClass(false).setPrintLine(false);
+	}
+
+	public void ss() {
+		boolean isguide = SpUtils.getInstance().getBoolean("isguide");
+		if (!isguide) {
+
+			//开启引导蒙层
+
+		}
+
+		SpUtils.getInstance().putValue("isguide", true);
+
 	}
 }

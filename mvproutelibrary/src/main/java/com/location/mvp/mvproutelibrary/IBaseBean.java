@@ -9,11 +9,27 @@ package com.location.mvp.mvproutelibrary;
 
 public interface IBaseBean<T> {
 
+	/**
+	 * 返回你想要的数据源
+	 * @return
+	 */
 	T getData();
 
+	/**
+	 * 是否请求成功
+	 * @return
+	 */
 	boolean isOk();
 
+	/**
+	 * 错误原因
+	 * @return
+	 */
 	String getErrorMsg();
 
+	/**
+	 * 返回状态码
+	 * @return
+	 */
 	int   getStatusCode();
 }

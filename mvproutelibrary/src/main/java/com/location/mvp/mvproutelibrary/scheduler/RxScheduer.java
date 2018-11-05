@@ -28,6 +28,12 @@ import io.reactivex.schedulers.Schedulers;
 public class RxScheduer {
 
 
+	/**
+	 * 1.0.2版本之后废弃
+	 *  新版自定义convertFactory已经解决
+	 * @param <T>
+	 */
+	@Deprecated
 	public static class map<T> implements Function<IBaseBean<T>, T> {
 
 		@Override
@@ -41,7 +47,12 @@ public class RxScheduer {
 	}
 
 
-
+	/**
+	 * 线程调度
+	 * 1.0.2版本之后废弃
+	 * @param <T>
+	 */
+	@Deprecated
 	public static class compose<T> implements ObservableTransformer<IBaseBean<T>, T> {
 		@Override
 		public ObservableSource<T> apply(Observable upstream) {
@@ -49,6 +60,10 @@ public class RxScheduer {
 		}
 	}
 
+	/**
+	 * 线程调度
+	 * @param <T>
+	 */
 	public static class IO_MAIN<T> implements ObservableTransformer<T, T> {
 
 		@Override
@@ -58,14 +73,7 @@ public class RxScheduer {
 	}
 
 
-	public static <T> Function<Throwable, ObservableSource<T>> handlerException() {
-		return new Function<Throwable, ObservableSource<T>>() {
-			@Override
-			public ObservableSource<T> apply(Throwable throwable) throws Exception {
-				return Observable.error(ExceptionHandle.handleException(throwable));
-			}
-		};
-	}
+
 
 
 	public static class HandlerException<T> implements Function<Throwable, Observable<T>> {
@@ -73,10 +81,6 @@ public class RxScheduer {
 		@Override
 		public Observable<T> apply(Throwable throwable) throws Exception {
 			ExceptionHandle.ResponeThrowable responeThrowable = ExceptionHandle.handleException(throwable);
-			String msg = responeThrowable.msg;
-			if(msg.contains("请先登录")){
-
-			}
 			return Observable.error(responeThrowable);
 		}
 	}

@@ -13,7 +13,18 @@ import io.reactivex.Observable;
  */
 
 public interface IRefreshToken {
+
+	/**
+	 * 执行刷新token
+	 * @return
+	 */
 	Observable refreshTokenSuccful();
 
+	/**
+	 * 是否是token过期异常
+	 * @param code
+	 * @param errorMsg
+	 * @return
+	 */
 	boolean isTokenException(int code,String errorMsg);
 }

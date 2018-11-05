@@ -14,7 +14,7 @@ maven { url 'https://dl.bintray.com/location/maven/' }
 app的build.gradle添加
 
 ```groovy
-implementation 'com.location:mvproute:1.0.2'
+implementation 'com.location.mvp:mvproute:1.0.0'
 ```
 
 ## 简介

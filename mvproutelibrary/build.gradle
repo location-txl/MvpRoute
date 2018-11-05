@@ -1,14 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply from: 'bintray.gradle'
 
-publish {
-    userOrg = 'location'//bintray.com用户名
-    groupId = 'com.location'//jcenter上的路径
-    artifactId = 'mvproute'//项目名称
-    publishVersion = '1.0.2'//版本号
-    desc = 'this is for mvproute'//描述，不重要
-    website = 'https://github.com/TLocation/Mvp_Route_Demo'//网站，最好有，不重要
-}
+
 android {
     lintOptions {
         abortOnError false
@@ -51,5 +44,5 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.4.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.google.code.gson:gson:2.8.5'
 }
