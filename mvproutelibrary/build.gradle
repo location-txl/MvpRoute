@@ -1,6 +1,19 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
+publish {
+    userOrg = 'location'//bintray.com用户名
+    groupId = 'com.location'//jcenter上的路径
+    artifactId = 'mvproute'//项目名称
+    publishVersion = '1.0.2'//版本号
+    desc = 'this is for mvproute'//描述，不重要
+    website = 'https://github.com/TLocation/Mvp_Route_Demo'//网站，最好有，不重要
+}
 android {
+    lintOptions {
+        abortOnError false
+    }
+
     compileSdkVersion 26
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
@@ -24,11 +37,11 @@ android {
         }
     }
 
+
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support:design:26.1.0'
     testImplementation 'junit:junit:4.12'

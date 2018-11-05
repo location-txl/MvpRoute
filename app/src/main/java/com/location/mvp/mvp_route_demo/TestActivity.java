@@ -151,38 +151,7 @@ public class TestActivity extends AppCompatActivity implements OnItemClickListen
 
 		final List<OerBean> list = new ArrayList<>();
 
-		io.reactivex.Observable.fromIterable(testBean.getResult().getUnitList())
-				.doOnNext(s -> {
-					LogUtils.d("zhixing");
-					OerBean oerBean = new OerBean(s.getUnitName(), 1);
-					list.add(oerBean);
-				})
-				.flatMap(unitListBean -> io.reactivex.Observable.fromIterable(unitListBean.getLessonList()).map(lessonListBean -> {
-					OerBean oerBean = new OerBean(lessonListBean.getLessonName(), lessonListBean.getLessonId(), 2);
-					return oerBean;
-				})).subscribe(new Observer<OerBean>() {
-			@Override
-			public void onSubscribe(Disposable d) {
 
-			}
-
-			@Override
-			public void onNext(OerBean oerBean) {
-				list.add(oerBean);
-			}
-
-			@Override
-			public void onError(Throwable e) {
-
-			}
-
-			@Override
-			public void onComplete() {
-				LogUtils.d("jihe1size===>" + list.size());
-				testAdapter.refresh(list);
-
-			}
-		});
 	}
 
 	private View lastView;
