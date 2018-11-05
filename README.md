@@ -3,6 +3,20 @@
 Android项目开发框架 基于Mvp
 [bata测试版](https://github.com/TLocation/Mvp_Route_Demo/tree/dev)
 
+## 导入
+
+项目的build.gradle添加
+
+```groovy
+maven { url 'https://dl.bintray.com/location/maven/' }
+```
+
+app的build.gradle添加
+
+```groovy
+implementation 'com.location:mvproute:1.0.2'
+```
+
 ## 简介
    MvpRoute是一款轻量级的项目开发框架
 
@@ -24,19 +38,6 @@ Android项目开发框架 基于Mvp
 
 8.   BannerVIew（测试） 自定义轮播图  采用RxJava调度 支持页面切换长度 切换时间  自定义指示器
 
-## 导入
-
-项目的build.gradle添加
-
-```groovy
-maven { url 'https://dl.bintray.com/location/maven/' }
-```
-
-app的build.gradle添加
-
-```groovy
-implementation 'com.location:mvproute:1.0.2'
-```
 
 ## 使用的第三方
 
