@@ -4,15 +4,6 @@ Android项目开发框架 基于Mvp
 [bata测试版](https://github.com/TLocation/Mvp_Route_Demo/tree/dev)
 
 ## 导入
-
-项目的build.gradle添加
-
-```groovy
-maven { url 'https://dl.bintray.com/location/maven/' }
-```
-
-app的build.gradle添加
-
 ```groovy
 implementation 'com.location.mvp:mvproute:1.0.0'
 ```
