@@ -25,9 +25,9 @@ implementation 'com.location.mvp:mvproute:1.0.0'
 
 6.   基础FragmentUtils 工具类  简化Fragment使用  一键实现app主页多Fragment样式  仿Glide调用方式 防止调用冲突 异常
 
-7.   基础SpanUtils 工具类  链式调用  多种textView样式 优化布局层次 
+7.   基础SpanUtils 工具类  链式调用  多种文本样式 优化布局层次 
 
-8.   BannerVIew（测试） 自定义轮播图  采用RxJava调度 支持页面切换长度 切换时间  自定义指示器
+8.   BannerView（测试） 自定义轮播图  采用RxJava调度 支持页面切换长度 切换时间  自定义指示器
 
 
 ## 使用的第三方
@@ -44,7 +44,7 @@ compile 'com.squareup.retrofit2:retrofit:2.4.0'
 
 compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
-compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+compile 'com.google.code.gson:gson:2.8.5'
 ```
 
 ## 目录
