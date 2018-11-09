@@ -12,10 +12,21 @@ import android.content.Context;
 public interface INetWorkLoadingView {
 
 
+	/**
+	 * 初始化弹窗
+	 *
+	 * @param context
+	 */
 	void createLoadingView(Context context);
 
+	/**
+	 * 显示弹窗
+	 */
 	void showLoading();
 
 
+	/**
+	 * 关闭弹窗
+	 */
 	void dismissLoading();
 }

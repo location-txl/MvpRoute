@@ -40,7 +40,7 @@ public class App extends Application {
 		config.setiRefreshToken(new RefreshToken());
 		config.setGsonClass(BaseData.class);
 		config.setBuilder(builder);
-		config.setLodingView(new LoadingView());
+//		config.setLodingView(new LoadingView());
 		RetrofitClient.init(config);
 		ToastUtils.init(this);
 		SpUtils.init(this);
