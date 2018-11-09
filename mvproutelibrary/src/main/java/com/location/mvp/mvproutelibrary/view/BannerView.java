@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 location
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.location.mvp.mvproutelibrary.view;
 
 import android.content.Context;
@@ -38,10 +53,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 /**
- * 项目:Mvp_Route_Demo
- * author：location
- * time：2018/6/6 18:31
- * description： 自定义轮播图 基于RxJava
+ * 自定义轮播图 基于RxJava
  * 默认轮播图标志位在中间  查看此方法 @see {@link #BannerView(Context, AttributeSet, int)}
  * 需要设定其他位置的需要自己编写对外方法提供位置
  * 下方table是使用的radiobutton

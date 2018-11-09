@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 location
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.location.mvp.mvproutelibrary.error;
 
 import android.net.ParseException;
@@ -14,7 +29,7 @@ import retrofit2.HttpException;
 
 
 /**
- * @author location
+ * 默认的异常类
  */
 public class ExceptionHandle {
 
@@ -73,7 +88,7 @@ public class ExceptionHandle {
 			ex.msg = "网络连接异常，请检查您的网络状态";
 		} else {
 			ex = new ResponeThrowable(e, ERROR.UNKNOWN);
-			ex.msg ="未知错误" ;
+			ex.msg = "未知错误";
 		}
 		return ex;
 	}
