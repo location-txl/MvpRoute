@@ -2,9 +2,8 @@ package com.location.mvp.mvproutelibrary.scheduler;
 
 import android.text.TextUtils;
 
-import com.location.mvp.mvproutelibrary.IBaseBean;
+import com.location.mvp.mvproutelibrary.http.IBaseBean;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.error.IResponseErrorMsg;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 
 import io.reactivex.Observable;

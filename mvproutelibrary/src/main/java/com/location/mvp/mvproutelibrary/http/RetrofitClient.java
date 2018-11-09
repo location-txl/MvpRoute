@@ -46,11 +46,15 @@ public class RetrofitClient {
 
 	private IResponseErrorMsg errorResponse;
 
+	private INetWorkLoadingView loadingView;
+
 	private IRefreshToken iRefreshToken;
 
 	private ProxyHandler proxyHandler;
 
-
+	public INetWorkLoadingView getLoadingView() {
+		return loadingView;
+	}
 
 	/**
 	 * 初始化网络
@@ -68,8 +72,9 @@ public class RetrofitClient {
 	@SuppressLint("NewApi")
 	private RetrofitClient(RetrofitConfig config) {
 		errorResponse = config.getiResponseErrorMsg();
+		loadingView = config.getLoadingView();
 		iRefreshToken = config.getiRefreshToken();
-		if(config.getGsonClass()==null){
+		if (config.getGsonClass() == null) {
 			throw new NullPointerException("gsonClazz is null");
 		}
 		proxyHandler = new ProxyHandler(iRefreshToken);
@@ -163,14 +168,14 @@ public class RetrofitClient {
 
 	public <T> T createApi(Class<? extends T> clazz) {
 		T t = client.create(clazz);
-		if(iRefreshToken==null){
+		if (iRefreshToken == null) {
 			return t;
 		}
 		proxyHandler.setObject(t);
-		return (T) Proxy.newProxyInstance(clazz.getClassLoader(),new Class[]{clazz},proxyHandler);
+		return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, proxyHandler);
 	}
 
-	public <T> T createRefreshToken(Class<? extends T> clazz){
+	public <T> T createRefreshToken(Class<? extends T> clazz) {
 		return client.create(clazz);
 	}
 

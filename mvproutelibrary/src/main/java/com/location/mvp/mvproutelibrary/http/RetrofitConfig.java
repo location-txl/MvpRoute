@@ -1,9 +1,7 @@
 package com.location.mvp.mvproutelibrary.http;
 
-import com.location.mvp.mvproutelibrary.IBaseBean;
 import com.location.mvp.mvproutelibrary.error.IResponseErrorMsg;
 
-import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
 /**
@@ -21,8 +19,10 @@ public class RetrofitConfig {
 	private IResponseErrorMsg iResponseErrorMsg;
 
 	private IRefreshToken iRefreshToken;
+
 	private Class<? extends IBaseBean> clazz;
 
+	private INetWorkLoadingView loadingView;
 
 	public IRefreshToken getiRefreshToken() {
 		return iRefreshToken;
@@ -67,5 +67,13 @@ public class RetrofitConfig {
 
 	public IResponseErrorMsg getiResponseErrorMsg() {
 		return iResponseErrorMsg;
+	}
+
+	public void setLodingView(INetWorkLoadingView lodingView) {
+		this.loadingView = lodingView;
+	}
+
+	public INetWorkLoadingView getLoadingView() {
+		return loadingView;
 	}
 }

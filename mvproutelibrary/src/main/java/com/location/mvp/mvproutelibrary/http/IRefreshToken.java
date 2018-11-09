@@ -1,7 +1,5 @@
 package com.location.mvp.mvproutelibrary.http;
 
-import com.location.mvp.mvproutelibrary.IBaseBean;
-
 import io.reactivex.Observable;
 
 

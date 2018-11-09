@@ -1,6 +1,6 @@
 package com.location.mvp.mvp_route_demo.base;
 
-import com.location.mvp.mvproutelibrary.IBaseBean;
+import com.location.mvp.mvproutelibrary.http.IBaseBean;
 
 /**
  * 项目:MvpRoute

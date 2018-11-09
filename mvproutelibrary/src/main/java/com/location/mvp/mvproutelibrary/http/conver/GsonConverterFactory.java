@@ -19,7 +19,7 @@ package com.location.mvp.mvproutelibrary.http.conver;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
-import com.location.mvp.mvproutelibrary.IBaseBean;
+import com.location.mvp.mvproutelibrary.http.IBaseBean;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;

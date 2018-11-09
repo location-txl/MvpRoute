@@ -31,5 +31,7 @@ public interface SpanContract {
 		public abstract void setForgetTextColor(String message);
 
 		public abstract  void setSpanClick(String message);
+
+
 	}
 }

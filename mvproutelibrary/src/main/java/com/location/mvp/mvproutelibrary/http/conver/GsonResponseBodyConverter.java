@@ -19,7 +19,7 @@ package com.location.mvp.mvproutelibrary.http.conver;
 import android.text.TextUtils;
 
 import com.google.gson.TypeAdapter;
-import com.location.mvp.mvproutelibrary.IBaseBean;
+import com.location.mvp.mvproutelibrary.http.IBaseBean;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 
