@@ -50,21 +50,7 @@ public class AdapterList<E> extends ArrayList<E> {
 
 	}
 
-	@Override
-	public boolean addAll(Collection<? extends E> c) {
-//        if(listener!=null){
-//            int i = modCount + c.size();
-//            Iterator<? extends E> iterator = c.iterator();
-//            int index = modCount;
-//            while (iterator.hasNext()) {
-//                E next = iterator.next();
-//                listener.add(index, next,i);
-//                index++;
-//            }
-//        }
 
-		return super.addAll(c);
-	}
 
 	@Override
 	public E remove(int index) {

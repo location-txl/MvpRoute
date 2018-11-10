@@ -3,7 +3,7 @@ package com.location.mvp.mvp_route_demo;
 import android.support.annotation.Nullable;
 
 import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;
-import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
+import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
 
 /**
  * 项目:趣租部落
@@ -12,14 +12,14 @@ import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
  * description：
  */
 
-public class TestAdapter extends BaseAdapter<OerBean> {
+public class TestAdapter extends BaseAdapter<OerBean,BaseViewHolder> {
 
 	public TestAdapter(int layout) {
 		super(layout);
 	}
 
 	@Override
-	public void conver(ViewHolder holder, @Nullable OerBean data, int viewType) {
+	public void conver(BaseViewHolder holder, @Nullable OerBean data, int viewType) {
 		switch (viewType){
 			case 1:
 				holder.setText(R.id.item_title,data.getName());

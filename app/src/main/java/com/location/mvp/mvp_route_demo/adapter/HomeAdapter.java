@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;
-import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
+import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
 
 /**
  * 项目名称: MvpRoute
@@ -17,7 +17,7 @@ import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
  */
 
 
-public class HomeAdapter extends BaseAdapter<String> {
+public class HomeAdapter extends BaseAdapter<String,BaseViewHolder> {
 
 
     public HomeAdapter(int layout) {
@@ -25,7 +25,7 @@ public class HomeAdapter extends BaseAdapter<String> {
     }
 
     @Override
-    public void conver(ViewHolder holder, @Nullable String data, int viewType) {
+    public void conver(BaseViewHolder holder, @Nullable String data, int viewType) {
         holder.setText(R.id.home_text, data);
     }
 }

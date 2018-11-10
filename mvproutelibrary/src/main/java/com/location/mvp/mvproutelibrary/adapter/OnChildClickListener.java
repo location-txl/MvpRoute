@@ -21,12 +21,12 @@ import android.view.View;
 /**
  * 子view的点击事件
  */
-public interface OnChildClickListener {
+public interface OnChildClickListener<V extends BaseViewHolder> {
 	/**
 	 * 子view的点击事件
 	 * @param viewHolder viewholer
 	 * @param view    点击的view
 	 * @param position 当前的索引
 	 */
-	void onChildClcik(ViewHolder viewHolder, View view, int position);
+	void onChildClcik(V viewHolder, View view, int position);
 }

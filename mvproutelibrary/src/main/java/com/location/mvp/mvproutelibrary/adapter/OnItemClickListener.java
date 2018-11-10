@@ -21,6 +21,6 @@ import android.view.View;
  * item点击事件
  */
 
-public interface OnItemClickListener  {
-	void onItemClick(ViewHolder viewHolder, View view, int position);
+public interface OnItemClickListener<V extends BaseViewHolder>  {
+	void onItemClick(V viewHolder, View view, int position);
 }

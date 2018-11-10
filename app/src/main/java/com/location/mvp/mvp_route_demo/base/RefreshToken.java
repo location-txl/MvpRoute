@@ -15,11 +15,13 @@ import io.reactivex.Observable;
 
 public class RefreshToken implements IRefreshToken {
 	@Override
-	public synchronized Observable refreshTokenSuccful() {
+	public synchronized Observable refreshToken() {
 			LoginService api = RetrofitClient.getInstance().createRefreshToken(LoginService.class);
 			return api.login("tianxiaolong", "123");
 
 	}
+
+
 
 	@Override
 	public boolean isTokenException(int code, String errorMsg) {

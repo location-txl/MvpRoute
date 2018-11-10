@@ -34,8 +34,7 @@ public class NetPresenter extends NetContract.Presenter {
 	@Override
 	public void loginWanAndroid(String userNmae, String passworld) {
 		loginService.login(userNmae, passworld)
-				.onErrorResumeNext(new RxScheduer.HandlerException<LoginResponse>())
-				.compose(new RxScheduer.IO_MAIN<LoginResponse>())
+				.compose(new RxScheduer.compose<LoginResponse>())
 				.subscribe(new BaseObserver<LoginResponse>(rxManager, view) {
 					@Override
 					public void onNext(LoginResponse loginResponse) {
@@ -65,8 +64,7 @@ public class NetPresenter extends NetContract.Presenter {
 	@Override
 	public void getCollectList(String page,String userNmae,String passwrold) {
            loginService.getCollect(page)
-				   .compose(new RxScheduer.IO_MAIN<CollectListBean>())
-				   .onErrorResumeNext(new RxScheduer.HandlerException<CollectListBean>())
+				   .compose(new RxScheduer.compose<CollectListBean>())
 				   .subscribe(new BaseObserver<CollectListBean>(rxManager,view) {
 					   @Override
 					   public void onNext(CollectListBean collectListBean) {

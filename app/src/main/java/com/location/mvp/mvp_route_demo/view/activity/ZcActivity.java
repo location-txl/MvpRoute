@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.location.mvp.mvp_route_demo.R;
@@ -16,10 +15,7 @@ import com.location.mvp.mvp_route_demo.bean.ZcDataBean;
 import com.location.mvp.mvp_route_demo.contract.ZcContract;
 import com.location.mvp.mvp_route_demo.presenter.ZcPresenter;
 import com.location.mvp.mvproutelibrary.Base.Request;
-import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
-import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
