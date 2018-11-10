@@ -49,6 +49,7 @@ import java.util.Set;
 
 /**
  * 二次封装的RecyclerView适配器
+ *
  * @param <T>
  */
 
@@ -94,7 +95,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	/**
 	 * 标记type类型
 	 */
-	public static final int TYPE_EMPTY = -999999999;
+	private static final int TYPE_EMPTY = -999999999;
 	/**
 	 * 默认类型
 	 */
@@ -153,6 +154,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	}
 
 
+	/**
+	 * item点击接口
+	 */
 	private OnItemClickListener listener;
 
 	/**
@@ -257,16 +261,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	}
 
 
-		public void updateAllHeader(List datas, @LayoutRes int layouts) {
+	public void updateAllHeader(List datas, @LayoutRes int layouts) {
 		Integer[] index = new Integer[datas.size()];
-		for(int i=0;i<datas.size();i++){
+		for (int i = 0; i < datas.size(); i++) {
 			index[i] = i;
 		}
 		refreshHeader(datas, layouts, index);
 	}
 
 	private void refreshHeader(List datas, @LayoutRes int layouts, Integer[] index) {
-		if (index==null||datas.size() != index.length) {
+		if (index == null || datas.size() != index.length) {
 			return;
 		}
 
@@ -523,11 +527,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 		}
 		return TYPE_NOMAL;
 	}
-    public T getItem(int position){
+
+	public T getItem(int position) {
 		T t = data.get(position);
 		return t;
 	}
-	public List<T> getItemList(){
+
+	public List<T> getItemList() {
 		return data;
 	}
 
@@ -563,9 +569,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 		notifyDataSetChanged();
 	}
 
-	public void refresh(@IntRange(from = 0) int position){
-		notifyItemChanged(getHeaderCount()+position);
+	public void refresh(@IntRange(from = 0) int position) {
+		notifyItemChanged(getHeaderCount() + position);
 	}
+
 	/**
 	 * 重新设置数据
 	 *
@@ -714,7 +721,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	 */
 	@Override
 	public void add(int index, DataBean data, int count) {
-		if(cacheHeaders!=null&&cacheHeaders.size()>0){
+		if (cacheHeaders != null && cacheHeaders.size() > 0) {
 			int size = cacheHeaders.size();
 			for (int i = 0; i < size; i++) {
 				int keyAt = cacheHeaders.keyAt(i);
