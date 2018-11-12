@@ -29,7 +29,9 @@ import android.text.style.SuperscriptSpan;
 import android.text.style.UnderlineSpan;
 
 
-
+/**
+ * text的富文本工具类
+ */
 public class SpanUtils {
 	private SpannableString span;
 	private int startIndex;

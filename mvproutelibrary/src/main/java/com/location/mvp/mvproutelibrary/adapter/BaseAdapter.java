@@ -51,10 +51,11 @@ import java.util.List;
 /**
  * 二次封装的RecyclerView适配器
  *
- * @param <T>
+ * @param <T> 适配器数据类型
+ * @param <V> 自定义的viewholder 当然也可以使用默认的 #BaseViewHolder
  */
 
-public abstract class BaseAdapter<T,V extends BaseViewHolder> extends RecyclerView.Adapter<V> implements AdapterList.ChangeListener<DataBean> {
+public abstract class BaseAdapter<T, V extends BaseViewHolder> extends RecyclerView.Adapter<V> implements AdapterList.ChangeListener<DataBean> {
 
 	/**
 	 * 当数据没有时显示即使已经添加了头布局尾布局
@@ -523,7 +524,6 @@ public abstract class BaseAdapter<T,V extends BaseViewHolder> extends RecyclerVi
 			return footerList.get(position - data.size() - headerList.size()).getLayout();
 		}
 		int dataPosition = position - getHeaderCount();
-		LogUtils.i("position==>" + position + "\nheadercount===>" + getHeaderCount());
 		if (dataPosition >= data.size()) {
 			return TYPE_NOMAL;
 		}
@@ -631,11 +631,11 @@ public abstract class BaseAdapter<T,V extends BaseViewHolder> extends RecyclerVi
 		return position >= headerList.size() + data.size();
 	}
 
-	private  int getHeaderCount() {
+	private int getHeaderCount() {
 		return headerList.size();
 	}
 
-	private  int getFooterCount() {
+	private int getFooterCount() {
 		return footerList.size();
 	}
 
@@ -757,7 +757,7 @@ public abstract class BaseAdapter<T,V extends BaseViewHolder> extends RecyclerVi
 
 	@IntDef({EMPTY_MODLE_NOMAL, EMPTY_MODLE_HEADERS})
 	@Retention(RetentionPolicy.SOURCE)
-	private  @interface EmptyModle {
+	private @interface EmptyModle {
 	}
 
 
@@ -779,8 +779,6 @@ public abstract class BaseAdapter<T,V extends BaseViewHolder> extends RecyclerVi
 	}
 
 	/**
-	 *
-	 *
 	 * @param z
 	 * @return
 	 */
@@ -804,9 +802,8 @@ public abstract class BaseAdapter<T,V extends BaseViewHolder> extends RecyclerVi
 		}
 		return null;
 	}
+
 	/**
-	 *
-	 *
 	 * @param z
 	 * @param view
 	 * @return

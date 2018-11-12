@@ -19,7 +19,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 
-
+/**
+ * 日志打印类
+ */
 public class LogUtils {
     private static final int LIVE_V = Log.VERBOSE;
     private static final int LIVE_D = Log.DEBUG;

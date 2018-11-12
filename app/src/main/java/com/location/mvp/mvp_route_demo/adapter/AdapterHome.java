@@ -25,6 +25,7 @@ public class AdapterHome extends BaseAdapter<ItemTypeResponse,AdapterHome.HomdHo
 	@Override
 	public void conver(HomdHolderBase holder, @Nullable ItemTypeResponse data, int viewType) {
 		switch (viewType){
+
 			case 0:
 				holder.setText(R.id.home_text, data.getContent());
 				break;

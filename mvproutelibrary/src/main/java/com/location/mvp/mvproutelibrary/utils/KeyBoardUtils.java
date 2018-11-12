@@ -24,6 +24,9 @@ import android.widget.EditText;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
+/**
+ * 软键盘工具类
+ */
 public class KeyBoardUtils {
 
     /**

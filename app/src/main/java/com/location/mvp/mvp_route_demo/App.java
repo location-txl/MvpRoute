@@ -12,7 +12,7 @@ import com.location.mvp.mvproutelibrary.http.cookie.CookiesManager;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
-import com.squareup.leakcanary.LeakCanary;
+//import com.squareup.leakcanary.LeakCanary;
 
 import java.time.temporal.ValueRange;
 
@@ -45,12 +45,12 @@ public class App extends Application {
 		ToastUtils.init(this);
 		SpUtils.init(this);
 		new LogUtils.LogUtilsBuilder().setPrintClass(false).setPrintLine(false);
-		if (LeakCanary.isInAnalyzerProcess(this)) {
-			// This process is dedicated to LeakCanary for heap analysis.
-			// You should not init your app in this process.
-			return;
-		}
-		LeakCanary.install(this);
+//		if (LeakCanary.isInAnalyzerProcess(this)) {
+//			// This process is dedicated to LeakCanary for heap analysis.
+//			// You should not init your app in this process.
+//			return;
+//		}
+//		LeakCanary.install(this);
 	}
 
 

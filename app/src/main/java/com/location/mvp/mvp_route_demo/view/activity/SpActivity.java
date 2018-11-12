@@ -1,6 +1,7 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -21,6 +22,7 @@ import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.contract.SpContract;
 import com.location.mvp.mvp_route_demo.presenter.SpPresenter;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
+import com.location.mvp.mvproutelibrary.Base.Request;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
@@ -149,4 +151,5 @@ public class SpActivity extends BaseToActivity<SpContract.Presenter> implements 
 	public void showMessage(String message) {
 		ToastUtils.showShort(message);
 	}
+
 }

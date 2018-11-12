@@ -19,7 +19,9 @@ package com.location.mvp.mvproutelibrary.utils;
 import android.content.Context;
 
 
-
+/**
+ * 尺寸转换类
+ */
 public class Denutils {
 
 	private Denutils() {

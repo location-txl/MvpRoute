@@ -35,7 +35,10 @@ import java.util.Map;
 import java.util.Set;
 
 
-
+/**
+ * SharedPreferences存储工具类  简化了sp存储方式
+ * 并且支持实体类的保存
+ */
 public class SpUtils {
 
 	/**

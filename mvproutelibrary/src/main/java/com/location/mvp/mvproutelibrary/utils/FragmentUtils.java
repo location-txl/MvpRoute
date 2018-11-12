@@ -37,7 +37,9 @@ import java.util.List;
 import java.util.Set;
 
 
-
+/**
+ *  Fragment 工具类
+ */
 public class FragmentUtils {
 	private static final String TAG = FragmentUtils.class.getSimpleName();
 	/**
