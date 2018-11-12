@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 location
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.location.mvp.mvproutelibrary.utils;
 
 import android.content.Context;
@@ -19,13 +34,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * 项目:Mvp_Route_Demo
- * author：location
- * time：2018/5/24 20:30
- * description：
- */
 
+/**
+ * SharedPreferences存储工具类  简化了sp存储方式
+ * 并且支持实体类的保存
+ */
 public class SpUtils {
 
 	/**

@@ -13,14 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.location.mvp.mvproutelibrary.adapter;
-
-import android.view.View;
+package com.location.mvp.mvproutelibrary.http;
 
 /**
- * item点击事件
+ * 基础实体类接口
+ * @param <T>
  */
 
-public interface OnItemClickListener<V extends BaseViewHolder>  {
-	void onItemClick(V viewHolder, View view, int position);
+public interface IBaseBean<T> {
+
+	/**
+	 * 返回你想要的数据源
+	 * @return
+	 */
+	T getData();
+
+	/**
+	 * 是否请求成功
+	 * @return
+	 */
+	boolean isOk();
+
+	/**
+	 * 错误原因
+	 * @return
+	 */
+	String getErrorMsg();
+
+	/**
+	 * 返回状态码
+	 * @return
+	 */
+	int   getStatusCode();
 }

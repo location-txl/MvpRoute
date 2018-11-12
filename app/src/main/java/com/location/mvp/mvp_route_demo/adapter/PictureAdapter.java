@@ -9,7 +9,7 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.bean.PictureBean;
 import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
-import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
+import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
 import com.location.mvp.mvproutelibrary.utils.Denutils;
 
 import java.util.Collection;
@@ -25,13 +25,13 @@ import java.util.Collection;
  */
 
 
-public class PictureAdapter extends BaseAdapter<PictureBean.ResultsBean> {
+public class PictureAdapter extends BaseAdapter<PictureBean.ResultsBean,BaseViewHolder> {
 	public PictureAdapter(Collection<PictureBean.ResultsBean> data, int layout, OnItemClickListener listener) {
 		super(data, layout, listener);
 	}
 
 	@Override
-	public void conver(ViewHolder holder, @Nullable PictureBean.ResultsBean data, int viewType) {
+	public void conver(BaseViewHolder holder, @Nullable PictureBean.ResultsBean data, int viewType) {
 		Glide.with(holder.getContext()).load(data.getUrl())
 				.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
 				.override(Denutils.dptopx(holder.getContext(),200),Denutils.dptopx(holder.getContext(),200))

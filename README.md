@@ -3,9 +3,11 @@
 Android项目开发框架 基于Mvp
 [bata测试版](https://github.com/TLocation/Mvp_Route_Demo/tree/dev)
 
+ [ ![Download](https://api.bintray.com/packages/location/maven/mvproute/images/download.svg) ](https://bintray.com/location/maven/mvproute/_latestVersion) [![License][licensesvg]][license]
+
 ## 导入
 ```groovy
-implementation 'com.location.mvp:mvproute:1.0.0'
+implementation 'com.location.mvp:mvproute:1.0.1'
 ```
 
 ## 简介
@@ -36,15 +38,9 @@ implementation 'com.location.mvp:mvproute:1.0.0'
 
 
 ```groovy
-compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-
-compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-
-compile 'com.squareup.retrofit2:retrofit:2.4.0'
-
-compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-
-compile 'com.google.code.gson:gson:2.8.5'
+ api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+ api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+ api 'com.google.code.gson:gson:2.8.5'
 ```
 
 ## 目录
@@ -58,4 +54,5 @@ View |[BobPopwindow](https://github.com/TLocation/Mvp_Route_Demo/blob/master/REA
 
 
 
-  
+[licensesvg]: https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg
+[license]: https://github.com/TLocation/MvpRoute/blob/master/LICENSE

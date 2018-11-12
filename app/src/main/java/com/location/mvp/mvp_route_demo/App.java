@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.location.mvp.mvp_route_demo.base.BaseData;
 import com.location.mvp.mvp_route_demo.base.ErrorResponse;
+import com.location.mvp.mvp_route_demo.base.LoadingView;
 import com.location.mvp.mvp_route_demo.base.RefreshToken;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 import com.location.mvp.mvproutelibrary.http.RetrofitConfig;
@@ -11,6 +12,7 @@ import com.location.mvp.mvproutelibrary.http.cookie.CookiesManager;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
+//import com.squareup.leakcanary.LeakCanary;
 
 import java.time.temporal.ValueRange;
 
@@ -38,21 +40,18 @@ public class App extends Application {
 		config.setiRefreshToken(new RefreshToken());
 		config.setGsonClass(BaseData.class);
 		config.setBuilder(builder);
+//		config.setLodingView(new LoadingView());
 		RetrofitClient.init(config);
 		ToastUtils.init(this);
 		SpUtils.init(this);
 		new LogUtils.LogUtilsBuilder().setPrintClass(false).setPrintLine(false);
+//		if (LeakCanary.isInAnalyzerProcess(this)) {
+//			// This process is dedicated to LeakCanary for heap analysis.
+//			// You should not init your app in this process.
+//			return;
+//		}
+//		LeakCanary.install(this);
 	}
 
-	public void ss() {
-		boolean isguide = SpUtils.getInstance().getBoolean("isguide");
-		if (!isguide) {
 
-			//开启引导蒙层
-
-		}
-
-		SpUtils.getInstance().putValue("isguide", true);
-
-	}
 }

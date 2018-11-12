@@ -13,14 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.location.mvp.mvproutelibrary.adapter;
+package com.location.mvp.mvproutelibrary.http;
 
-import android.view.View;
+import android.content.Context;
 
 /**
- * item点击事件
+ * 加载弹窗接口
+ * 实现此接口  在网络请求过程中
+ * 会弹出此弹窗
  */
 
-public interface OnItemClickListener<V extends BaseViewHolder>  {
-	void onItemClick(V viewHolder, View view, int position);
+public interface INetWorkLoadingView {
+
+
+	/**
+	 * 初始化弹窗
+	 *
+	 * @param context
+	 */
+	void createLoadingView(Context context);
+
+	/**
+	 * 显示弹窗
+	 */
+	void showLoading();
+
+
+	/**
+	 * 关闭弹窗
+	 */
+	void dismissLoading();
 }

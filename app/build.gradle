@@ -5,9 +5,9 @@ android {
         abortOnError false
     }
     compileSdkVersion 26
-    packagingOptions {
-        exclude 'META-INF/rxjava.properties'
-    }
+//    packagingOptions {
+//        exclude 'META-INF/rxjava.properties'
+//    }
     defaultConfig {
         applicationId "com.location.mvp.mvp_route_demo"
         minSdkVersion 19
@@ -27,7 +27,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support:support-annotations:26.1.0') {
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation('com.android.support:support-annotations:26.1.0') {
         force = true
     }
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -36,7 +37,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':mvproutelibrary')
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.0'
-    compile 'com.github.bumptech.glide:glide:3.8.0'
-    compile 'com.lzy.widget:imagepicker:0.6.1'
-    compile 'com.googlecode.mp4parser:isoparser:1.1.21'
+    implementation 'com.github.bumptech.glide:glide:3.8.0'
+//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    implementation 'com.android.support:design:26.1.0'
 }

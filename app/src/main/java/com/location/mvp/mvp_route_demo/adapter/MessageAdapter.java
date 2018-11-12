@@ -1,13 +1,11 @@
 package com.location.mvp.mvp_route_demo.adapter;
 
 import android.support.annotation.Nullable;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.bean.NoMessageBean;
 import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;
-import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
+import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
 
 import java.util.Collection;
 
@@ -18,19 +16,19 @@ import java.util.Collection;
  * description：
  */
 
-public class MessageAdapter extends BaseAdapter<NoMessageBean> {
+public class MessageAdapter extends BaseAdapter<NoMessageBean,BaseViewHolder> {
 	public MessageAdapter(Collection<NoMessageBean> data, int layout) {
 		super(data, layout);
 	}
 
 	@Override
-	public void conver(ViewHolder holder, @Nullable NoMessageBean data, int viewType) {
+	public void conver(BaseViewHolder holder, @Nullable NoMessageBean data, int viewType) {
 		holder.setText(R.id.item_content, data.getName());
 
 	}
 
 	@Override
-	public void onBindHeaderViewHolder(ViewHolder viewHolder, @Nullable Object response, int layout) {
+	public void onBindHeaderViewHolder(BaseViewHolder viewHolder, @Nullable Object response, int layout) {
 
 	}
 }

@@ -1,24 +1,15 @@
 package com.location.mvp.mvp_route_demo.adapter;
 
-import android.content.Context;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.location.mvp.mvp_route_demo.R;
-import com.location.mvp.mvp_route_demo.bean.ZcChildBean;
 import com.location.mvp.mvp_route_demo.bean.ZcDataBean;
-import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;
-import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
-import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
 
-import java.util.Collection;
 import java.util.List;
 
 /**

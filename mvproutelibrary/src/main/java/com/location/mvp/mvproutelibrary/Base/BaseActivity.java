@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 location
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.location.mvp.mvproutelibrary.Base;
 
 import android.content.Intent;
@@ -11,33 +26,23 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.location.mvp.mvproutelibrary.utils.KeyBoardUtils;
-import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_REQUEST;
 import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_RESULT;
 
+
 /**
- * 项目名称: MvpRoute
- * 类描述:
- * 创建人: location
- * 创建时间: 2018/5/13 0013 20:11
- * 修改人:
- * 修改内容:
- * 修改时间:
+ * 基类BaseActivity
+ * @param <T>
  */
 
-
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
+
 	protected T presenter;
 	protected final String TAG = getClass().getSimpleName();
 
@@ -57,14 +62,28 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
 	protected KeyBordListener keyBordListener;
 
+	/**
+	 * 返回布局id
+	 * @return
+	 */
 	protected abstract @LayoutRes
 	int getLayout();
 
+	/**
+	 * 初始化view
+	 */
 	protected abstract void initView();
 
+	/**
+	 * 加载数据
+	 */
 	protected abstract void loadData();
 
-	protected abstract @NonNull
+	/**
+	 * 创建Presenter
+	 * @return
+	 */
+	protected abstract
 	T createPresenter();
 
 	@Override
@@ -204,11 +223,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 					data.putExtra(EXERA_REQUEST, requestCode);
 					data.putExtra(EXERA_RESULT, resultCode);
 					declaredMethod.invoke(this, data);
-				} catch (IllegalAccessException e) {
-					LogUtils.d("error==>" + e.getMessage());
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					LogUtils.d("InvocationTargetException==>" + e.getTargetException().getMessage());
+				} catch (IllegalAccessException | InvocationTargetException e) {
 					e.printStackTrace();
 				}
 				return;

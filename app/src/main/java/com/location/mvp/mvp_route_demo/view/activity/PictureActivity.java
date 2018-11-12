@@ -14,11 +14,8 @@ import com.location.mvp.mvp_route_demo.presenter.PicturePresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.Request;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
-import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
+import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
-import com.location.mvp.mvproutelibrary.utils.LogUtils;
-import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +90,7 @@ public class PictureActivity extends BaseActivity<PictureContract.Presenter> imp
 	}
 
 	@Override
-	public void onItemClick(ViewHolder viewHolder, View view, int position) {
+	public void onItemClick(BaseViewHolder viewHolder, View view, int position) {
 		startActivityForResult(new Intent(this, TestActivity.class), 123);
 	}
 }

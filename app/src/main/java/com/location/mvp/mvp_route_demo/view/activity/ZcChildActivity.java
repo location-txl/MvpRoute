@@ -3,8 +3,6 @@ package com.location.mvp.mvp_route_demo.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,10 +16,9 @@ import com.location.mvp.mvp_route_demo.bean.ZcChildBean;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
-import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
+import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
-import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,9 +93,9 @@ public class ZcChildActivity extends BaseToActivity implements View.OnClickListe
 			}
 			zcChildBeans.add(zcChildBean);
 		}
-		recyclerView.setAdapter(new BaseAdapter<ZcChildBean>(zcChildBeans, R.layout.item_child_select, this) {
+		recyclerView.setAdapter(new BaseAdapter<ZcChildBean,BaseViewHolder>(zcChildBeans, R.layout.item_child_select, this) {
 			@Override
-			public void conver(ViewHolder holder, @Nullable ZcChildBean data, int viewType) {
+			public void conver(BaseViewHolder holder, @Nullable ZcChildBean data, int viewType) {
 				TextView textView = holder.findViewById(R.id.select_text);
 				if(data.isSelect()){
 					textView.setTextColor(Color.RED);
@@ -139,7 +136,7 @@ public class ZcChildActivity extends BaseToActivity implements View.OnClickListe
 	}
 
 	@Override
-	public void onItemClick(ViewHolder viewHolder, View view, int position) {
+	public void onItemClick(BaseViewHolder viewHolder, View view, int position) {
 		ZcChildBean zcChildBean = zcChildBeans.get(position);
 		if(this.position==-1){
 			finish();

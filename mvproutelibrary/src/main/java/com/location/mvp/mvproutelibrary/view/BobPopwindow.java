@@ -1,5 +1,21 @@
+/*
+ * Copyright 2018 location
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.location.mvp.mvproutelibrary.view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -7,6 +23,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IdRes;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +31,9 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+
 /**
- * 项目:MvpRoute
- * 类描述:  加阴影的工具类
- * 创建人: txl
- * 创建时间: 2017/8/15 18:25
- * 修改人:
- * 修改内容:
- * 修改时间:
+ * popwindow 工具类 支持蒙版图层   链式调用  更简洁的api
  */
 public class BobPopwindow extends PopupWindow {
 	public BobPopwindow(Context context) {
@@ -82,8 +94,9 @@ public class BobPopwindow extends PopupWindow {
 			view.setVisibility(View.GONE);
 		}
 	}
-	public void showAtLocation(View parent, int gravity){
-		showAtLocation(parent,gravity,0,0);
+
+	public void showAtLocation(View parent, int gravity) {
+		showAtLocation(parent, gravity, 0, 0);
 	}
 
 
@@ -133,6 +146,38 @@ public class BobPopwindow extends PopupWindow {
 	public void showAsDropDown(View anchor, int xoff, int yoff, int gravity) {
 		darken();
 		super.showAsDropDown(anchor, xoff, yoff, gravity);
+	}
+
+	public void showBottom(Activity activity) {
+		showAtLocation(activity.getWindow().getDecorView(), Gravity.BOTTOM);
+	}
+
+	public void showBottom(Activity activity, int x, int y) {
+		showAtLocation(activity.getWindow().getDecorView(), Gravity.BOTTOM, x, y);
+	}
+
+	public void showTop(Activity activity) {
+		showAtLocation(activity.getWindow().getDecorView(), Gravity.TOP);
+	}
+
+	public void showTop(Activity activity, int x, int y) {
+		showAtLocation(activity.getWindow().getDecorView(), Gravity.TOP, x, y);
+	}
+
+	public void showRight(Activity activity) {
+		showAtLocation(activity.getWindow().getDecorView(), Gravity.RIGHT);
+	}
+
+	public void showRight(Activity activity, int x, int y) {
+		showAtLocation(activity.getWindow().getDecorView(), Gravity.RIGHT, x, y);
+	}
+
+	public void showLeft(Activity activity) {
+		showAtLocation(activity.getWindow().getDecorView(), Gravity.LEFT);
+	}
+
+	public void showLeft(Activity activity, int x, int y) {
+		showAtLocation(activity.getWindow().getDecorView(), Gravity.LEFT, x, y);
 	}
 
 	private void darken() {
@@ -205,7 +250,7 @@ public class BobPopwindow extends PopupWindow {
 			return this;
 		}
 
-		public  Builder getChildView(@IdRes int viewid, BobDataView dataView) {
+		public Builder getChildView(@IdRes int viewid, BobDataView dataView) {
 			View childView = popwindow.getChildView(viewid);
 			dataView.setView(childView);
 			return this;

@@ -1,8 +1,6 @@
 package com.location.mvp.mvp_route_demo;
 
-import android.app.Activity;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,22 +11,10 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
-import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
-import com.location.mvp.mvproutelibrary.utils.LogUtils;
+import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
 
-import java.lang.reflect.GenericSignatureFormatError;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 项目:趣租部落
@@ -157,7 +143,7 @@ public class TestActivity extends AppCompatActivity implements OnItemClickListen
 	private View lastView;
 
 	@Override
-	public void onItemClick(ViewHolder viewHolder, View view, int position) {
+	public void onItemClick(BaseViewHolder viewHolder, View view, int position) {
 		if (testAdapter.getItemViewType(position) == 1) {
 			return;
 		}

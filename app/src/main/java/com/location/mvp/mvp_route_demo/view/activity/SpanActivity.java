@@ -12,6 +12,7 @@ import com.location.mvp.mvp_route_demo.contract.SpanContract;
 import com.location.mvp.mvp_route_demo.presenter.SpanPresenter;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.SpanUtils;
+import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 /**
  * 项目:MvpRoute
@@ -125,6 +126,7 @@ public class SpanActivity extends BaseToActivity<SpanContract.Presenter> impleme
 		switch (v.getId()) {
 			case R.id.span_color_click:
 				presenter.setBackTextColor("设置某段文字背景色");
+				System.gc();
 				break;
 			default:
 		}

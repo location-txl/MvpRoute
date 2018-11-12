@@ -1,7 +1,21 @@
+/*
+ * Copyright 2018 location
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.location.mvp.mvproutelibrary.adapter;
 
 import android.support.annotation.CallSuper;
-import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.IntRange;
@@ -21,28 +35,28 @@ import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
 
 /**
- * 项目名称: MvpRoute
- * 类描述:  Recycler的基础适配器
- * 创建人: location
- * 创建时间: 2018/5/25 0025 23:26
- * 修改人:
- * 修改内容:
- * 修改时间:
+ * 二次封装的RecyclerView适配器
+ *
+ * @param <T> 适配器数据类型
+ * @param <V> 自定义的viewholder 当然也可以使用默认的 #BaseViewHolder
  */
 
+public abstract class BaseAdapter<T, V extends BaseViewHolder> extends RecyclerView.Adapter<V> implements AdapterList.ChangeListener<DataBean> {
 
-public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> implements AdapterList.ChangeListener<DataBean> {
 	/**
 	 * 当数据没有时显示即使已经添加了头布局尾布局
 	 */
@@ -84,7 +98,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	/**
 	 * 标记type类型
 	 */
-	public static final int TYPE_EMPTY = -999999999;
+	private static final int TYPE_EMPTY = -999999999;
 	/**
 	 * 默认类型
 	 */
@@ -130,7 +144,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	}
 
 
-	public BaseAdapter(Collection<T> data, @LayoutRes int layout, OnItemClickListener listener) {
+	public BaseAdapter(Collection<T> data, @LayoutRes int layout, OnItemClickListener<V> listener) {
 		this.data = new ArrayList<>();
 		if (data != null) {
 			this.data.addAll(data);
@@ -143,7 +157,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	}
 
 
-	private OnItemClickListener listener;
+	/**
+	 * item点击接口
+	 */
+	private OnItemClickListener<V> listener;
 
 	/**
 	 * 绑定布局
@@ -162,7 +179,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	 *
 	 * @param listener
 	 */
-	public void setOnItemClickListener(OnItemClickListener listener) {
+	public void setOnItemClickListener(OnItemClickListener<V> listener) {
 		this.listener = listener;
 	}
 
@@ -183,7 +200,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	 * @param ids      子view的id
 	 * @param listener 点击回调事件
 	 */
-	public void setOnChildClickListener(@IdRes int ids, @NonNull OnChildClickListener listener) {
+	public void setOnChildClickListener(@IdRes int ids, @NonNull OnChildClickListener<V> listener) {
 		if (listenerSparseArray == null) {
 			listenerSparseArray = new SparseArray<>();
 		}
@@ -199,28 +216,32 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	 * @param parent
 	 * @param viewType
 	 * @return
-	 * @see ViewHolder
+	 * @see BaseViewHolder
 	 */
 	@Override
-	public final ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+	public final V onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = null;
 		if (getHeaderData(viewType) != null) {
 			DataBean headerData = getHeaderData(viewType);
 			view = LayoutInflater.from(parent.getContext()).inflate(headerData.getLayout(), parent, false);
-			return new ViewHolder(view);
 		}
 
 		if (getFooterData(viewType) != null) {
 			DataBean footerData = getFooterData(viewType);
 			view = LayoutInflater.from(parent.getContext()).inflate(footerData.getLayout(),
 					parent, false);
-			return new ViewHolder(view);
 		}
 		if (viewType == TYPE_EMPTY) {
-			return new ViewHolder(emptyView);
+			view = emptyView;
 		}
-		view = LayoutInflater.from(parent.getContext()).inflate(spLayout.get(viewType), parent, false);
-		ViewHolder holder = new ViewHolder(view, listener, listenerSparseArray, getHeaderCount());
+		V holder;
+		if (view == null) {
+			view = LayoutInflater.from(parent.getContext()).inflate(spLayout.get(viewType), parent, false);
+			holder = createBaseViewHolder(view);
+			holder.registItemListener(listener, listenerSparseArray, getHeaderCount());
+		} else {
+			holder = createBaseViewHolder(view);
+		}
 		return holder;
 	}
 
@@ -247,16 +268,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	}
 
 
-		public void updateAllHeader(List datas, @LayoutRes int layouts) {
+	public void updateAllHeader(List datas, @LayoutRes int layouts) {
 		Integer[] index = new Integer[datas.size()];
-		for(int i=0;i<datas.size();i++){
+		for (int i = 0; i < datas.size(); i++) {
 			index[i] = i;
 		}
 		refreshHeader(datas, layouts, index);
 	}
 
 	private void refreshHeader(List datas, @LayoutRes int layouts, Integer[] index) {
-		if (index==null||datas.size() != index.length) {
+		if (index == null || datas.size() != index.length) {
 			return;
 		}
 
@@ -288,11 +309,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	/**
 	 * @param holder
 	 * @param position
-	 * @see #conver(ViewHolder, Object, int) {@link #onBindFooterViewHolder(ViewHolder, Object, int)}
-	 * {@link #onBindHeaderViewHolder(ViewHolder, Object, int)}
+	 * @see #conver(BaseViewHolder, Object, int) {@link #onBindFooterViewHolder(BaseViewHolder, Object, int)}
+	 * {@link #onBindHeaderViewHolder(BaseViewHolder, Object, int)}
 	 */
 	@Override
-	public final void onBindViewHolder(ViewHolder holder, int position) {
+	public final void onBindViewHolder(V holder, int position) {
 		if (getItemViewType(position) == TYPE_EMPTY) {
 			return;
 		}
@@ -308,7 +329,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 			onBindFooterViewHolder(holder, footerList.get(position - headerList.size() - data.size()).getResponse(), footerList.get
 					(position - headerList.size() - data.size()).getLayout());
 			if (onHeaderClickListener != null) {
-				holder.registListener(holder.getItemViewType(), onHeaderClickListener, headerList.get(position - headerList.size() - data.size()).getResponse(), getIndex(headerList, position - headerList.size() - data.size()), false);
+				holder.registListener(holder.getItemViewType(), onHeaderClickListener, footerList.get(position - headerList.size() - data.size()).getResponse(), getIndex(footerList, position - headerList.size() - data.size()), false);
 			}
 			return;
 		}
@@ -327,7 +348,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	 * @param data     数据源 有可能为空
 	 * @param viewType 当前的type类型 多布局时使用
 	 */
-	public abstract void conver(ViewHolder holder, @Nullable T data, int viewType);
+	public abstract void conver(V holder, @Nullable T data, int viewType);
 
 	/**
 	 * 解决GrildLayoutManager问题
@@ -366,7 +387,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	 * @param holder
 	 */
 	@Override
-	public void onViewAttachedToWindow(ViewHolder holder) {
+	public void onViewAttachedToWindow(V holder) {
 		super.onViewAttachedToWindow(holder);
 		int position = holder.getLayoutPosition();
 		if (isHeaderPos(position) || isFooterPos(position)) {
@@ -389,12 +410,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	 * @param response   用到时 强转为你所需要的实体类
 	 * @param layout     添加多个头布局时  可以判断layout来控制视图
 	 */
-	public void onBindHeaderViewHolder(ViewHolder viewHolder, @Nullable Object response, @LayoutRes int
+	public void onBindHeaderViewHolder(V viewHolder, @Nullable Object response, @LayoutRes int
 			layout) {
 	}
 
 	//用法参见header
-	public void onBindFooterViewHolder(ViewHolder viewHolder, @Nullable Object response, @LayoutRes int
+	public void onBindFooterViewHolder(V viewHolder, @Nullable Object response, @LayoutRes int
 			layout) {
 	}
 
@@ -503,7 +524,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 			return footerList.get(position - data.size() - headerList.size()).getLayout();
 		}
 		int dataPosition = position - getHeaderCount();
-		LogUtils.i("position==>" + position + "\nheadercount===>" + getHeaderCount());
 		if (dataPosition >= data.size()) {
 			return TYPE_NOMAL;
 		}
@@ -513,11 +533,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 		}
 		return TYPE_NOMAL;
 	}
-    public T getItem(int position){
+
+	public T getItem(int position) {
 		T t = data.get(position);
 		return t;
 	}
-	public List<T> getItemList(){
+
+	public List<T> getItemList() {
 		return data;
 	}
 
@@ -553,9 +575,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 		notifyDataSetChanged();
 	}
 
-	public void refresh(@IntRange(from = 0) int position){
-		notifyItemChanged(getHeaderCount()+position);
+	public void refresh(@IntRange(from = 0) int position) {
+		notifyItemChanged(getHeaderCount() + position);
 	}
+
 	/**
 	 * 重新设置数据
 	 *
@@ -608,11 +631,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 		return position >= headerList.size() + data.size();
 	}
 
-	public final int getHeaderCount() {
+	private int getHeaderCount() {
 		return headerList.size();
 	}
 
-	public final int getFooterCount() {
+	private int getFooterCount() {
 		return footerList.size();
 	}
 
@@ -704,7 +727,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 	 */
 	@Override
 	public void add(int index, DataBean data, int count) {
-		if(cacheHeaders!=null&&cacheHeaders.size()>0){
+		if (cacheHeaders != null && cacheHeaders.size() > 0) {
 			int size = cacheHeaders.size();
 			for (int i = 0; i < size; i++) {
 				int keyAt = cacheHeaders.keyAt(i);
@@ -734,6 +757,73 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> im
 
 	@IntDef({EMPTY_MODLE_NOMAL, EMPTY_MODLE_HEADERS})
 	@Retention(RetentionPolicy.SOURCE)
-	public @interface EmptyModle {
+	private @interface EmptyModle {
+	}
+
+
+	private V createBaseViewHolder(View view) {
+		Class temp = getClass();
+		Class z = null;
+		while (z == null && null != temp) {
+			z = getInstancedGenericKClass(temp);
+			temp = temp.getSuperclass();
+		}
+		V v;
+		// 泛型擦除会导致z为null
+		if (z == null) {
+			v = (V) new BaseViewHolder(view);
+		} else {
+			v = createGenericKInstance(z, view);
+		}
+		return v != null ? v : (V) new BaseViewHolder(view);
+	}
+
+	/**
+	 * @param z
+	 * @return
+	 */
+	private Class getInstancedGenericKClass(Class z) {
+		Type type = z.getGenericSuperclass();
+		if (type instanceof ParameterizedType) {
+			Type[] types = ((ParameterizedType) type).getActualTypeArguments();
+			for (Type temp : types) {
+				if (temp instanceof Class) {
+					Class tempClass = (Class) temp;
+					if (BaseViewHolder.class.isAssignableFrom(tempClass)) {
+						return tempClass;
+					}
+				} else if (temp instanceof ParameterizedType) {
+					Type rawType = ((ParameterizedType) temp).getRawType();
+					if (rawType instanceof Class && BaseViewHolder.class.isAssignableFrom((Class<?>) rawType)) {
+						return (Class<?>) rawType;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @param z
+	 * @param view
+	 * @return
+	 */
+	private V createGenericKInstance(Class z, View view) {
+		try {
+			Constructor constructor;
+			// inner and unstatic class
+			if (z.isMemberClass() && !Modifier.isStatic(z.getModifiers())) {
+				constructor = z.getDeclaredConstructor(getClass(), View.class);
+				constructor.setAccessible(true);
+				return (V) constructor.newInstance(this, view);
+			} else {
+				constructor = z.getDeclaredConstructor(View.class);
+				constructor.setAccessible(true);
+				return (V) constructor.newInstance(view);
+			}
+		} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

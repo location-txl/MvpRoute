@@ -11,14 +11,8 @@ import android.widget.Toast;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.MessageAdapter;
 import com.location.mvp.mvp_route_demo.bean.NoMessageBean;
-import com.location.mvp.mvp_route_demo.bean.PictureBean;
-import com.location.mvp.mvproutelibrary.Base.BaseOberver;
 import com.location.mvp.mvproutelibrary.adapter.OnChildClickListener;
-import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
-import com.location.mvp.mvproutelibrary.http.RetrofitClient;
-import com.location.mvp.mvproutelibrary.scheduler.RxResPonse;
-import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
-import com.location.mvp.mvproutelibrary.utils.ToastUtils;
+import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +58,7 @@ public class DataActivity extends AppCompatActivity implements OnChildClickListe
 	 * @param position   当前的索引
 	 */
 	@Override
-	public void onChildClcik(ViewHolder viewHolder, View view, int position) {
+	public void onChildClcik(BaseViewHolder viewHolder, View view, int position) {
 		delete(position);
 	}
 

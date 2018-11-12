@@ -2,7 +2,6 @@ package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.HardwarePropertiesManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,15 +13,13 @@ import com.location.mvp.mvp_route_demo.adapter.HomeAdapter;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.view.activity.adapteractivity.HomeAdaptrActivity;
-import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.adapter.OnChildClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnHeaderClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
-import com.location.mvp.mvproutelibrary.adapter.ViewHolder;
+import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.DividerItemDecoration;
-import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.util.Arrays;
@@ -71,7 +68,7 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 		homeAdapter.setOnItemClickListener(this);
 		homeAdapter.setOnChildClickListener(R.id.id_1, new OnChildClickListener() {
 			@Override
-			public void onChildClcik(ViewHolder viewHolder, View view, int position) {
+			public void onChildClcik(BaseViewHolder viewHolder, View view, int position) {
 
 			}
 		});
@@ -101,7 +98,7 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 
 
 	@Override
-	public void onItemClick(ViewHolder viewHolder, View view, int position) {
+	public void onItemClick(BaseViewHolder viewHolder, View view, int position) {
 		switch (position) {
 			case 0:
 				startActivity(HomeAdaptrActivity.class);

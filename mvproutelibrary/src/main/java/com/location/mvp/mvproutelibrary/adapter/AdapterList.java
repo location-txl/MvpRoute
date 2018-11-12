@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 location
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.location.mvp.mvproutelibrary.adapter;
 
 import java.util.ArrayList;
@@ -35,21 +50,7 @@ public class AdapterList<E> extends ArrayList<E> {
 
 	}
 
-	@Override
-	public boolean addAll(Collection<? extends E> c) {
-//        if(listener!=null){
-//            int i = modCount + c.size();
-//            Iterator<? extends E> iterator = c.iterator();
-//            int index = modCount;
-//            while (iterator.hasNext()) {
-//                E next = iterator.next();
-//                listener.add(index, next,i);
-//                index++;
-//            }
-//        }
 
-		return super.addAll(c);
-	}
 
 	@Override
 	public E remove(int index) {

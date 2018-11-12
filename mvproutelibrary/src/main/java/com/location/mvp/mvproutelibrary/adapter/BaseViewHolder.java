@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 location
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.location.mvp.mvproutelibrary.adapter;
 
 import android.content.Context;
@@ -12,19 +27,13 @@ import android.widget.TextView;
 
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
+import java.util.List;
+
 
 /**
- * 项目名称: Mvp_Route_Demo
- * 类描述:  基础viewholder类  类中方法自行扩展
- * 创建人: location
- * 创建时间: 2018/5/25 0025 23:26
- * 修改人:
- * 修改内容:
- * 修改时间:
+ * item默认的viewHolder
  */
-
-
-public final class ViewHolder extends RecyclerView.ViewHolder {
+public class BaseViewHolder extends RecyclerView.ViewHolder {
 	private View itemView;
 	private SparseArray<View> viewCache;
 
@@ -34,16 +43,21 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		return context;
 	}
 
-	public ViewHolder(View itemView, final OnItemClickListener listener, SparseArray<OnChildClickListener> sparseArray, final int headerSize) {
-		this(itemView);
+
+
+
+	public void registItemListener(final OnItemClickListener listener, SparseArray<OnChildClickListener> sparseArray, final int headerSize){
 		if (listener != null) {
 			this.itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					listener.onItemClick(ViewHolder.this, v, getAdapterPosition() - headerSize);
+					listener.onItemClick(BaseViewHolder.this, v, getAdapterPosition() - headerSize);
 				}
 			});
 		}
+
+
+
 		if (sparseArray != null && sparseArray.size() > 0) {
 			int length = sparseArray.size();
 			for (int i = 0; i < length; i++) {
@@ -54,20 +68,16 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 					childView.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							onChildClickListener.onChildClcik(ViewHolder.this, childView, getAdapterPosition() - headerSize);
+							onChildClickListener.onChildClcik(BaseViewHolder.this, childView, getAdapterPosition() - headerSize);
 						}
 					});
 				}
 			}
 		}
-	}
-
-	public ViewHolder(View itemView, OnHeaderClickListener listener, BaseAdapter baseAdapter) {
-		this(itemView);
 
 	}
 
-	public ViewHolder(View itemView) {
+	public BaseViewHolder(View itemView) {
 		super(itemView);
 		this.itemView = itemView;
 		viewCache = new SparseArray<>();
@@ -93,6 +103,17 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		});
 	}
 
+
+
+	public View getItemView() {
+		return itemView;
+	}
+
+	/**
+	 * 设置文本
+	 * @param ids
+	 * @param charSequence
+	 */
 	public void setText(@IdRes int ids, CharSequence charSequence) {
 		View view = findViewById(ids);
 		if (view instanceof TextView) {
@@ -100,10 +121,11 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		}
 	}
 
-	public View getItemView() {
-		return itemView;
-	}
-
+	/**
+	 * 设置文本
+	 * @param ids
+	 * @param message
+	 */
 	public void setText(@IdRes int ids, String message) {
 		View view = findViewById(ids);
 		if (view instanceof TextView) {
@@ -112,6 +134,11 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 	}
 
 
+	/**
+	 * 设置文本
+	 * @param ids
+	 * @param stringres
+	 */
 	public void setText(@IdRes int ids, @StringRes int stringres) {
 		View view = findViewById(ids);
 		if (view instanceof TextView) {
@@ -119,6 +146,11 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		}
 	}
 
+	/**
+	 * 设置Imageview资源图片
+	 * @param ids
+	 * @param resouce
+	 */
 	public void setImageResouce(@IdRes int ids, @DrawableRes int resouce) {
 		View view = findViewById(ids);
 		if (view instanceof ImageView) {
@@ -126,6 +158,10 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		}
 	}
 
+	/**
+	 * 设置显示某个view
+	 * @param ids
+	 */
 	public void setVisibility(@IdRes int ids) {
 		View view = findViewById(ids);
 		if (view != null) {
@@ -133,12 +169,18 @@ public final class ViewHolder extends RecyclerView.ViewHolder {
 		}
 	}
 
+	/**
+	 * 隐藏某个view
+	 * @param ids
+	 */
 	public void setGone(@IdRes int ids) {
 		View view = findViewById(ids);
 		if (view != null) {
 			view.setVisibility(View.GONE);
 		}
 	}
+
+
 
 
 }

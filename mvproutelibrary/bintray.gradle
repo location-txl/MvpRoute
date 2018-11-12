@@ -19,7 +19,7 @@ def siteUrl  = 'https://github.com/TLocation/Mvp_Route_Demo'
 def username = 'location'
 def groupIds = 'com.location.mvp'
 def artId = 'mvproute'
-def version = '1.0.0'
+def version = '1.0.1'
 def ex = '这是一个Android mvp迅速开发框架'
 
 publish {
