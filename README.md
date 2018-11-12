@@ -55,4 +55,4 @@ View |[BobPopwindow](https://github.com/TLocation/Mvp_Route_Demo/blob/master/REA
 
 
 [licensesvg]: https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg
-[license]: https://github.com/Blankj/AndroidUtilCode/blob/master/LICENSE
+[license]: https://github.com/TLocation/MvpRoute/tree/master/LICENSE
