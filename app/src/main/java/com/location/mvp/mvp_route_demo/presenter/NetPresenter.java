@@ -12,6 +12,7 @@ import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
 
+import java.io.File;
 import java.util.List;
 
 import okhttp3.Cookie;
@@ -73,5 +74,10 @@ public class NetPresenter extends NetContract.Presenter {
 
 
 				   });
+	}
+
+	@Override
+	public void uploadVideo(File file) {
+
 	}
 }

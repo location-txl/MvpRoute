@@ -16,12 +16,17 @@
 package com.location.mvp.mvproutelibrary.http;
 
 import com.location.mvp.mvproutelibrary.Base.BaseObserver;
+import com.location.mvp.mvproutelibrary.Base.BaseProgressObserver;
 import com.location.mvp.mvproutelibrary.error.IResponseErrorMsg;
 import com.location.mvp.mvproutelibrary.http.conver.GsonConverterFactory;
 
+import java.io.IOException;
 import java.lang.reflect.Proxy;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -48,6 +53,11 @@ public class RetrofitClient {
 
 	private ProxyHandler proxyHandler;
 
+	private BaseProgressObserver progressObserver;
+
+	public void setProgressObserver(BaseProgressObserver progressObserver) {
+		this.progressObserver = progressObserver;
+	}
 
 	/**
 	 * 初始化网络
@@ -88,6 +98,7 @@ public class RetrofitClient {
 		}
 		if (iRefreshToken != null) proxyHandler = new ProxyHandler(iRefreshToken);
 		OkHttpClient.Builder builder = config.getBuilder() == null ? new OkHttpClient.Builder() : config.getBuilder();
+//		builder.addInterceptor(progressInterceptor());
 		client = new Retrofit.Builder()
 				.client(builder.build())
 				.baseUrl(config.getBaseUrl())
@@ -129,4 +140,18 @@ public class RetrofitClient {
 	}
 
 
+	private Interceptor progressInterceptor() {
+		return new Interceptor() {
+			@Override
+			public Response intercept(Chain chain) throws IOException {
+				Request request = chain.request();
+				if (request.body() == null || progressObserver == null || progressObserver.getDisposable().isDisposed()) {
+					return chain.proceed(request);
+				}
+				Request.Builder builder = request.newBuilder();
+				Request build = builder.method(request.method(), new ProgressRequestBody(request.body(), progressObserver)).build();
+				return chain.proceed(build);
+			}
+		};
+	}
 }

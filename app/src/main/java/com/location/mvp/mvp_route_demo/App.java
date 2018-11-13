@@ -33,7 +33,8 @@ public class App extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		RetrofitConfig config = new RetrofitConfig("http://www.wanandroid.com/");
+//		RetrofitConfig config = new RetrofitConfig("http://www.wanandroid.com/");
+		RetrofitConfig config = new RetrofitConfig("http://hb5.api.okayapi.com/");
 		OkHttpClient.Builder builder = new OkHttpClient.Builder();
 		builder.cookieJar(new CookiesManager(this));
 		config.setErrorResponse(new ErrorResponse());

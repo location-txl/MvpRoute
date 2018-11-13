@@ -23,4 +23,9 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="获取收藏列表" />
+
+	<EditText
+		android:id="@+id/net_edit"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
 </LinearLayout>

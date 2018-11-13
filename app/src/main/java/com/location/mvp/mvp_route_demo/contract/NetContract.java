@@ -5,6 +5,8 @@ import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.Base.BaseView;
 
+import java.io.File;
+
 /**
  * 项目:MvpRoute
  *
@@ -29,5 +31,7 @@ public interface NetContract {
 		public abstract void cleanLogin();
 
 		public abstract void getCollectList(String page,String username,String passworld);
+
+		public abstract void uploadVideo(File file);
 	}
 }

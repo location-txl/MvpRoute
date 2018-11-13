@@ -16,8 +16,10 @@
 package com.location.mvp.mvproutelibrary.error;
 
 import android.net.ParseException;
+import android.text.TextUtils;
 
 import com.google.gson.JsonParseException;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
@@ -88,7 +90,17 @@ public class ExceptionHandle {
 			ex.msg = "网络连接异常，请检查您的网络状态";
 		} else {
 			ex = new ResponeThrowable(e, ERROR.UNKNOWN);
-			ex.msg = "未知错误";
+			Throwable cause = e.getCause();
+			if(cause!=null){
+				String message = cause.getMessage();
+				if(TextUtils.isEmpty(message)){
+					message = cause.getLocalizedMessage();
+				}
+				ex.msg = message;
+			}else{
+				ex.msg = "未知错误";
+			}
+
 		}
 		return ex;
 	}
