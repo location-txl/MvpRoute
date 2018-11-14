@@ -17,7 +17,7 @@ implementation 'com.location.mvp:mvproute:1.0.1'
 
 2.   基础网络框架（Retrofit+RxJava） 自定义异常处理   cookie验证  自动刷新Token等多种功能
 
-3.   基础Recycler适配器  比原生RecyclerAdapter少了50%代码  支持头布局  尾部局  空布局  自定义Holder
+3.   基础RecyclerView适配器  比原生RecyclerAdapter少了50%代码  支持头布局  尾部局  空布局  自定义Holder
 
        头部 尾部 item item子view点击事件  自定义头部复用 Group分组等多种样式
 
