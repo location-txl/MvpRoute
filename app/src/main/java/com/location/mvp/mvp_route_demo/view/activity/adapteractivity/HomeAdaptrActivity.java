@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.AdapterHome;
@@ -15,6 +16,7 @@ import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.adapter.OnHeaderClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
+import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -67,9 +69,34 @@ public class HomeAdaptrActivity extends BaseToActivity {
 		adapterHome.setOnItemClickListener(new OnItemClickListener<AdapterHome.HomdHolderBase>() {
 			@Override
 			public void onItemClick(AdapterHome.HomdHolderBase viewHolder, View view, int position) {
-          ToastUtils.showShort("点击item===>"+position);
+				ToastUtils.showShort("点击item===>" + position);
 			}
 		});
+		final Button view = findViewById(R.id.test_clcik);
+		RxScheduer.click(view, new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				RxScheduer.countDown(view, 1, new RxScheduer.CountDownListener<Button>() {
+					@Override
+					public void onBindCountDown(Button view) {
+						view.setEnabled(false);
+					}
+
+					@Override
+					public void onDownCountProgress(Button view, int second) {
+						view.setText(String.format("%d秒", second));
+					}
+
+					@Override
+					public void onCountDownComplete(Button view) {
+						view.setText("点击发送");
+						view.setEnabled(true);
+					}
+				});
+			}
+		});
+
 	}
 
 	@Override
