@@ -36,9 +36,9 @@ public interface IRefreshToken {
 
 	/**
 	 * token是否过期
-	 * @param code 服务器返回的code值
+	 * @param statusCode 服务器返回的code值
 	 * @param errorMsg 服务器返回的msg值
 	 * @return
 	 */
-	boolean isTokenException(int code,String errorMsg);
+	boolean isTokenException(int statusCode,String errorMsg);
 }

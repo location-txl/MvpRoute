@@ -139,7 +139,11 @@ public class RetrofitClient {
 		return client.create(clazz);
 	}
 
-
+	/**
+	 * @deprecated  用于处理上传进度 和下载进度的拦截器 暂时废弃
+	 * @return
+	 */
+	@Deprecated
 	private Interceptor progressInterceptor() {
 		return new Interceptor() {
 			@Override

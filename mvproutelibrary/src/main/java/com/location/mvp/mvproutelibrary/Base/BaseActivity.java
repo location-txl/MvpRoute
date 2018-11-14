@@ -15,7 +15,9 @@
  */
 package com.location.mvp.mvproutelibrary.Base;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -57,7 +59,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 		if (presenter != null) {
 			presenter.regist(this);
 		}
-		initView();
+		initView(savedInstanceState);
 		loadData();
 	}
 
@@ -73,7 +75,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 	/**
 	 * 初始化view
 	 */
-	protected abstract void initView();
+	protected abstract void initView(@Nullable Bundle savedInstanceState);
+
 
 	/**
 	 * 加载数据
@@ -200,6 +203,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
 
 
+	@TargetApi(Build.VERSION_CODES.KITKAT)
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);

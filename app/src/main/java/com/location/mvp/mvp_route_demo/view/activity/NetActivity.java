@@ -1,47 +1,27 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
-import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.location.mvp.mvp_route_demo.GetPathFromUri;
 import com.location.mvp.mvp_route_demo.KeyUtils;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.bean.CollectListBean;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.contract.NetContract;
-import com.location.mvp.mvp_route_demo.presenter.NetPresenter;
 import com.location.mvp.mvp_route_demo.presenter.NetPresenterVideo;
-import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.Base.Request;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 
 /**
  * 项目:MvpRoute
@@ -56,7 +36,7 @@ public class NetActivity extends BaseToActivity<NetContract.Presenter> implement
 	private Uri imageUri;
 
 	@Override
-	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
+	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 		ToastUtils.showShort(baseThrowable.msg);
 //		LogUtils.d("错误",baseThrowable.getCause().getMessage());
 	}

@@ -1,6 +1,8 @@
 package com.location.mvp.mvp_route_demo.base;
 
+import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -23,7 +25,7 @@ public abstract class BaseToActivity<P extends BasePresenter> extends BaseActivi
 
 	@CallSuper
 	@Override
-	protected void initView() {
+	protected void initView(@Nullable Bundle savedInstanceState) {
 		titleView = findViewById(R.id.toobar_title);
 		if (titleView != null && !TextUtils.isEmpty(getTooBarTitle())) {
 			titleView.setText(getTooBarTitle());

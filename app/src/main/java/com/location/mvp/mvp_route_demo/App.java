@@ -33,15 +33,15 @@ public class App extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-//		RetrofitConfig config = new RetrofitConfig("http://www.wanandroid.com/");
-		RetrofitConfig config = new RetrofitConfig("http://hb5.api.okayapi.com/");
+		RetrofitConfig config = new RetrofitConfig("http://www.wanandroid.com/");
+//		RetrofitConfig config = new RetrofitConfig("http://hb5.api.okayapi.com/");
 		OkHttpClient.Builder builder = new OkHttpClient.Builder();
 		builder.cookieJar(new CookiesManager(this));
 		config.setErrorResponse(new ErrorResponse());
 		config.setiRefreshToken(new RefreshToken());
 		config.setGsonClass(BaseData.class);
 		config.setBuilder(builder);
-//		config.setLodingView(new LoadingView());
+		config.setLodingView(new LoadingView());
 		RetrofitClient.init(config);
 		ToastUtils.init(this);
 		SpUtils.init(this);

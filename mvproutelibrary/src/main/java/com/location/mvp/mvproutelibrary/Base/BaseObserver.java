@@ -16,14 +16,13 @@
 package com.location.mvp.mvproutelibrary.Base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.http.INetWorkLoadingView;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 import com.location.mvp.mvproutelibrary.manager.RxManager;
-import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -39,19 +38,35 @@ public abstract class BaseObserver<T> implements Observer<T> {
 	private BaseView baseView;
 	private INetWorkLoadingView loadingView;
 
-	public BaseObserver(RxManager rxManager, BaseView baseView) {
+	 public  BaseObserver(RxManager rxManager, BaseView baseView) {
 		this.rxManager = rxManager;
 		this.baseView = baseView;
 		if (RetrofitClient.getInstance().getLoadingView() != null) {
 			loadingView = RetrofitClient.getInstance().getLoadingView();
-			loadingView.createLoadingView(baseView instanceof AppCompatActivity ? (AppCompatActivity) baseView : ((Fragment) baseView).getActivity());
+			Context context = null;
+			if(baseView instanceof  Activity){
+				context = (Activity) baseView;
+			}else if(baseView instanceof Fragment){
+				if(((Fragment) baseView).getActivity()==null){
+					throw new RuntimeException("v4 fragment must be bind Activity");
+				}
+				context = ((Fragment)baseView).getActivity();
+			}else if(baseView instanceof android.app.Fragment){
+				if(((android.app.Fragment) baseView).getActivity()==null){
+					throw new RuntimeException("v4 fragment must be bind Activity");
+				}
+				context = ((android.app.Fragment) baseView).getActivity();
+			}
+			if(context!=null){
+				loadingView.createLoadingView(context);
+			}
 		}
 	}
 
 	@Override
 	public void onSubscribe(Disposable d) {
 		rxManager.add(d);
-		if (baseView instanceof BaseActivity && ((BaseActivity) baseView).isFinishing()) {
+		if (baseView instanceof Activity && ((Activity) baseView).isFinishing()) {
 			rxManager.clear();
 		} else if (loadingView != null) {
 			loadingView.showLoading();
@@ -60,8 +75,8 @@ public abstract class BaseObserver<T> implements Observer<T> {
 
 	@Override
 	public void onError(Throwable e) {
-		if (e instanceof ExceptionHandle.ResponeThrowable) {
-			baseView.onshowError((ExceptionHandle.ResponeThrowable) e);
+		if (e instanceof ExceptionHandle.ResponseThrowable) {
+			baseView.onshowError((ExceptionHandle.ResponseThrowable) e);
 		}
 		if (loadingView != null) loadingView.dismissLoading();
 	}

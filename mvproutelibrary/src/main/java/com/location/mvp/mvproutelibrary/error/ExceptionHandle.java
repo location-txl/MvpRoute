@@ -19,7 +19,6 @@ import android.net.ParseException;
 import android.text.TextUtils;
 
 import com.google.gson.JsonParseException;
-import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
@@ -44,11 +43,11 @@ public class ExceptionHandle {
 	private static final int SERVICE_UNAVAILABLE = 503;
 	private static final int GATEWAY_TIMEOUT = 504;
 
-	public static ResponeThrowable handleException(Throwable e) {
-		ResponeThrowable ex;
+	public static ResponseThrowable handleException(Throwable e) {
+		ResponseThrowable ex;
 		if (e instanceof HttpException) {
 			HttpException httpException = (HttpException) e;
-			ex = new ResponeThrowable(e, ERROR.HTTP_ERROR);
+			ex = new ResponseThrowable(e, ERROR.HTTP_ERROR);
 			switch (httpException.code()) {
 				case UNAUTHORIZED:
 				case FORBIDDEN:
@@ -64,32 +63,32 @@ public class ExceptionHandle {
 			}
 		} else if (e instanceof ServerException) {
 			ServerException resultException = (ServerException) e;
-			ex = new ResponeThrowable(resultException, resultException.result);
+			ex = new ResponseThrowable(resultException, resultException.result);
 			ex.msg = resultException.msg;
-		} else if (e instanceof ResponeThrowable) {
-			ex = (ResponeThrowable) e;
+		} else if (e instanceof ResponseThrowable) {
+			ex = (ResponseThrowable) e;
 		} else if (e instanceof JsonParseException
 				|| e instanceof JSONException
 				|| e instanceof ParseException) {
-			ex = new ResponeThrowable(e, ERROR.PARSE_ERROR);
+			ex = new ResponseThrowable(e, ERROR.PARSE_ERROR);
 			ex.msg = "解析错误";
 		} else if (e instanceof ConnectException) {
-			ex = new ResponeThrowable(e, ERROR.NETWORD_ERROR);
+			ex = new ResponseThrowable(e, ERROR.NETWORD_ERROR);
 			ex.msg = "网络连接异常，请检查您的网络状态";
 		} else if (e instanceof javax.net.ssl.SSLHandshakeException) {
-			ex = new ResponeThrowable(e, ERROR.SSL_ERROR);
+			ex = new ResponseThrowable(e, ERROR.SSL_ERROR);
 			ex.msg = "证书验证失败";
 		} else if (e instanceof ConnectTimeoutException) {
-			ex = new ResponeThrowable(e, ERROR.TIMEOUT_ERROR);
+			ex = new ResponseThrowable(e, ERROR.TIMEOUT_ERROR);
 			ex.msg = "网络连接超时，请检查您的网络状态，稍后重试";
 		} else if (e instanceof java.net.SocketTimeoutException) {
-			ex = new ResponeThrowable(e, ERROR.TIMEOUT_ERROR);
+			ex = new ResponseThrowable(e, ERROR.TIMEOUT_ERROR);
 			ex.msg = "网络连接超时，请检查您的网络状态，稍后重试";
 		} else if (e instanceof UnknownHostException) {
-			ex = new ResponeThrowable(e, ERROR.UNKNOWN_HOST);
+			ex = new ResponseThrowable(e, ERROR.UNKNOWN_HOST);
 			ex.msg = "网络连接异常，请检查您的网络状态";
 		} else {
-			ex = new ResponeThrowable(e, ERROR.UNKNOWN);
+			ex = new ResponseThrowable(e, ERROR.UNKNOWN);
 			Throwable cause = e.getCause();
 			if(cause!=null){
 				String message = cause.getMessage();
@@ -105,12 +104,12 @@ public class ExceptionHandle {
 		return ex;
 	}
 
-	public static class ResponeThrowable extends Exception {
+	public static class ResponseThrowable extends Exception {
 
 		public int result;
 		public String msg;
 
-		public ResponeThrowable(Throwable throwable, int result) {
+		public ResponseThrowable(Throwable throwable, int result) {
 			super(throwable);
 			this.result = result;
 

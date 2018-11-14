@@ -1,7 +1,9 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -38,7 +40,7 @@ public class PictureActivity extends BaseActivity<PictureContract.Presenter> imp
 	private PictureAdapter adapter;
 
 	@Override
-	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
+	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 
@@ -48,7 +50,7 @@ public class PictureActivity extends BaseActivity<PictureContract.Presenter> imp
 	}
 
 	@Override
-	protected void initView() {
+	protected void initView(@Nullable Bundle savedInstanceState) {
 		recyclerView = findViewById(R.id.id_recyclerview);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		data = new ArrayList<>();

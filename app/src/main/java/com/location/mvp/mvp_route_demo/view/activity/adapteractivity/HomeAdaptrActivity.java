@@ -1,5 +1,6 @@
 package com.location.mvp.mvp_route_demo.view.activity.adapteractivity;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,9 +18,7 @@ import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 项目:MvpRoute
@@ -33,13 +32,13 @@ public class HomeAdaptrActivity extends BaseToActivity {
 	private AdapterHome adapterHome;
 
 	@Override
-	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
+	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 
 	@Override
-	protected void initView() {
-		super.initView();
+	protected void initView(@Nullable Bundle savedInstanceState) {
+		super.initView(savedInstanceState);
 		recyclerView = findViewById(R.id.home_adapter_recyclerView);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		List<ItemTypeResponse> list = new ArrayList<>();

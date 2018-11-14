@@ -64,7 +64,6 @@ public class ProxyHandler implements InvocationHandler {
 
 	@Override
 	public Object invoke(Object proxy, final Method method, final Object[] args) throws Throwable {
-//		checkkProgress(method, args);
 		return Observable.just(true)
 				.flatMap(new Function<Object, ObservableSource<?>>() {
 					@Override
@@ -109,8 +108,14 @@ public class ProxyHandler implements InvocationHandler {
 
 	}
 
-	//检查注解属性
-	private void checkkProgress(Method method, Object[] args) {
+	/**
+	 * @deprecated  暂时废弃
+	 * 这个方法用来检测 接口方法中是否含有 {@link Progress} 注解 用于绑定 文件上传进度
+	 * @param method
+	 * @param args
+	 */
+	@Deprecated
+	private void checkProgress(Method method, Object[] args) {
 		Type[] types = method.getGenericParameterTypes();
 		Annotation[][] parameterAnnotations = method.getParameterAnnotations();
 		int count = parameterAnnotations.length;
@@ -131,7 +136,7 @@ public class ProxyHandler implements InvocationHandler {
 		}
 	}
 
-	Class<?> getRawType(Type type) {
+	private Class<?> getRawType(Type type) {
 		if (type instanceof Class<?>) {
 			// Type is a normal class.
 			return (Class<?>) type;

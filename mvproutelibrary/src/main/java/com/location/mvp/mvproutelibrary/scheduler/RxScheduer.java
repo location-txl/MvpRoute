@@ -15,11 +15,7 @@
  */
 package com.location.mvp.mvproutelibrary.scheduler;
 
-import android.text.TextUtils;
-
-import com.location.mvp.mvproutelibrary.http.IBaseBean;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -50,7 +46,7 @@ public class RxScheduer {
 
 		@Override
 		public Observable<T> apply(Throwable throwable) throws Exception {
-			ExceptionHandle.ResponeThrowable responeThrowable = ExceptionHandle.handleException(throwable);
+			ExceptionHandle.ResponseThrowable responeThrowable = ExceptionHandle.handleException(throwable);
 			return Observable.error(responeThrowable);
 		}
 	}

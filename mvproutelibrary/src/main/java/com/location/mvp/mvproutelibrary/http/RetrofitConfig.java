@@ -21,10 +21,10 @@ import okhttp3.OkHttpClient;
 
 
 /**
- *   retrofit 配置类
- *   <p>
- *       在这里可以设置retrofit的配置信息
- *   </p>
+ * retrofit 配置类
+ * <p>
+ * 在这里可以设置retrofit的配置信息
+ * </p>
  */
 
 public class RetrofitConfig {
@@ -60,9 +60,6 @@ public class RetrofitConfig {
 	 */
 	private INetWorkLoadingView loadingView;
 
-	public IRefreshToken getiRefreshToken() {
-		return iRefreshToken;
-	}
 
 	public void setiRefreshToken(IRefreshToken iRefreshToken) {
 		this.iRefreshToken = iRefreshToken;
@@ -81,35 +78,42 @@ public class RetrofitConfig {
 		this.clazz = clazz;
 	}
 
-	public Class<? extends IBaseBean> getGsonClass() {
-		return clazz;
-	}
-
-	public String getBaseUrl() {
-		return baseUrl;
-	}
 
 	public void setBaseUrl(String baseUrl) {
 		this.baseUrl = baseUrl;
 	}
 
-	public OkHttpClient.Builder getBuilder() {
-		return builder;
-	}
 
 	public void setBuilder(OkHttpClient.Builder builder) {
 		this.builder = builder;
 	}
 
-	public IResponseErrorMsg getiResponseErrorMsg() {
+
+	public void setLodingView(INetWorkLoadingView loadingView) {
+		this.loadingView = loadingView;
+	}
+
+	IRefreshToken getiRefreshToken() {
+		return iRefreshToken;
+	}
+
+	Class<? extends IBaseBean> getGsonClass() {
+		return clazz;
+	}
+
+	String getBaseUrl() {
+		return baseUrl;
+	}
+
+	OkHttpClient.Builder getBuilder() {
+		return builder;
+	}
+
+	IResponseErrorMsg getiResponseErrorMsg() {
 		return iResponseErrorMsg;
 	}
 
-	public void setLodingView(INetWorkLoadingView lodingView) {
-		this.loadingView = lodingView;
-	}
-
-	public INetWorkLoadingView getLoadingView() {
+	INetWorkLoadingView getLoadingView() {
 		return loadingView;
 	}
 }

@@ -29,12 +29,19 @@ public abstract class BasePresenter<T extends BaseView> {
 	protected T view;
 
 
-	protected void unRegist() {
+	/**
+	 * 注册
+	 */
+	void unRegist() {
 		rxManager.clear();
 		view = null;
 	}
 
-	protected void regist(T view) {
+	/**
+	 * 解绑
+	 * @param view
+	 */
+	 void regist(T view) {
 		this.view = view;
 		rxManager = new RxManager();
 	}

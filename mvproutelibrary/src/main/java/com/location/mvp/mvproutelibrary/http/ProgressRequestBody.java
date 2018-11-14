@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 location
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.location.mvp.mvproutelibrary.http;
 
 import android.os.SystemClock;
@@ -17,14 +32,15 @@ import okio.Okio;
 import okio.Sink;
 
 /**
- * 项目:趣租部落
  *
- * @author：location time：2018/11/11 15:17
- * description：
+ *  带进度的RequestBody
+ *  用于上传文件
+ * 构造方法里面需要  {@link RequestBody,BaseProgressObserver}
+ *
  */
 
 public class ProgressRequestBody extends RequestBody {
-	protected final RequestBody mDelegate;
+	private final RequestBody mDelegate;
 	private BufferedSink mBufferedSink;
 	private BaseProgressObserver listener;
 

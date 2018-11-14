@@ -133,10 +133,6 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 		if (parent.getAdapter() instanceof BaseAdapter) {
 			adapter = (BaseAdapter) parent.getAdapter();
 		}
-//		int groupid = -1;
-//		if (adapter != null && adapter.getData(0) != null && adapter.getData(0) instanceof MulitGroupListener) {
-//			groupid = ((MulitGroupListener) adapter.getData(0)).bindAdapterGroupId();
-//		}
 		for (int i = 0; i < childCount; i++) {
 			final View child = parent.getChildAt(i);
 			int position = parent.getChildAdapterPosition(child);

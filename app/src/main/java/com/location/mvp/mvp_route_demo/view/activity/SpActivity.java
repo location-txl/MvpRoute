@@ -1,40 +1,30 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
-import android.util.Log;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.location.mvp.mvp_route_demo.BuildConfig;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
-import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.contract.SpContract;
 import com.location.mvp.mvp_route_demo.presenter.SpPresenter;
-import com.location.mvp.mvproutelibrary.Base.BasePresenter;
-import com.location.mvp.mvproutelibrary.Base.Request;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.utils.SpUtils;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
-import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
 
 /**
  * 项目:趣租部落
@@ -50,7 +40,7 @@ public class SpActivity extends BaseToActivity<SpContract.Presenter> implements 
 	private Button save, delete;
 
 	@Override
-	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
+	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 
@@ -66,8 +56,8 @@ public class SpActivity extends BaseToActivity<SpContract.Presenter> implements 
 
 
 	@Override
-	protected void initView() {
-		super.initView();
+	protected void initView(@Nullable Bundle savedInstanceState) {
+		super.initView(savedInstanceState);
 		hintText = findViewById(R.id.sp_hint);
 		key = findViewById(R.id.sp_key);
 		value = findViewById(R.id.sp_value);

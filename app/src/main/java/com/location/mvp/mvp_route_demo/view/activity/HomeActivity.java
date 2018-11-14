@@ -2,6 +2,7 @@ package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,7 +42,7 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 	private HomeAdapter homeAdapter;
 
 	@Override
-	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
+	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 
@@ -56,8 +57,8 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 	}
 
 	@Override
-	protected void initView() {
-		super.initView();
+	protected void initView(@Nullable Bundle savedInstanceState) {
+		super.initView(savedInstanceState);
 		recyclerView = findViewById(R.id.home_RecyclerView);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration

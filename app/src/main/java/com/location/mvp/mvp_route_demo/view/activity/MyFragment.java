@@ -1,6 +1,8 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.location.mvp.mvproutelibrary.Base.BaseFragment;
@@ -16,12 +18,12 @@ import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
 public class MyFragment extends BaseFragment {
 	@Override
-	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
+	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 
 	@Override
-	protected void initView(View view) {
+	protected void initView(@Nullable Bundle savedInstanceState) {
 
 	}
 

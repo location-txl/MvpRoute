@@ -1,6 +1,8 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.SeekBar;
@@ -12,7 +14,6 @@ import com.location.mvp.mvp_route_demo.contract.SpanContract;
 import com.location.mvp.mvp_route_demo.presenter.SpanPresenter;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.SpanUtils;
-import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 /**
  * 项目:MvpRoute
@@ -35,7 +36,7 @@ public class SpanActivity extends BaseToActivity<SpanContract.Presenter> impleme
 	private TextView spanClickText;
 
 	@Override
-	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
+	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 
@@ -61,8 +62,8 @@ public class SpanActivity extends BaseToActivity<SpanContract.Presenter> impleme
 	}
 
 	@Override
-	protected void initView() {
-		super.initView();
+	protected void initView(@Nullable Bundle savedInstanceState ){
+		super.initView(savedInstanceState);
 		seekBar = findViewById(R.id.span_seekbar);
 		seekBar.setMax(200);
 		seekBar.setOnSeekBarChangeListener(this);
