@@ -46,7 +46,7 @@ import static com.location.mvp.mvproutelibrary.base.Request.EXERA_RESULT;
  * @author location
  */
 
-public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity<T extends com.location.mvp.mvproutelibrary.base.BasePresenter> extends AppCompatActivity implements com.location.mvp.mvproutelibrary.base.BaseView {
 
 	protected T presenter;
 
