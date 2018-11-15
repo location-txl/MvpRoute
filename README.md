@@ -3,7 +3,9 @@
 Android项目开发框架 基于Mvp
 [bata测试版](https://github.com/TLocation/Mvp_Route_Demo/tree/dev)
 
- [ ![Download](https://api.bintray.com/packages/location/maven/mvproute/images/download.svg) ](https://bintray.com/location/maven/mvproute/_latestVersion) [![License][licensesvg]][license]
+ [ ![Download](https://api.bintray.com/packages/location/maven/mvproute/images/download.svg) ](https://bintray.com/location/maven/mvproute/_latestVersion)[![License][licensesvg]][license]
+
+## [更新日志](https://github.com/TLocation/MvpRoute/blob/master/README/update.md)
 
 ## 导入
 ```groovy
