@@ -1,4 +1,4 @@
-v1.0.3:预览
+v1.0.2:预览
 
 - [x] BaseActivity BaseFragment 增加layout注解  舍弃之前的getLayout抽象方法
 - [x] BaseActivity  使用注解方式 实现全屏  沉浸式体验
@@ -7,7 +7,7 @@ v1.0.3:预览
 - [ ] BobPopwindow 增加默认动画  由下到上 由上到下 由左到右 由右到左
 - [ ] 增加AndroidStudio模板文件 一键创建MvpRoute样式的Activity及Fragment
 
-v1.0.2:
+v1.0.1:
 
 - BaseAdapter支持自定义ViewHolder 重构ViewHolder代码  对调用无影响
 - 解决BaseAdapter尾部局大于头布局时滑动引起的崩溃bug
@@ -16,7 +16,7 @@ v1.0.2:
 - 完善BobPopWindow  增加 top right left bottom四种显示方式
 - 完善TimeUtils  支持以秒为单位的时间戳格式化
 - 修改项目Gradle文件  去除 support design GsonAdapter RxJava依赖 优化项目体积
--  项目增加完整注释
+- 项目增加完整注释
 
 v1.0.0
 - mvproute发布
