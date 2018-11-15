@@ -13,8 +13,9 @@ import com.location.mvp.mvp_route_demo.adapter.PictureAdapter;
 import com.location.mvp.mvp_route_demo.bean.PictureBean;
 import com.location.mvp.mvp_route_demo.contract.PictureContract;
 import com.location.mvp.mvp_route_demo.presenter.PicturePresenter;
-import com.location.mvp.mvproutelibrary.Base.BaseActivity;
-import com.location.mvp.mvproutelibrary.Base.Request;
+import com.location.mvp.mvproutelibrary.base.BaseActivity;
+import com.location.mvp.mvproutelibrary.base.Layout;
+import com.location.mvp.mvproutelibrary.base.Request;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
@@ -32,7 +33,7 @@ import java.util.List;
  * 修改时间:
  */
 
-
+@Layout(R.layout.activity_picture)
 public class PictureActivity extends BaseActivity<PictureContract.Presenter> implements
 		PictureContract.View, OnItemClickListener {
 	private RecyclerView recyclerView;
@@ -44,10 +45,6 @@ public class PictureActivity extends BaseActivity<PictureContract.Presenter> imp
 
 	}
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_picture;
-	}
 
 	@Override
 	protected void initView(@Nullable Bundle savedInstanceState) {

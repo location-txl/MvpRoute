@@ -16,7 +16,8 @@ import com.location.mvp.mvp_route_demo.bean.CollectListBean;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.contract.NetContract;
 import com.location.mvp.mvp_route_demo.presenter.NetPresenterVideo;
-import com.location.mvp.mvproutelibrary.Base.Request;
+import com.location.mvp.mvproutelibrary.base.Layout;
+import com.location.mvp.mvproutelibrary.base.Request;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
@@ -29,7 +30,7 @@ import java.io.File;
  * @author：location time：2018/8/31 11:39
  * description：
  */
-
+@Layout(R.layout.activity_net)
 public class NetActivity extends BaseToActivity<NetContract.Presenter> implements NetContract.View {
 
 	private File imageFile;
@@ -46,10 +47,6 @@ public class NetActivity extends BaseToActivity<NetContract.Presenter> implement
 		return "网络请求";
 	}
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_net;
-	}
 
 	@Override
 	protected void loadData() {

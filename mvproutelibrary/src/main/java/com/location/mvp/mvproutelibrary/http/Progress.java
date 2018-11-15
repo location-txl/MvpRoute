@@ -15,8 +15,6 @@
  */
 package com.location.mvp.mvproutelibrary.http;
 
-import com.location.mvp.mvproutelibrary.Base.BaseProgressObserver;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

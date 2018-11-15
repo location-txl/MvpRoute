@@ -1,11 +1,8 @@
 package com.location.mvp.mvp_route_demo.contract;
 
-import android.content.Context;
-
 import com.location.mvp.mvp_route_demo.view.activity.ResultActivity;
-import com.location.mvp.mvproutelibrary.Base.BaseActivity;
-import com.location.mvp.mvproutelibrary.Base.BasePresenter;
-import com.location.mvp.mvproutelibrary.Base.BaseView;
+import com.location.mvp.mvproutelibrary.base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.BaseView;
 
 /**
  * 项目:MvpRoute

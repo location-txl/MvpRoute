@@ -17,6 +17,7 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.contract.SpContract;
 import com.location.mvp.mvp_route_demo.presenter.SpPresenter;
+import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
@@ -32,7 +33,7 @@ import java.util.Enumeration;
  * @author：location time：2018/9/3 20:48
  * description：
  */
-
+@Layout(R.layout.activity_sp)
 public class SpActivity extends BaseToActivity<SpContract.Presenter> implements View.OnClickListener, SpContract.View {
 	private TextView hintText;
 	private EditText key;
@@ -49,10 +50,6 @@ public class SpActivity extends BaseToActivity<SpContract.Presenter> implements 
 		return "SpUtils";
 	}
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_sp;
-	}
 
 
 	@Override

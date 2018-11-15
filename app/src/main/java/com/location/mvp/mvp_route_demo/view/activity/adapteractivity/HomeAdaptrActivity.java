@@ -12,9 +12,10 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.AdapterHome;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.bean.ItemTypeResponse;
-import com.location.mvp.mvproutelibrary.Base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.adapter.OnHeaderClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
+import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
@@ -28,7 +29,7 @@ import java.util.List;
  * @author：location time：2018/8/1 18:18
  * description：
  */
-
+@Layout(R.layout.activity_adapter_home)
 public class HomeAdaptrActivity extends BaseToActivity {
 	private RecyclerView recyclerView;
 	private AdapterHome adapterHome;
@@ -104,10 +105,6 @@ public class HomeAdaptrActivity extends BaseToActivity {
 		return "功能强大的RecyclerView适配器";
 	}
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_adapter_home;
-	}
 
 	@Override
 	protected void loadData() {

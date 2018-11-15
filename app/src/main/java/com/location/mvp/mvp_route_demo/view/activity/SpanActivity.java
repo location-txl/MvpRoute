@@ -12,6 +12,7 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.contract.SpanContract;
 import com.location.mvp.mvp_route_demo.presenter.SpanPresenter;
+import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.SpanUtils;
 
@@ -21,7 +22,7 @@ import com.location.mvp.mvproutelibrary.utils.SpanUtils;
  * @author：location time：2018/7/31 18:33
  * description：
  */
-
+@Layout(R.layout.activity_span)
 public class SpanActivity extends BaseToActivity<SpanContract.Presenter> implements SeekBar.OnSeekBarChangeListener, SpanContract.View, View.OnClickListener {
 	private SeekBar seekBar;
 
@@ -45,10 +46,6 @@ public class SpanActivity extends BaseToActivity<SpanContract.Presenter> impleme
 		return "SpanUtils丰富的文本效果";
 	}
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_span;
-	}
 
 	@Override
 	protected void loadData() {

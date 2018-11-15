@@ -13,63 +13,105 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.location.mvp.mvproutelibrary.Base;
+package com.location.mvp.mvproutelibrary.base;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
+import com.location.mvp.mvproutelibrary.utils.AppManager;
 import com.location.mvp.mvproutelibrary.utils.KeyBoardUtils;
+import com.location.mvp.mvproutelibrary.utils.StatusBarUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_REQUEST;
-import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_RESULT;
+import static com.location.mvp.mvproutelibrary.base.Request.EXERA_REQUEST;
+import static com.location.mvp.mvproutelibrary.base.Request.EXERA_RESULT;
 
 
 /**
  * 基类BaseActivity
+ *
  * @param <T>
+ * @author location
  */
 
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
 
 	protected T presenter;
+
 	protected final String TAG = getClass().getSimpleName();
 
+	protected BaseActivity activity;
 
-
+	@CallSuper
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(getLayout());
+		setContentview();
+		setStatusBar();
+		activity = this;
 		presenter = createPresenter();
 		if (presenter != null) {
 			presenter.regist(this);
 		}
+		AppManager.getAppManager().addActivity(this);
 		initView(savedInstanceState);
 		loadData();
 	}
 
-	protected KeyBordListener keyBordListener;
+	/**
+	 * 获取注解 设置 透明状态栏 是否全屏
+	 *
+	 * @see StatusBar 状态栏注解
+	 * @see FullScreen 全屏注解
+	 */
+	private void setStatusBar() {
+		Class<? extends BaseActivity> baseClass = getClass();
+		if (baseClass.isAnnotationPresent(StatusBar.class)) {
+			StatusBar statusBar = baseClass.getAnnotation(StatusBar.class);
+			StatusBarUtils.setStatusBarColor(this, statusBar.color());
+			StatusBarUtils.setTransparentStatusBar(this, statusBar.isTranslucent());
+			if (statusBar.paddingTop()) {
+				StatusBarUtils.fitWindowAndClipPadding(this);
+			}
+		} else if (BaseManager.TRANSPARENR_STATUS) {
+			StatusBarUtils.setStatusBarColor(this, BaseManager.STATUS_COLOR);
+			StatusBarUtils.setTransparentStatusBar(this, BaseManager.STATUS_TRANSLUCENT);
+		}
+		if (baseClass.isAnnotationPresent(FullScreen.class)) {
+			StatusBarUtils.hideStatusBar(this);
+		}
+	}
 
 	/**
-	 * 返回布局id
-	 * @return
+	 * 获取布局id注解
+	 *
+	 * @exception NullPointerException 当没有申明此注解是抛出此异常
+	 * @see Layout
 	 */
-	protected abstract @LayoutRes
-	int getLayout();
+	private void setContentview() {
+		Class<? extends BaseActivity> aClass = getClass();
+		boolean annotationPresent = aClass.isAnnotationPresent(Layout.class);
+		if (annotationPresent) {
+			setContentView(aClass.getAnnotation(Layout.class).value());
+		}else{
+			throw new NullPointerException("You must declare that layout is annotated on the class");
+		}
+	}
+
+	protected KeyBordListener keyBordListener;
+
 
 	/**
 	 * 初始化view
@@ -84,17 +126,19 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
 	/**
 	 * 创建Presenter
+	 *
 	 * @return
 	 */
-	protected abstract
-	T createPresenter();
+	protected abstract T createPresenter();
 
+	@CallSuper
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		if (presenter != null) {
 			presenter.unRegist();
 		}
+		AppManager.getAppManager().finishActivity(this);
 	}
 
 	protected void startActivity(Class activity) {
@@ -104,13 +148,19 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-			if (isTouchView(filterViewByIds(), ev)) return super.dispatchTouchEvent(ev);
-			if (hideSoftByEditViewIds() == null || hideSoftByEditViewIds().length == 0)
+			if (isTouchView(filterViewByIds(), ev)) {
 				return super.dispatchTouchEvent(ev);
+			}
+			if (hideSoftByEditViewIds() == null || hideSoftByEditViewIds().length == 0) {
+
+				return super.dispatchTouchEvent(ev);
+			}
 			View v = getCurrentFocus();
 			if (isFocusEditText(v, hideSoftByEditViewIds())) {
-				if (isTouchView(hideSoftByEditViewIds(), ev))
+				if (isTouchView(hideSoftByEditViewIds(), ev)) {
+
 					return super.dispatchTouchEvent(ev);
+				}
 				//隐藏键盘
 				KeyBoardUtils.hideInputForce(this);
 				if (keyBordListener != null) {
@@ -123,12 +173,20 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 		return super.dispatchTouchEvent(ev);
 	}
 
-	//是否触摸在指定view上面,对某个控件过滤
+	/**
+	 * 是否触摸在指定view上面,对某个控件过滤
+	 *
+	 * @param ids
+	 * @param ev
+	 * @return
+	 */
 	public boolean isTouchView(int[] ids, MotionEvent ev) {
 		int[] location = new int[2];
 		for (int id : ids) {
 			View view = findViewById(id);
-			if (view == null) continue;
+			if (view == null) {
+				continue;
+			}
 			view.getLocationOnScreen(location);
 			int x = location[0];
 			int y = location[1];
@@ -179,9 +237,17 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 		return null;
 	}
 
-	//是否触摸在指定view上面,对某个控件过滤
+	/**
+	 * 是否触摸在指定view上面,对某个控件过滤
+	 *
+	 * @param views
+	 * @param ev
+	 * @return
+	 */
 	public boolean isTouchView(View[] views, MotionEvent ev) {
-		if (views == null || views.length == 0) return false;
+		if (views == null || views.length == 0) {
+			return false;
+		}
 		int[] location = new int[2];
 		for (View view : views) {
 			view.getLocationOnScreen(location);
@@ -197,17 +263,19 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
 
 	public interface KeyBordListener {
+		/**
+		 * 键盘隐藏监听
+		 */
 		void onHideKeyBord();
 	}
 
 
-
+	@CallSuper
 	@TargetApi(Build.VERSION_CODES.KITKAT)
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		Class<? extends BaseActivity> aClass = getClass();
-
 		Method[] declaredMethods = aClass.getDeclaredMethods();
 		for (Method declaredMethod : declaredMethods) {
 			Request request = declaredMethod.getAnnotation(Request.class);
@@ -229,7 +297,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 					declaredMethod.invoke(this, data);
 				} catch (IllegalAccessException | InvocationTargetException e) {
 					e.printStackTrace();
-					Log.d("错误", e.getMessage());
 				}
 				return;
 			}

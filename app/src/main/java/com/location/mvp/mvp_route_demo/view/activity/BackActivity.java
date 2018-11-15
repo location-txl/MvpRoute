@@ -7,8 +7,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.location.mvp.mvp_route_demo.R;
-import com.location.mvp.mvproutelibrary.Base.BaseActivity;
-import com.location.mvp.mvproutelibrary.Base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.BaseActivity;
+import com.location.mvp.mvproutelibrary.base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
 /**
@@ -17,17 +18,13 @@ import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
  * @author：location time：2018/7/31 16:07
  * description：
  */
-
+@Layout(R.layout.activity_back)
 public class BackActivity extends BaseActivity implements View.OnClickListener {
 	@Override
 	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_back;
-	}
 
 	@Override
 	protected void initView(@Nullable Bundle savedInstanceState) {

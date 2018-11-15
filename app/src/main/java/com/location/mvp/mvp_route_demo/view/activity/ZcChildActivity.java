@@ -14,10 +14,11 @@ import android.widget.TextView;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.bean.ZcChildBean;
-import com.location.mvp.mvproutelibrary.Base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
+import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import static com.location.mvp.mvp_route_demo.view.activity.ZcActivity.EXTRA_POS
  * @author：location time：2018/9/2 20:19
  * description：
  */
-
+@Layout(R.layout.activity_home)
 public class ZcChildActivity extends BaseToActivity implements View.OnClickListener, OnItemClickListener {
 
 	private List<ZcChildBean> selectList;
@@ -63,10 +64,6 @@ public class ZcChildActivity extends BaseToActivity implements View.OnClickListe
 		return "请选择属性";
 	}
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_home;
-	}
 
 	@Override
 	protected void loadData() {

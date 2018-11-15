@@ -13,8 +13,8 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.HomeAdapter;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
-import com.location.mvp.mvp_route_demo.view.activity.adapteractivity.HomeAdaptrActivity;
-import com.location.mvp.mvproutelibrary.Base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.adapter.OnChildClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnHeaderClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
@@ -22,6 +22,7 @@ import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.DividerItemDecoration;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
+import com.location.mvp.mvproutelibrary.utils.StatusBarUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +37,7 @@ import java.util.List;
  * 修改时间:
  */
 
-
+@Layout(R.layout.activity_home)
 public class HomeActivity extends BaseToActivity implements OnItemClickListener {
 	private RecyclerView recyclerView;
 	private HomeAdapter homeAdapter;
@@ -46,10 +47,6 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 
 	}
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_home;
-	}
 
 	@Override
 	protected String getTooBarTitle() {
@@ -102,7 +99,8 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 	public void onItemClick(BaseViewHolder viewHolder, View view, int position) {
 		switch (position) {
 			case 0:
-				startActivity(HomeAdaptrActivity.class);
+				StatusBarUtils.showStatusBar(this);
+//				startActivity(HomeAdaptrActivity.class);
 				break;
 			case 1:
 				break;

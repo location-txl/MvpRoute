@@ -16,7 +16,8 @@ import com.location.mvp.mvp_route_demo.bean.ZcChildBean;
 import com.location.mvp.mvp_route_demo.bean.ZcDataBean;
 import com.location.mvp.mvp_route_demo.contract.ZcContract;
 import com.location.mvp.mvp_route_demo.presenter.ZcPresenter;
-import com.location.mvp.mvproutelibrary.Base.Request;
+import com.location.mvp.mvproutelibrary.base.Layout;
+import com.location.mvp.mvproutelibrary.base.Request;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.List;
  * @author：location time：2018/9/2 19:46
  * description：
  */
-
+@Layout(R.layout.activity_ac_selectview)
 public class ZcActivity extends BaseToActivity<ZcContract.Presenter> implements  ZcContract.View, OnItemListener {
 	private final int CODE = 201;
 	public static final String EXTRA_DATA = "data_s_a";
@@ -68,10 +69,6 @@ public class ZcActivity extends BaseToActivity<ZcContract.Presenter> implements 
 		presenter.insertItem();
 	}
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_ac_selectview;
-	}
 
 	@Request(request = CODE)
 	private void showResult(Intent intent) {

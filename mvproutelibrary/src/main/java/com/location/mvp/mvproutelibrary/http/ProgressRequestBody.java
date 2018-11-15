@@ -17,9 +17,8 @@ package com.location.mvp.mvproutelibrary.http;
 
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.location.mvp.mvproutelibrary.Base.BaseProgressObserver;
+import com.location.mvp.mvproutelibrary.base.BaseProgressObserver;
 
 import java.io.IOException;
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.location.mvp.mvproutelibrary.Base;
+package com.location.mvp.mvproutelibrary.base;
 
 import com.location.mvp.mvproutelibrary.manager.RxManager;
 
@@ -21,6 +21,7 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * 带进度的Observer 用于上传文件
+ * @author location
  */
 
 public abstract class BaseProgressObserver<T> extends BaseObserver<T> {

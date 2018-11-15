@@ -6,6 +6,23 @@
 	<style name="AppTheme" parent="Base.AppTheme">
 
 		<!-- 这个属性之所以注释掉是因为它只能在5.0之后使用，所以一定要定义它的话需要在/res/valuse-v21/sytles.xml中进行定义 -->
-		 <item name="android:navigationBarColor">@color/accent_material_light</item>
+		<item name="android:navigationBarColor">@color/accent_material_light</item>
+		<item name="android:statusBarColor">@android:color/transparent</item>
+		<item name="android:windowTranslucentStatus">false</item>
+		<item name="android:windowTranslucentNavigation">true</item>
+		<!--<item name="android:windowBackground">@color/background</item>-->
+	</style>
+
+	<style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+		<item name="android:windowAnimationStyle">@style/AcitivityEnterAndExit</item>
+		<item name="colorPrimary">@color/material_deep_teal_500</item>
+		<item name="colorAccent">@color/colorAccent</item>
+		<item name="colorPrimaryDark">@color/colorPrimary</item>
+		<item name="android:textCursorDrawable">@null</item>
+		<item name="android:navigationBarColor">@color/accent_material_light</item>
+		<!--<item name="android:statusBarColor">@android:color/transparent</item>-->
+		<!--<item name="android:windowTranslucentStatus">false</item>-->
+		<!--<item name="android:windowTranslucentNavigation">true</item>-->
 	</style>
 </resources>

@@ -11,11 +11,12 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.contract.ResultContract;
 import com.location.mvp.mvp_route_demo.presenter.ResultPresenter;
-import com.location.mvp.mvproutelibrary.Base.Request;
+import com.location.mvp.mvproutelibrary.base.Layout;
+import com.location.mvp.mvproutelibrary.base.Request;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
-import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_REQUEST;
-import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_RESULT;
+import static com.location.mvp.mvproutelibrary.base.Request.EXERA_REQUEST;
+import static com.location.mvp.mvproutelibrary.base.Request.EXERA_RESULT;
 
 /**
  * 项目:MvpRoute
@@ -23,7 +24,7 @@ import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_RESULT;
  * @author：location time：2018/7/31 16:02
  * description：
  */
-
+@Layout(R.layout.activity_result)
 public class ResultActivity extends BaseToActivity<ResultContract.Presenter> implements ResultContract.View, View.OnClickListener {
 	private final int REQUESTCODE = 100;
 	private TextView sinceText;
@@ -33,10 +34,6 @@ private TextView resulttext;
 
 	}
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_result;
-	}
 
 	@Override
 	protected String getTooBarTitle() {

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.location.mvp.mvproutelibrary.Base;
+package com.location.mvp.mvproutelibrary.base;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

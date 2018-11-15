@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.location.mvp.mvp_route_demo.R;
-import com.location.mvp.mvproutelibrary.Base.BaseActivity;
-import com.location.mvp.mvproutelibrary.Base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.BaseActivity;
+import com.location.mvp.mvproutelibrary.base.BasePresenter;
 
 /**
  * 项目:MvpRoute
@@ -36,6 +36,5 @@ public abstract class BaseToActivity<P extends BasePresenter> extends BaseActivi
 				}
 			});
 		}
-
 	}
 }

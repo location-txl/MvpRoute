@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.location.mvp.mvproutelibrary.Base;
+package com.location.mvp.mvproutelibrary.base;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -33,7 +33,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.location.mvp.mvproutelibrary.R;
 import com.location.mvp.mvproutelibrary.utils.KeyBoardUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -41,14 +40,15 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_REQUEST;
-import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_RESULT;
+import static com.location.mvp.mvproutelibrary.base.Request.EXERA_REQUEST;
+import static com.location.mvp.mvproutelibrary.base.Request.EXERA_RESULT;
 
 
 /**
  * 基类  BaseFragment
  *
  * @param <T>
+ * @author Administrator
  */
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView {
 	protected T presenter;
@@ -79,6 +79,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 		return null;
 	}
 
+	@CallSuper
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -89,12 +90,14 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 		return inflater.inflate(getLayout(), container, false);
 	}
 
+	@CallSuper
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
 		activity = (FragmentActivity) context;
 	}
 
+	@CallSuper
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
@@ -107,9 +110,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 		loadData();
 	}
 
-    @Nullable
+	@Nullable
 	protected <V extends View> V findViewById(@IdRes int id) {
-		return rootView==null?null: (V) rootView.findViewById(id);
+		return rootView == null ? null : (V) rootView.findViewById(id);
 	}
 
 	private void initHideBoard(View view) {
@@ -232,6 +235,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 	 */
 	protected abstract T createPresenter();
 
+	@CallSuper
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
@@ -243,10 +247,18 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 	/**
 	 * 返回布局id
 	 *
-	 * @return
+	 * @return 返回布局id
+	 * @throws @exception NullPointerException 当没有申明此注解是抛出此异常
+	 * @see Layout
 	 */
-	protected abstract @LayoutRes
-	int getLayout();
+	private @LayoutRes
+	int getLayout() {
+		if (getClass().isAnnotationPresent(Layout.class)) {
+			return getClass().getAnnotation(Layout.class).value();
+		} else {
+			throw new NullPointerException("You must declare that layout is annotated on the class");
+		}
+	}
 
 
 	/**
@@ -261,6 +273,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 	protected void onHide() {
 	}
 
+	@CallSuper
 	@Override
 	public void onHiddenChanged(boolean hidden) {
 		super.onHiddenChanged(hidden);
@@ -271,6 +284,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 		}
 	}
 
+	@CallSuper
 	@RequiresApi(api = Build.VERSION_CODES.KITKAT)
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

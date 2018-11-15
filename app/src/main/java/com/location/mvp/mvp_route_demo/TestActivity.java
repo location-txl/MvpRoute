@@ -22,7 +22,6 @@ import java.util.List;
  * @author：location time：2018/9/28 21:56
  * description：
  */
-
 public class TestActivity extends AppCompatActivity implements OnItemClickListener {
 
 	public static final String str = "{\n" +

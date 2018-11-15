@@ -15,10 +15,8 @@
  */
 package com.location.mvp.mvproutelibrary.http;
 
-import com.location.mvp.mvproutelibrary.Base.BaseProgressObserver;
+import com.location.mvp.mvproutelibrary.base.BaseProgressObserver;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.utils.LogUtils;
-import com.location.mvp.mvproutelibrary.utils.TimeUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
@@ -29,11 +27,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
-import java.nio.file.Path;
-import java.util.IllformedLocaleException;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
