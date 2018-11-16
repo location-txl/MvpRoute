@@ -35,7 +35,7 @@ public class HomeAdaptrActivity extends BaseToActivity {
 	private AdapterHome adapterHome;
 
 	@Override
-	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
+	public void onShowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 

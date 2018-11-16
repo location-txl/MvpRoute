@@ -55,7 +55,7 @@ public class ZcChildActivity extends BaseToActivity implements View.OnClickListe
 		return intent;
 	}
 	@Override
-	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
+	public void onShowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 

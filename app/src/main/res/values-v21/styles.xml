@@ -16,7 +16,7 @@
 	<style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
 		<item name="android:windowAnimationStyle">@style/AcitivityEnterAndExit</item>
-		<item name="colorPrimary">@color/material_deep_teal_500</item>
+		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorAccent">@color/colorAccent</item>
 		<item name="colorPrimaryDark">@color/colorPrimary</item>
 		<item name="android:textCursorDrawable">@null</item>

@@ -21,7 +21,7 @@ import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 @Layout(R.layout.activity_back)
 public class BackActivity extends BaseActivity implements View.OnClickListener {
 	@Override
-	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
+	public void onShowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 

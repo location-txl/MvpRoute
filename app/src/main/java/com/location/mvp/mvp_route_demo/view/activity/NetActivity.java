@@ -37,7 +37,7 @@ public class NetActivity extends BaseToActivity<NetContract.Presenter> implement
 	private Uri imageUri;
 
 	@Override
-	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
+	public void onShowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 		ToastUtils.showShort(baseThrowable.msg);
 //		LogUtils.d("错误",baseThrowable.getCause().getMessage());
 	}

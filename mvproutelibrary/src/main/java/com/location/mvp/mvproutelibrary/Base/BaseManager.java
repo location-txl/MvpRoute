@@ -18,14 +18,7 @@ public class BaseManager {
 	 * {@link #TRANSPARENR_STATUS} 设置为true才有效
 	 * 默认状态栏颜色
 	 */
-	static int STATUS_COLOR = Color.TRANSPARENT;
-
-	/**
-	 * {@link #TRANSPARENR_STATUS} 设置为true才有效
-	 * 是否是半透明
-	 */
-	static boolean STATUS_TRANSLUCENT = false;
-
+	static int STATUS_COLOR = -1;
 
 	/**
 	 * {@link #TRANSPARENR_STATUS} 设置为true才有效

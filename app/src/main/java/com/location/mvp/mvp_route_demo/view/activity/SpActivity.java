@@ -41,7 +41,7 @@ public class SpActivity extends BaseToActivity<SpContract.Presenter> implements 
 	private Button save, delete;
 
 	@Override
-	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
+	public void onShowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 

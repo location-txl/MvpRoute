@@ -14,11 +14,13 @@ import com.location.mvp.mvp_route_demo.adapter.HomeAdapter;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvproutelibrary.base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.FullScreen;
 import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.adapter.OnChildClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnHeaderClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
+import com.location.mvp.mvproutelibrary.base.StatusBar;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.DividerItemDecoration;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
@@ -28,9 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 项目名称: MvpRoute
- * 类描述:
- * 创建人: 田晓龙
+ * @author location
  * 创建时间: 2018/7/21 0021 16:46
  * 修改人:
  * 修改内容:
@@ -38,12 +38,13 @@ import java.util.List;
  */
 
 @Layout(R.layout.activity_home)
+@StatusBar(tranStatus = false,color = Color.MAGENTA)
 public class HomeActivity extends BaseToActivity implements OnItemClickListener {
 	private RecyclerView recyclerView;
 	private HomeAdapter homeAdapter;
 
 	@Override
-	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
+	public void onShowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 

@@ -72,15 +72,6 @@ public class StatusBarUtils {
 				!= WindowManager.LayoutParams.FLAG_FULLSCREEN;
 	}
 
-	/**
-	 * 设置透明状态栏
-	 * 默认状态栏不是半透明
-	 *
-	 * @param activity
-	 */
-	public static void setTransparentStatusBar(Activity activity) {
-		setTransparentStatusBar(activity, false);
-	}
 
 	/**
 	 * 设置透明状态栏（api大于19方可使用）
@@ -90,14 +81,11 @@ public class StatusBarUtils {
 	 * <p>android:fitsSystemWindows="true"</p>
 	 *
 	 * @param activity      activity
-	 * @param isTranslucent 是否半透明
 	 */
-	public static void setTransparentStatusBar(@NonNull final Activity activity, boolean isTranslucent) {
+	public static void setTransparentStatusBar(@NonNull final Activity activity) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			if (isTranslucent) {
 				//设置半透明
 				activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			}
 			activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 		}
 	}

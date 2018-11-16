@@ -41,7 +41,7 @@ public class PictureActivity extends BaseActivity<PictureContract.Presenter> imp
 	private PictureAdapter adapter;
 
 	@Override
-	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
+	public void onShowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 

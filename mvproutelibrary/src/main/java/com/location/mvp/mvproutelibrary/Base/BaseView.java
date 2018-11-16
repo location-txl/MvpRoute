@@ -27,5 +27,5 @@ public interface BaseView {
 	 *
 	 * @param throwable
 	 */
-	void onshowError(ExceptionHandle.ResponseThrowable throwable);
+	void onShowError(ExceptionHandle.ResponseThrowable throwable);
 }

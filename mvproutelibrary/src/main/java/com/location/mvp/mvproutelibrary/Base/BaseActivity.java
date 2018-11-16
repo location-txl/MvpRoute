@@ -17,11 +17,13 @@ package com.location.mvp.mvproutelibrary.base;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -35,9 +37,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.location.mvp.mvproutelibrary.base.Request.EXERA_REQUEST;
-import static com.location.mvp.mvproutelibrary.base.Request.EXERA_RESULT;
-
 
 /**
  * 基类BaseActivity
@@ -46,8 +45,7 @@ import static com.location.mvp.mvproutelibrary.base.Request.EXERA_RESULT;
  * @author location
  */
 
-public abstract class BaseActivity<T extends com.location.mvp.mvproutelibrary.base.BasePresenter> extends AppCompatActivity implements com.location.mvp.mvproutelibrary.base.BaseView {
-
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
 	protected T presenter;
 
 	protected final String TAG = getClass().getSimpleName();
@@ -58,8 +56,9 @@ public abstract class BaseActivity<T extends com.location.mvp.mvproutelibrary.ba
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentview();
 		setStatusBar();
+		setContentView();
+		initPaddingTop();
 		activity = this;
 		presenter = createPresenter();
 		if (presenter != null) {
@@ -71,6 +70,22 @@ public abstract class BaseActivity<T extends com.location.mvp.mvproutelibrary.ba
 	}
 
 	/**
+	 * 设置 在沉浸状态栏下的  内容是否在状态栏之下
+	 */
+	private void initPaddingTop() {
+		Class<? extends BaseActivity> baseClass = getClass();
+		if (baseClass.isAnnotationPresent(StatusBar.class)) {
+			StatusBar statusBar = baseClass.getAnnotation(StatusBar.class);
+			// 只有是沉浸式 状态栏才有效
+			if (statusBar.tranStatus() && statusBar.paddingTop()) {
+				StatusBarUtils.fitWindowAndClipPadding(this);
+			}
+		} else if (BaseManager.TRANSPARENR_STATUS && BaseManager.STATUS_PADDING_TOP) {
+			StatusBarUtils.fitWindowAndClipPadding(this);
+		}
+	}
+
+	/**
 	 * 获取注解 设置 透明状态栏 是否全屏
 	 *
 	 * @see StatusBar 状态栏注解
@@ -78,34 +93,67 @@ public abstract class BaseActivity<T extends com.location.mvp.mvproutelibrary.ba
 	 */
 	private void setStatusBar() {
 		Class<? extends BaseActivity> baseClass = getClass();
-		if (baseClass.isAnnotationPresent(StatusBar.class)) {
+		boolean haveStatusBar = baseClass.isAnnotationPresent(StatusBar.class);
+		if (haveStatusBar) {
 			StatusBar statusBar = baseClass.getAnnotation(StatusBar.class);
-			StatusBarUtils.setStatusBarColor(this, statusBar.color());
-			StatusBarUtils.setTransparentStatusBar(this, statusBar.isTranslucent());
-			if (statusBar.paddingTop()) {
-				StatusBarUtils.fitWindowAndClipPadding(this);
+			int c = statusBar.color();
+			if (statusBar.tranStatus()) {
+				//设置透明状态栏
+				StatusBarUtils.setTransparentStatusBar(this);
+				c = Color.TRANSPARENT;
 			}
+			setStatusBarColorForAnnotation(c);
 		} else if (BaseManager.TRANSPARENR_STATUS) {
-			StatusBarUtils.setStatusBarColor(this, BaseManager.STATUS_COLOR);
-			StatusBarUtils.setTransparentStatusBar(this, BaseManager.STATUS_TRANSLUCENT);
+			StatusBarUtils.setTransparentStatusBar(this);
+			//解决在某些机型上 透明状态栏后有半透明的黑色背景
+			StatusBarUtils.setStatusBarColor(this, Color.TRANSPARENT);
+		} else {
+			setStatusBarColorFromManager();
 		}
+
+
+		//是否是全屏
 		if (baseClass.isAnnotationPresent(FullScreen.class)) {
 			StatusBarUtils.hideStatusBar(this);
 		}
 	}
 
 	/**
+	 * @param c 注解设置的颜色
+	 *          如果注解没有设置颜色  则会获取{@link BaseManager#STATUS_COLOR} 颜色
+	 *          还没有获取到  则获取app的主题颜色{@link #getDefaultColor()}
+	 */
+	private void setStatusBarColorForAnnotation(int c) {
+
+
+		if (BaseManager.STATUS_COLOR != -1 && c == -1) {
+			c = BaseManager.STATUS_COLOR;
+		}
+		if (c == -1) {
+			c = getDefaultColor();
+		}
+		StatusBarUtils.setStatusBarColor(this, c);
+	}
+
+	private void setStatusBarColorFromManager() {
+		int color = BaseManager.STATUS_COLOR;
+		if (color != -1) {
+			StatusBarUtils.setStatusBarColor(this, color);
+		}
+	}
+
+	/**
 	 * 获取布局id注解
 	 *
-	 * @exception NullPointerException 当没有申明此注解是抛出此异常
+	 * @throws NullPointerException 当没有申明此注解是抛出此异常
 	 * @see Layout
 	 */
-	private void setContentview() {
+	private void setContentView() {
 		Class<? extends BaseActivity> aClass = getClass();
 		boolean annotationPresent = aClass.isAnnotationPresent(Layout.class);
 		if (annotationPresent) {
 			setContentView(aClass.getAnnotation(Layout.class).value());
-		}else{
+		} else {
 			throw new NullPointerException("You must declare that layout is annotated on the class");
 		}
 	}
@@ -292,8 +340,8 @@ public abstract class BaseActivity<T extends com.location.mvp.mvproutelibrary.ba
 					if (data == null) {
 						data = new Intent();
 					}
-					data.putExtra(EXERA_REQUEST, requestCode);
-					data.putExtra(EXERA_RESULT, resultCode);
+					data.putExtra(Request.EXERA_REQUEST, requestCode);
+					data.putExtra(Request.EXERA_RESULT, resultCode);
 					declaredMethod.invoke(this, data);
 				} catch (IllegalAccessException | InvocationTargetException e) {
 					e.printStackTrace();
@@ -302,5 +350,17 @@ public abstract class BaseActivity<T extends com.location.mvp.mvproutelibrary.ba
 			}
 
 		}
+	}
+
+	/**
+	 * 获取默认的状态栏颜色
+	 *
+	 * @return
+	 */
+	private int getDefaultColor() {
+		TypedValue typedValue = new TypedValue();
+		getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
+		return typedValue.data;
+
 	}
 }

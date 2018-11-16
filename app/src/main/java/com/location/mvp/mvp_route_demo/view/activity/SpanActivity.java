@@ -37,7 +37,7 @@ public class SpanActivity extends BaseToActivity<SpanContract.Presenter> impleme
 	private TextView spanClickText;
 
 	@Override
-	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
+	public void onShowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 

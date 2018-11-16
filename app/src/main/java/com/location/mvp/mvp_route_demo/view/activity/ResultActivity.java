@@ -15,8 +15,6 @@ import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.base.Request;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
-import static com.location.mvp.mvproutelibrary.base.Request.EXERA_REQUEST;
-import static com.location.mvp.mvproutelibrary.base.Request.EXERA_RESULT;
 
 /**
  * 项目:MvpRoute
@@ -30,7 +28,7 @@ public class ResultActivity extends BaseToActivity<ResultContract.Presenter> imp
 	private TextView sinceText;
 private TextView resulttext;
 	@Override
-	public void onshowError(ExceptionHandle.ResponseThrowable baseThrowable) {
+	public void onShowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 
@@ -60,9 +58,9 @@ private TextView resulttext;
 	@Request(request = REQUESTCODE)
 	private void onResult(Intent intent) {
 		resulttext.setText("回传成功\n调用onResult方法\n");
-		resulttext.append("requestCode===>"+intent.getIntExtra(EXERA_REQUEST,-1));
+		resulttext.append("requestCode===>"+intent.getIntExtra(Request.EXERA_REQUEST,-1));
 		resulttext.append("\n");
-		resulttext.append("resultCode===>" + intent.getIntExtra(EXERA_RESULT,-1));
+		resulttext.append("resultCode===>" + intent.getIntExtra(Request.EXERA_RESULT,-1));
 		resulttext.append("\n");
 		resulttext.append("intent====>"+intent.getExtras().toString());
 	}
