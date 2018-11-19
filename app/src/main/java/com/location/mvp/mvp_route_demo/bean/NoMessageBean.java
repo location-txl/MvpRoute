@@ -11,6 +11,14 @@ public class NoMessageBean {
 	private String name;
 	private int id;
 
+	@Override
+	public String toString() {
+		return "NoMessageBean{" +
+				"name='" + name + '\'' +
+				", id=" + id +
+				'}';
+	}
+
 	public NoMessageBean(String name, int id) {
 		this.name = name;
 		this.id = id;

@@ -2,10 +2,12 @@ package com.location.mvp.mvp_route_demo;
 
 import android.app.Application;
 
+import com.alibaba.fastjson.JSON;
 import com.location.mvp.mvp_route_demo.base.BaseData;
 import com.location.mvp.mvp_route_demo.base.ErrorResponse;
 import com.location.mvp.mvp_route_demo.base.LoadingView;
 import com.location.mvp.mvp_route_demo.base.RefreshToken;
+import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 import com.location.mvp.mvproutelibrary.http.RetrofitConfig;
 import com.location.mvp.mvproutelibrary.http.cookie.CookiesManager;
@@ -15,6 +17,7 @@ import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 //import com.squareup.leakcanary.LeakCanary;
 
 import java.time.temporal.ValueRange;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 
@@ -52,6 +55,7 @@ public class App extends Application {
 //			return;
 //		}
 //		LeakCanary.install(this);
+
 	}
 
 

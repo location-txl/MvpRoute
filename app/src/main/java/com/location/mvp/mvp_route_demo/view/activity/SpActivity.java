@@ -15,17 +15,26 @@ import android.widget.TextView;
 
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
+import com.location.mvp.mvp_route_demo.bean.LoginResponse;
+import com.location.mvp.mvp_route_demo.bean.NoMessageBean;
+import com.location.mvp.mvp_route_demo.bean.TestBean;
 import com.location.mvp.mvp_route_demo.contract.SpContract;
 import com.location.mvp.mvp_route_demo.presenter.SpPresenter;
 import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
+import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
+import com.location.mvp.mvproutelibrary.utils.JsonUtils;
+import com.location.mvp.mvproutelibrary.utils.LogUtils;
+import com.location.mvp.mvproutelibrary.utils.SpUtils;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 /**
  * 项目:趣租部落
@@ -39,6 +48,7 @@ public class SpActivity extends BaseToActivity<SpContract.Presenter> implements 
 	private EditText key;
 	private EditText value;
 	private Button save, delete;
+	private Button user,message,getUser,getMessage;
 
 	@Override
 	public void onShowError(ExceptionHandle.ResponseThrowable baseThrowable) {
@@ -62,6 +72,14 @@ public class SpActivity extends BaseToActivity<SpContract.Presenter> implements 
 		delete = findViewById(R.id.sp_delete);
 		save.setOnClickListener(this);
 		delete.setOnClickListener(this);
+		user = findViewById(R.id.sp_user);
+		message = findViewById(R.id.sp_mesage);
+		getUser = findViewById(R.id.sp_get_user);
+		getMessage = findViewById(R.id.sp_get_message);
+		RxScheduer.click(user,this);
+		RxScheduer.click(message,this);
+		RxScheduer.click(getUser,this);
+		RxScheduer.click(getMessage,this);
 	}
 
 	@Override
@@ -123,13 +141,40 @@ public class SpActivity extends BaseToActivity<SpContract.Presenter> implements 
 		switch (v.getId()) {
 			//保存
 			case R.id.sp_save:
-
 				presenter.save(key.getText().toString(), value.getText().toString());
 				break;
 			//删除
 			case R.id.sp_delete:
 				presenter.delete(key.getText().toString());
 				break;
+			case  R.id.sp_user:
+				ToastUtils.showShort("user");
+				List<LoginResponse> list = new ArrayList<>();
+				for(int i=0;i<5;i++){
+					LoginResponse loginResponse = new LoginResponse();
+					loginResponse.setEmail("email"+i);
+					loginResponse.setId(i);
+					list.add(loginResponse);
+				}
+				String s = JsonUtils.obtJson(list);
+				LogUtils.d("s===>" + s);
+				List<LoginResponse> list2 = JsonUtils.obtArray(s, LoginResponse.class);
+				LogUtils.d("s===>login===" + list2.toString());
+//				SpUtils.getInstance().putValue(list);
+				break;
+			case  R.id.sp_mesage:
+				List<NoMessageBean> list1 = new ArrayList<>();
+				for(int i =0;i<5;i++){
+					NoMessageBean noMessageBean = new NoMessageBean("123",i);
+					list1.add(noMessageBean);
+				}
+				SpUtils.getInstance().putValue(list1);
+				break;
+			case  R.id.sp_get_user:
+				break;
+			case  R.id.sp_get_message:
+				break;
+
 			default:
 		}
 	}

@@ -59,6 +59,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 		setStatusBar();
 		setContentView();
 		initPaddingTop();
+		Bundle extras = getIntent().getExtras();
+
 		activity = this;
 		presenter = createPresenter();
 		if (presenter != null) {
@@ -361,6 +363,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 		TypedValue typedValue = new TypedValue();
 		getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
 		return typedValue.data;
+	}
+
+
+	private void setObject(Bundle bundle,Object data){
+
+
+
 
 	}
 }
