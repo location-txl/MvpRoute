@@ -21,8 +21,6 @@ import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.contract.SpContract;
 import com.location.mvp.mvp_route_demo.presenter.SpPresenter;
-import com.location.mvp.mvproutelibrary.Base.BasePresenter;
-import com.location.mvp.mvproutelibrary.Base.Request;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;

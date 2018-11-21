@@ -9,13 +9,10 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.contract.ResultContract;
 import com.location.mvp.mvp_route_demo.presenter.ResultPresenter;
-import com.location.mvp.mvproutelibrary.Base.BaseActivity;
-import com.location.mvp.mvproutelibrary.Base.Request;
+import com.location.mvp.mvproutelibrary.base.Request;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.SpanUtils;
 
-import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_REQUEST;
-import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_RESULT;
 
 /**
  * 项目:MvpRoute
@@ -63,9 +60,9 @@ private TextView resulttext;
 	@Request(request = REQUESTCODE)
 	private void onResult(Intent intent) {
 		resulttext.setText("回传成功\n调用onResult方法\n");
-		resulttext.append("requestCode===>"+intent.getIntExtra(EXERA_REQUEST,-1));
+		resulttext.append("requestCode===>"+intent.getIntExtra(Request.EXERA_REQUEST,-1));
 		resulttext.append("\n");
-		resulttext.append("resultCode===>" + intent.getIntExtra(EXERA_RESULT,-1));
+		resulttext.append("resultCode===>" + intent.getIntExtra(Request.EXERA_RESULT,-1));
 		resulttext.append("\n");
 		resulttext.append("intent====>"+intent.getExtras().toString());
 	}

@@ -2,8 +2,8 @@ package com.location.mvp.mvp_route_demo.contract;
 
 import com.location.mvp.mvp_route_demo.bean.CollectListBean;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
-import com.location.mvp.mvproutelibrary.Base.BasePresenter;
-import com.location.mvp.mvproutelibrary.Base.BaseView;
+import com.location.mvp.mvproutelibrary.base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.BaseView;
 
 /**
  * 项目:MvpRoute

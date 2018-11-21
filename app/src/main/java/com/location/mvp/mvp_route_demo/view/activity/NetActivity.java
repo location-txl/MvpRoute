@@ -11,7 +11,6 @@ import com.location.mvp.mvp_route_demo.bean.CollectListBean;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.contract.NetContract;
 import com.location.mvp.mvp_route_demo.presenter.NetPresenter;
-import com.location.mvp.mvproutelibrary.Base.BaseActivity;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;

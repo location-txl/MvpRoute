@@ -5,7 +5,7 @@ import com.location.mvp.mvp_route_demo.bean.CollectListBean;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.contract.NetContract;
 import com.location.mvp.mvp_route_demo.service.LoginService;
-import com.location.mvp.mvproutelibrary.Base.BaseObserver;
+import com.location.mvp.mvproutelibrary.base.BaseObserver;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 import com.location.mvp.mvproutelibrary.http.cookie.CookiesManager;
 import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;

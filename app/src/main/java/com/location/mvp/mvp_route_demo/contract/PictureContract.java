@@ -1,8 +1,8 @@
 package com.location.mvp.mvp_route_demo.contract;
 
 import com.location.mvp.mvp_route_demo.bean.PictureBean;
-import com.location.mvp.mvproutelibrary.Base.BasePresenter;
-import com.location.mvp.mvproutelibrary.Base.BaseView;
+import com.location.mvp.mvproutelibrary.base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.BaseView;
 
 import java.util.List;
 
@@ -18,10 +18,10 @@ import java.util.List;
 
 
 public interface PictureContract {
-    interface View extends BaseView{
+    interface View extends BaseView {
        void showData(List<PictureBean.ResultsBean> response);
     }
-    abstract class Presenter extends BasePresenter<View>{
+    abstract class Presenter extends BasePresenter<View> {
         public abstract void loadPicture();
     }
 

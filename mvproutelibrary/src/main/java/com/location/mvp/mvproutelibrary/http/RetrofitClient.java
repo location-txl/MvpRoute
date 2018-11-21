@@ -15,7 +15,6 @@
  */
 package com.location.mvp.mvproutelibrary.http;
 
-import com.location.mvp.mvproutelibrary.Base.BaseObserver;
 import com.location.mvp.mvproutelibrary.error.IResponseErrorMsg;
 import com.location.mvp.mvproutelibrary.http.conver.GsonConverterFactory;
 

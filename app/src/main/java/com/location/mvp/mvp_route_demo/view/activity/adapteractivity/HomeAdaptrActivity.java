@@ -10,9 +10,9 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.AdapterHome;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.bean.ItemTypeResponse;
-import com.location.mvp.mvproutelibrary.Base.BasePresenter;
 import com.location.mvp.mvproutelibrary.adapter.OnHeaderClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
+import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 

@@ -3,8 +3,8 @@ package com.location.mvp.mvp_route_demo.view.activity;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.location.mvp.mvproutelibrary.Base.BaseFragment;
-import com.location.mvp.mvproutelibrary.Base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.BaseFragment;
+import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
 /**

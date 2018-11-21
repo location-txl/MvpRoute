@@ -3,7 +3,7 @@ v1.0.2:预览
 - [x] BaseActivity BaseFragment 增加layout注解  舍弃之前的getLayout抽象方法
 - [x] BaseActivity  使用注解方式 实现全屏  沉浸式体验
 - [x] RxScheduer 调度器更新  增加 倒计时工具方法和防止view多次点击工具方法
-- [ ] Activity Fragment传值支持 未序列化的Object对象
+- [x] Activity Fragment传值支持 未序列化的Object对象  支持传值注入
 - [ ] BobPopwindow 增加默认动画  由下到上 由上到下 由左到右 由右到左
 - [ ] 增加AndroidStudio模板文件 一键创建MvpRoute样式的Activity及Fragment
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.location.mvp.mvproutelibrary.Base;
+package com.location.mvp.mvproutelibrary.base;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,8 +32,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_REQUEST;
-import static com.location.mvp.mvproutelibrary.Base.Request.EXERA_RESULT;
 
 
 /**
@@ -220,8 +218,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 					if (data == null) {
 						data = new Intent();
 					}
-					data.putExtra(EXERA_REQUEST, requestCode);
-					data.putExtra(EXERA_RESULT, resultCode);
+					data.putExtra(Request.EXERA_REQUEST, requestCode);
+					data.putExtra(Request.EXERA_RESULT, resultCode);
 					declaredMethod.invoke(this, data);
 				} catch (IllegalAccessException | InvocationTargetException e) {
 					e.printStackTrace();

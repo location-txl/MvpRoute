@@ -11,10 +11,10 @@ import com.location.mvp.mvp_route_demo.adapter.PictureAdapter;
 import com.location.mvp.mvp_route_demo.bean.PictureBean;
 import com.location.mvp.mvp_route_demo.contract.PictureContract;
 import com.location.mvp.mvp_route_demo.presenter.PicturePresenter;
-import com.location.mvp.mvproutelibrary.Base.BaseActivity;
-import com.location.mvp.mvproutelibrary.Base.Request;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
+import com.location.mvp.mvproutelibrary.base.BaseActivity;
+import com.location.mvp.mvproutelibrary.base.Request;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
 import java.util.ArrayList;
