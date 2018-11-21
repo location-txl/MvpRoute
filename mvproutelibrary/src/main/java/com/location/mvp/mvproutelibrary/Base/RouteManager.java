@@ -1,6 +1,6 @@
 package com.location.mvp.mvproutelibrary.base;
 
-import android.graphics.Color;
+
 
 /**
  * create：2018/11/15 22:43
@@ -8,7 +8,10 @@ import android.graphics.Color;
  * @author location
  */
 
-public class BaseManager {
+public class RouteManager {
+
+	static final String GSON_NAME = "com.google.gson.Gson";
+	static final String FAST_JSON_NAME = "com.alibaba.fastjson.JSON";
 	/**
 	 * 是否为透明状态栏
 	 */

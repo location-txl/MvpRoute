@@ -105,6 +105,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 		initHideBoard(view);
 		if (getArguments() != null) {
 			getBundle(getArguments());
+			new BundleUtils().setBundleField(this,getArguments());
 		}
 		initView(savedInstanceState);
 		loadData();

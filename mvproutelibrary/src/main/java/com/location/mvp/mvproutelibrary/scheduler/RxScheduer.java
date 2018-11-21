@@ -90,23 +90,26 @@ public class RxScheduer {
 	/**
 	 * 防止 view多次点击  默认1秒内只允许点击一次
 	 *
-	 * @param view     需要点击的view
+	 * @param views     需要点击的view  接受一个可变参数
 	 * @param listener 点击view的回调
 	 * @throws IllegalStateException 当操作的时候在子线程的时候会抛出此异常
 	 */
-	public static void click(final View view, final View.OnClickListener listener) {
+	public static void click( final View.OnClickListener listener, View... views) {
 		if (Looper.getMainLooper() != Looper.myLooper()) {
 			throw new IllegalStateException("Click must be executed in the main thread,you thread in " + Thread.currentThread().getName());
 		}
-		if (view == null || listener == null) return;
-		Observable.create(new ViewObseroble(view))
-				.throttleFirst(1, TimeUnit.SECONDS)
-				.subscribe(new Consumer<View>() {
-					@Override
-					public void accept(View view) throws Exception {
-						listener.onClick(view);
-					}
-				});
+		if (views == null ||views.length<=0|| listener == null) return;
+		for (View view : views) {
+			Observable.create(new ViewObseroble(view))
+					.throttleFirst(1, TimeUnit.SECONDS)
+					.subscribe(new Consumer<View>() {
+						@Override
+						public void accept(View view) throws Exception {
+							listener.onClick(view);
+						}
+					});
+		}
+
 	}
 
 

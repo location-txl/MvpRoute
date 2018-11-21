@@ -76,10 +76,10 @@ public class SpActivity extends BaseToActivity<SpContract.Presenter> implements 
 		message = findViewById(R.id.sp_mesage);
 		getUser = findViewById(R.id.sp_get_user);
 		getMessage = findViewById(R.id.sp_get_message);
-		RxScheduer.click(user,this);
-		RxScheduer.click(message,this);
-		RxScheduer.click(getUser,this);
-		RxScheduer.click(getMessage,this);
+		RxScheduer.click(this,user);
+		RxScheduer.click(this,message);
+		RxScheduer.click(this,getUser);
+		RxScheduer.click(this,getMessage);
 	}
 
 	@Override

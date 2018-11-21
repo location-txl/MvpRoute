@@ -74,7 +74,7 @@ public class HomeAdaptrActivity extends BaseToActivity {
 			}
 		});
 		final Button view = findViewById(R.id.test_clcik);
-		RxScheduer.click(view, new View.OnClickListener() {
+		RxScheduer.click( new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
@@ -96,7 +96,7 @@ public class HomeAdaptrActivity extends BaseToActivity {
 					}
 				});
 			}
-		});
+		},view);
 
 	}
 

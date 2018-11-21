@@ -120,7 +120,7 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 				startActivity(NetActivity.class);
 				break;
 			case 8:
-				startActivity(ZcActivity.class);
+				startActivity(BaseExalpActivity.class);
 				break;
 			default:
 				LogUtils.d("未知");

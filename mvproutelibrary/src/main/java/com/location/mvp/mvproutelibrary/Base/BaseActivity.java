@@ -60,13 +60,17 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 		setContentView();
 		initPaddingTop();
 		Bundle extras = getIntent().getExtras();
-
 		activity = this;
 		presenter = createPresenter();
 		if (presenter != null) {
 			presenter.regist(this);
 		}
 		AppManager.getAppManager().addActivity(this);
+		Bundle bundle = getIntent().getExtras();
+		// 设置bundle传值注入
+		if (bundle != null) {
+			new BundleUtils().setBundleField(this, bundle);
+		}
 		initView(savedInstanceState);
 		loadData();
 	}
@@ -82,7 +86,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 			if (statusBar.tranStatus() && statusBar.paddingTop()) {
 				StatusBarUtils.fitWindowAndClipPadding(this);
 			}
-		} else if (BaseManager.TRANSPARENR_STATUS && BaseManager.STATUS_PADDING_TOP) {
+		} else if (RouteManager.TRANSPARENR_STATUS && RouteManager.STATUS_PADDING_TOP) {
 			StatusBarUtils.fitWindowAndClipPadding(this);
 		}
 	}
@@ -105,7 +109,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 				c = Color.TRANSPARENT;
 			}
 			setStatusBarColorForAnnotation(c);
-		} else if (BaseManager.TRANSPARENR_STATUS) {
+		} else if (RouteManager.TRANSPARENR_STATUS) {
 			StatusBarUtils.setTransparentStatusBar(this);
 			//解决在某些机型上 透明状态栏后有半透明的黑色背景
 			StatusBarUtils.setStatusBarColor(this, Color.TRANSPARENT);
@@ -122,14 +126,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
 	/**
 	 * @param c 注解设置的颜色
-	 *          如果注解没有设置颜色  则会获取{@link BaseManager#STATUS_COLOR} 颜色
+	 *          如果注解没有设置颜色  则会获取{@link RouteManager#STATUS_COLOR} 颜色
 	 *          还没有获取到  则获取app的主题颜色{@link #getDefaultColor()}
 	 */
 	private void setStatusBarColorForAnnotation(int c) {
-
-
-		if (BaseManager.STATUS_COLOR != -1 && c == -1) {
-			c = BaseManager.STATUS_COLOR;
+		if (RouteManager.STATUS_COLOR != -1 && c == -1) {
+			c = RouteManager.STATUS_COLOR;
 		}
 		if (c == -1) {
 			c = getDefaultColor();
@@ -138,7 +140,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 	}
 
 	private void setStatusBarColorFromManager() {
-		int color = BaseManager.STATUS_COLOR;
+		int color = RouteManager.STATUS_COLOR;
 		if (color != -1) {
 			StatusBarUtils.setStatusBarColor(this, color);
 		}
@@ -363,13 +365,5 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 		TypedValue typedValue = new TypedValue();
 		getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
 		return typedValue.data;
-	}
-
-
-	private void setObject(Bundle bundle,Object data){
-
-
-
-
 	}
 }

@@ -2,6 +2,8 @@ package com.location.mvp.mvproutelibrary.utils;
 
 import android.support.annotation.Nullable;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,6 +11,7 @@ import org.json.JSONTokener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +44,12 @@ public class JsonUtils {
 		}
 		return null;
 	}
+
+
+
+
+
+
 
 
 	public static <T> List<T> obtArray(String data, Class<? extends T> clazz) {
