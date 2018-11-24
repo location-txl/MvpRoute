@@ -63,7 +63,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 		activity = this;
 		presenter = createPresenter();
 		if (presenter != null) {
-			presenter.regist(this);
+			presenter.register(this);
 		}
 		AppManager.getAppManager().addActivity(this);
 		Bundle bundle = getIntent().getExtras();
@@ -188,7 +188,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 	protected void onDestroy() {
 		super.onDestroy();
 		if (presenter != null) {
-			presenter.unRegist();
+			presenter.unRegister();
 		}
 		AppManager.getAppManager().finishActivity(this);
 	}

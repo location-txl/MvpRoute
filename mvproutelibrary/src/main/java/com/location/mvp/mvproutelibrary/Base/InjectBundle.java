@@ -13,29 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.location.mvp.mvproutelibrary.listener;
+package com.location.mvp.mvproutelibrary.base;
 
-import android.view.View;
+import android.os.Bundle;
 
-import java.util.Calendar;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * 防止多次点击
+ * @author location
+ *         用于activity fragment传值  动态注入  需要继承{@link BaseActivity}{@link BaseFragment}
+ * @see BundleUtils#setBundleField(Object, Bundle)
  */
-public abstract class OnNoDoubleClickListener implements View.OnClickListener {
-
-	private static final int MIN_CLICK_DELAY_TIME = 1000;
-	private long lastClickTime = 0;
-
-	@Override
-	public void onClick(View v) {
-		long currentTime = Calendar.getInstance().getTimeInMillis();
-		if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
-			lastClickTime = currentTime;
-			onNoDoubleClick(v);
-		}
-	}
-
-	public abstract void onNoDoubleClick(View v);
-
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface InjectBundle {
+	String value() default "";
 }

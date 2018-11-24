@@ -85,7 +85,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		presenter = createPresenter();
 		if (presenter != null) {
-			presenter.regist(this);
+			presenter.register(this);
 		}
 		return inflater.inflate(getLayout(), container, false);
 	}
@@ -241,7 +241,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 	public void onDestroyView() {
 		super.onDestroyView();
 		if (presenter != null) {
-			presenter.unRegist();
+			presenter.unRegister();
 		}
 	}
 

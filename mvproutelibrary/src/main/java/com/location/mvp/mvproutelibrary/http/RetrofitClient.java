@@ -109,7 +109,7 @@ public class RetrofitClient {
 
 	public static RetrofitClient getInstance() {
 		if (instance == null) {
-			throw new RuntimeException("you need initialize RetrofitClient");
+			throw new NullPointerException("you need initialize RetrofitClient");
 		}
 		return instance;
 	}

@@ -85,7 +85,7 @@ public class HomeAdaptrActivity extends BaseToActivity {
 					}
 
 					@Override
-					public void onDownCountProgress(Button view, int second) {
+					public void onCountDownProgress(Button view, int second) {
 						view.setText(String.format("%d秒", second));
 					}
 

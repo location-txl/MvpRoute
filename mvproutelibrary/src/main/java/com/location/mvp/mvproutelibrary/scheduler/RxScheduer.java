@@ -19,6 +19,7 @@ import android.os.Looper;
 import android.support.annotation.IntRange;
 import android.view.View;
 
+import com.location.mvp.mvproutelibrary.base.RouteManager;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
 import org.reactivestreams.Subscription;
@@ -43,7 +44,7 @@ import io.reactivex.schedulers.Schedulers;
  * 对rxjava分装的工具类
  * {@link #countDown(View, int, CountDownListener)} rxJava的倒计时工具
  * <br>
- * {@link #click(View, View.OnClickListener)} rxJava的防止view多次点击
+ * {@link #click(View.OnClickListener, View...)} rxJava的防止view多次点击
  * 默认1秒内不允许重复点击
  * <br>
  * 网络模块{@linkplain compose 调度器}  调度器包含 线程的切换 网络异常的统一处理
@@ -71,7 +72,7 @@ public class RxScheduer {
 				.doOnNext(new Consumer<Long>() {
 					@Override
 					public void accept(Long aLong) throws Exception {
-						listener.onDownCountProgress(view, (int) (second - aLong));
+						listener.onCountDownProgress(view, (int) (second - aLong));
 					}
 				}).doOnComplete(new Action() {
 					@Override
@@ -100,8 +101,8 @@ public class RxScheduer {
 		}
 		if (views == null ||views.length<=0|| listener == null) return;
 		for (View view : views) {
-			Observable.create(new ViewObseroble(view))
-					.throttleFirst(1, TimeUnit.SECONDS)
+			Observable.create(new ViewObservable(view))
+					.throttleFirst(RouteManager.getFikterClickTime(), TimeUnit.SECONDS)
 					.subscribe(new Consumer<View>() {
 						@Override
 						public void accept(View view) throws Exception {
@@ -113,10 +114,10 @@ public class RxScheduer {
 	}
 
 
-	private static class ViewObseroble implements ObservableOnSubscribe<View> {
+	private static class ViewObservable implements ObservableOnSubscribe<View> {
 		private View view;
 
-		public ViewObseroble(View view) {
+		ViewObservable(View view) {
 			this.view = view;
 		}
 
@@ -183,7 +184,7 @@ public class RxScheduer {
 		 * @param view
 		 * @param second 当前剩余的秒数
 		 */
-		void onDownCountProgress(T view, int second);
+		void onCountDownProgress(T view, int second);
 
 		/**
 		 * 倒计时 完成  只会调用一次

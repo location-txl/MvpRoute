@@ -32,7 +32,7 @@ public abstract class BasePresenter<T extends BaseView> {
 	/**
 	 * 注册
 	 */
-	void unRegist() {
+	void unRegister() {
 		rxManager.clear();
 		view = null;
 	}
@@ -41,7 +41,7 @@ public abstract class BasePresenter<T extends BaseView> {
 	 * 解绑
 	 * @param view
 	 */
-	 void regist(T view) {
+	 void register(T view) {
 		this.view = view;
 		rxManager = new RxManager();
 	}

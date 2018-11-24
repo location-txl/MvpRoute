@@ -41,8 +41,8 @@ public abstract class BaseObserver<T> implements Observer<T> {
 	public BaseObserver(RxManager rxManager, BaseView baseView) {
 		this.rxManager = rxManager;
 		this.baseView = baseView;
-		if (RetrofitClient.getInstance().getLoadingView() != null) {
-			loadingView = RetrofitClient.getInstance().getLoadingView();
+		loadingView = RetrofitClient.getInstance().getLoadingView();
+		if (loadingView != null) {
 			Context context = null;
 			if (baseView instanceof Activity) {
 				context = (Activity) baseView;
@@ -66,9 +66,9 @@ public abstract class BaseObserver<T> implements Observer<T> {
 	@Override
 	public void onSubscribe(Disposable d) {
 		rxManager.add(d);
-		if (baseView instanceof Activity && ((Activity) baseView).isFinishing()) {
+		if(baseView==null){
 			rxManager.clear();
-		} else if (loadingView != null) {
+		}else{
 			loadingView.showLoading();
 		}
 	}

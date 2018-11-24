@@ -39,7 +39,7 @@ import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.location.mvp.mvproutelibrary.R;
-import com.location.mvp.mvproutelibrary.listener.OnNoDoubleClickListener;
+import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 
 import java.lang.reflect.Field;
@@ -278,12 +278,12 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
 		if (onItemClickListener != null) {
 			final int finalI = i;
 			final View finalView = view;
-			view.setOnClickListener(new OnNoDoubleClickListener() {
+			RxScheduer.click(new OnClickListener() {
 				@Override
-				public void onNoDoubleClick(View v) {
+				public void onClick(View v) {
 					onItemClickListener.onItemClickListener(finalView, finalI);
 				}
-			});
+			},view);
 		}
 
 		imgs.add(view);

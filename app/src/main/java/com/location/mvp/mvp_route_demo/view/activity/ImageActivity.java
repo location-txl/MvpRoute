@@ -9,7 +9,7 @@ import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.bean.NoMessageBean;
 import com.location.mvp.mvproutelibrary.base.BaseActivity;
 import com.location.mvp.mvproutelibrary.base.BasePresenter;
-import com.location.mvp.mvproutelibrary.base.RouteField;
+import com.location.mvp.mvproutelibrary.base.InjectBundle;
 import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.JsonUtils;
@@ -24,13 +24,13 @@ import java.util.List;
  */
 @Layout(R.layout.activity_base)
 public class ImageActivity extends BaseActivity {
-		@RouteField("ni")
+		@InjectBundle("ni")
 	private ArrayList<String> mT ;
 
 	//	@BundField("test")
 	private LoginResponse loginResponse;
 
-	@RouteField("nomessage")
+	@InjectBundle("nomessage")
 	private List<NoMessageBean> noMessageBeanList;
 
 	//	@BundField
