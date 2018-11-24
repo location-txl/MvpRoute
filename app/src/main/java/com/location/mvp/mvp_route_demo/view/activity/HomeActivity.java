@@ -31,14 +31,14 @@ import java.util.List;
 
 /**
  * @author location
- * 创建时间: 2018/7/21 0021 16:46
- * 修改人:
- * 修改内容:
- * 修改时间:
+ *         创建时间: 2018/7/21 0021 16:46
+ *         修改人:
+ *         修改内容:
+ *         修改时间:
  */
 
 @Layout(R.layout.activity_home)
-@StatusBar(tranStatus = false,color = Color.MAGENTA)
+@StatusBar(tranStatus = false, color = Color.MAGENTA)
 public class HomeActivity extends BaseToActivity implements OnItemClickListener {
 	private RecyclerView recyclerView;
 	private HomeAdapter homeAdapter;
@@ -108,6 +108,11 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 			case 2:
 				//Spanutils
 				startActivity(SpanActivity.class);
+				break;
+			//BobPopwindow
+
+			case 3:
+				startActivity(BobActivity.class);
 				break;
 			case 4:
 				startActivity(SpActivity.class);

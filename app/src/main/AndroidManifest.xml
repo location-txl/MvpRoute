@@ -38,6 +38,7 @@
         <activity android:name=".view.activity.SpActivity" />
         <activity android:name=".view.activity.BaseExalpActivity"/>
         <activity android:name=".view.activity.ImageActivity"/>
+        <activity android:name=".view.activity.BobActivity"/>
     </application>
 
 </manifest>
