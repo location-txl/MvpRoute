@@ -8,7 +8,7 @@ import com.location.mvp.mvp_route_demo.service.LoginService;
 import com.location.mvp.mvproutelibrary.base.BaseObserver;
 import com.location.mvp.mvproutelibrary.http.RetrofitClient;
 import com.location.mvp.mvproutelibrary.http.cookie.CookiesManager;
-import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
+import com.location.mvp.mvproutelibrary.scheduler.RxScheduler;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
 
@@ -35,7 +35,7 @@ public class NetPresenter extends NetContract.Presenter {
 	@Override
 	public void loginWanAndroid(String userNmae, String passworld) {
 		loginService.login(userNmae, passworld)
-				.compose(new RxScheduer.compose<LoginResponse>())
+				.compose(new RxScheduler.compose<LoginResponse>())
 				.subscribe(new BaseObserver<LoginResponse>(rxManager, view) {
 					@Override
 					public void onNext(LoginResponse loginResponse) {
@@ -65,7 +65,7 @@ public class NetPresenter extends NetContract.Presenter {
 	@Override
 	public void getCollectList(String page,String userNmae,String passwrold) {
            loginService.getCollect(page)
-				   .compose(new RxScheduer.compose<CollectListBean>())
+				   .compose(new RxScheduler.compose<CollectListBean>())
 				   .subscribe(new BaseObserver<CollectListBean>(rxManager,view) {
 					   @Override
 					   public void onNext(CollectListBean collectListBean) {

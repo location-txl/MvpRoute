@@ -52,7 +52,7 @@ import io.reactivex.schedulers.Schedulers;
  * <br>
  * 网络模块  异常处理  {@link HandlerException}
  */
-public class RxScheduer {
+public class RxScheduler {
 
 
 	/**
@@ -165,7 +165,7 @@ public class RxScheduer {
 
 	/**
 	 * 倒计时 回调
-	 * {@link RxScheduer#countDown(View, int, CountDownListener)}
+	 * {@link RxScheduler#countDown(View, int, CountDownListener)}
 	 *
 	 * @param <T>
 	 */

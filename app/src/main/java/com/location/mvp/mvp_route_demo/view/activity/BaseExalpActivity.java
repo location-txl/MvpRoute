@@ -14,8 +14,7 @@ import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.base.BundleUtils;
 import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
-import com.location.mvp.mvproutelibrary.utils.JsonUtils;
+import com.location.mvp.mvproutelibrary.scheduler.RxScheduler;
 
 import java.util.ArrayList;
 
@@ -37,7 +36,7 @@ public class BaseExalpActivity extends BaseActivity implements View.OnClickListe
 	@Override
 	protected void initView(@Nullable Bundle savedInstanceState) {
 		imageView = findViewById(R.id.base_image);
-		RxScheduer.click(this, imageView);
+		RxScheduler.click(this, imageView);
 	}
 
 	@Override

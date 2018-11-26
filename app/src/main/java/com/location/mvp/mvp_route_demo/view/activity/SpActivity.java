@@ -17,12 +17,11 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.bean.NoMessageBean;
-import com.location.mvp.mvp_route_demo.bean.TestBean;
 import com.location.mvp.mvp_route_demo.contract.SpContract;
 import com.location.mvp.mvp_route_demo.presenter.SpPresenter;
 import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
+import com.location.mvp.mvproutelibrary.scheduler.RxScheduler;
 import com.location.mvp.mvproutelibrary.utils.JsonUtils;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
@@ -76,10 +75,10 @@ public class SpActivity extends BaseToActivity<SpContract.Presenter> implements 
 		message = findViewById(R.id.sp_mesage);
 		getUser = findViewById(R.id.sp_get_user);
 		getMessage = findViewById(R.id.sp_get_message);
-		RxScheduer.click(this,user);
-		RxScheduer.click(this,message);
-		RxScheduer.click(this,getUser);
-		RxScheduer.click(this,getMessage);
+		RxScheduler.click(this,user);
+		RxScheduler.click(this,message);
+		RxScheduler.click(this,getUser);
+		RxScheduler.click(this,getMessage);
 	}
 
 	@Override

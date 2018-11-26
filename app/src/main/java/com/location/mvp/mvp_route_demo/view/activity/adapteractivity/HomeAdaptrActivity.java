@@ -17,7 +17,7 @@ import com.location.mvp.mvproutelibrary.adapter.OnHeaderClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
+import com.location.mvp.mvproutelibrary.scheduler.RxScheduler;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -74,11 +74,11 @@ public class HomeAdaptrActivity extends BaseToActivity {
 			}
 		});
 		final Button view = findViewById(R.id.test_clcik);
-		RxScheduer.click( new View.OnClickListener() {
+		RxScheduler.click(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				RxScheduer.countDown(view, 1, new RxScheduer.CountDownListener<Button>() {
+				RxScheduler.countDown(view, 1, new RxScheduler.CountDownListener<Button>() {
 					@Override
 					public void onBindCountDown(Button view) {
 						view.setEnabled(false);

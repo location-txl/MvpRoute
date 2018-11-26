@@ -11,7 +11,7 @@ import com.location.mvp.mvproutelibrary.base.BaseActivity;
 import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.scheduler.RxScheduer;
+import com.location.mvp.mvproutelibrary.scheduler.RxScheduler;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 import com.location.mvp.mvproutelibrary.view.BobPopwindow;
 
@@ -32,7 +32,7 @@ public class BobActivity extends BaseActivity implements View.OnClickListener {
 	@Override
 	protected void initView(@Nullable Bundle savedInstanceState) {
 		bottomView = findViewById(R.id.bob_bottom);
-		RxScheduer.click(this, bottomView);
+		RxScheduler.click(this, bottomView);
 	}
 
 	@Override
