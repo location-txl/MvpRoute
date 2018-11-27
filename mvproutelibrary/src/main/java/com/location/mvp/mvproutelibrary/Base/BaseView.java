@@ -22,5 +22,10 @@ import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
  * mvp模式  View层接口需继承这个类
  */
 public interface BaseView {
-    void onshowError(ExceptionHandle.ResponeThrowable baseThrowable);
+	/**
+	 * 网络异常最后会统一分配到这里
+	 *
+	 * @param throwable
+	 */
+	void onShowError(ExceptionHandle.ResponseThrowable throwable);
 }

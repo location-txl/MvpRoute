@@ -16,8 +16,8 @@
 package com.location.mvp.mvproutelibrary.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.http.INetWorkLoadingView;
@@ -28,8 +28,8 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
- *
- *
+ * @author location
+ *         默认的RxJava  Observer 回调
  */
 
 
@@ -41,26 +41,42 @@ public abstract class BaseObserver<T> implements Observer<T> {
 	public BaseObserver(RxManager rxManager, BaseView baseView) {
 		this.rxManager = rxManager;
 		this.baseView = baseView;
-		if (RetrofitClient.getInstance().getLoadingView() != null) {
-			loadingView = RetrofitClient.getInstance().getLoadingView();
-			loadingView.createLoadingView(baseView instanceof AppCompatActivity ? (AppCompatActivity) baseView : ((Fragment) baseView).getActivity());
+		loadingView = RetrofitClient.getInstance().getLoadingView();
+		if (loadingView != null) {
+			Context context = null;
+			if (baseView instanceof Activity) {
+				context = (Activity) baseView;
+			} else if (baseView instanceof Fragment) {
+				if (((Fragment) baseView).getActivity() == null) {
+					throw new RuntimeException("fragment must be bind Activity");
+				}
+				context = ((Fragment) baseView).getActivity();
+			} else if (baseView instanceof android.app.Fragment) {
+				if (((android.app.Fragment) baseView).getActivity() == null) {
+					throw new RuntimeException("fragment must be bind Activity");
+				}
+				context = ((android.app.Fragment) baseView).getActivity();
+			}
+			if (context != null) {
+				loadingView.createLoadingView(context);
+			}
 		}
 	}
 
 	@Override
 	public void onSubscribe(Disposable d) {
 		rxManager.add(d);
-		if (baseView instanceof BaseActivity && ((BaseActivity) baseView).isFinishing()) {
+		if(baseView==null){
 			rxManager.clear();
-		} else if (loadingView != null) {
+		}else{
 			loadingView.showLoading();
 		}
 	}
 
 	@Override
 	public void onError(Throwable e) {
-		if (e instanceof ExceptionHandle.ResponeThrowable) {
-			baseView.onshowError((ExceptionHandle.ResponeThrowable) e);
+		if (e instanceof ExceptionHandle.ResponseThrowable) {
+			baseView.onShowError((ExceptionHandle.ResponseThrowable) e);
 		}
 		if (loadingView != null) loadingView.dismissLoading();
 	}

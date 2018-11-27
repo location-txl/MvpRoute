@@ -15,12 +15,16 @@
  */
 package com.location.mvp.mvproutelibrary.base;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -38,25 +42,33 @@ import java.util.List;
 
 
 
+
 /**
  * 基类  BaseFragment
+ * 设置{@link Layout} 注解来绑定布局
+ * 设置{@link InjectBundle}  注解来注入字段  无需手写bundle get方法
+ * 设置{@link Request}       注解来设置onActivityResult回调方法  无需手动重写{@link #onActivityResult(int, int, Intent)}
  * @param <T>
+ * @author Administrator
  */
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView {
 	protected T presenter;
 	protected final String TAG = getClass().getSimpleName();
 	protected FragmentActivity activity;
+	protected View rootView;
 
 
+	@TargetApi(Build.VERSION_CODES.KITKAT)
 	public static <T extends BaseFragment> T newInstance(Class<? extends T> clazz) {
 		try {
-			return  clazz.newInstance();
+			return clazz.newInstance();
 		} catch (java.lang.InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
+	@TargetApi(Build.VERSION_CODES.KITKAT)
 	public static <T extends BaseFragment> T newInstance(Class<? extends T> clazz, Bundle bundle) {
 		try {
 			T t = clazz.newInstance();
@@ -68,31 +80,41 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 		return null;
 	}
 
+	@CallSuper
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		presenter = createPresenter();
 		if (presenter != null) {
-			presenter.regist(this);
+			presenter.register(this);
 		}
 		return inflater.inflate(getLayout(), container, false);
 	}
 
+	@CallSuper
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
 		activity = (FragmentActivity) context;
 	}
 
+	@CallSuper
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		this.rootView = view;
 		initHideBoard(view);
 		if (getArguments() != null) {
 			getBundle(getArguments());
+			new BundleUtils().setBundleField(this,getArguments());
 		}
-		initView(view);
+		initView(savedInstanceState);
 		loadData();
+	}
+
+	@Nullable
+	protected <V extends View> V findViewById(@IdRes int id) {
+		return rootView == null ? null : (V) rootView.findViewById(id);
 	}
 
 	private void initHideBoard(View view) {
@@ -108,7 +130,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 					if (isFocusEditText(v, hideSoftByEditViewIds())) {
 						if (isTouchView(hideSoftByEditViewIds(), ev))
 							return false;
-						//隐藏键盘
 						KeyBoardUtils.hideInputForce(activity);
 					}
 				}
@@ -191,6 +212,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 
 	/**
 	 * 当有传值进入fragment时 会调用此方法
+	 *
 	 * @param bundle
 	 */
 	protected void getBundle(Bundle bundle) {
@@ -198,9 +220,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 
 	/**
 	 * 初始化view
-	 * @param view
+	 *
+	 * @param savedInstanceState
 	 */
-	protected abstract void initView(View view);
+	protected abstract void initView(@Nullable Bundle savedInstanceState);
 
 	/**
 	 * 加载数据
@@ -209,25 +232,35 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 
 	/**
 	 * 创建Presenter
+	 *
 	 * @return
 	 */
-	protected abstract
-	T createPresenter();
+	protected abstract T createPresenter();
 
+	@CallSuper
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
 		if (presenter != null) {
-			presenter.unRegist();
+			presenter.unRegister();
 		}
 	}
 
 	/**
 	 * 返回布局id
-	 * @return
+	 *
+	 * @return 返回布局id
+	 * @throws @exception NullPointerException 当没有申明此注解是抛出此异常
+	 * @see Layout
 	 */
-	protected abstract @LayoutRes
-	int getLayout();
+	private @LayoutRes
+	int getLayout() {
+		if (getClass().isAnnotationPresent(Layout.class)) {
+			return getClass().getAnnotation(Layout.class).value();
+		} else {
+			throw new NullPointerException("You must declare that layout is annotated on the class");
+		}
+	}
 
 
 	/**
@@ -242,6 +275,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 	protected void onHide() {
 	}
 
+	@CallSuper
 	@Override
 	public void onHiddenChanged(boolean hidden) {
 		super.onHiddenChanged(hidden);
@@ -252,6 +286,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 		}
 	}
 
+	@CallSuper
+	@RequiresApi(api = Build.VERSION_CODES.KITKAT)
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);

@@ -15,7 +15,9 @@
  */
 package com.location.mvp.mvproutelibrary.utils;
 
+import android.annotation.TargetApi;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
 import android.support.annotation.AnimatorRes;
@@ -328,6 +330,7 @@ public class FragmentUtils {
 		 * @param drawable
 		 * @return
 		 */
+		@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 		public FragmentWrapper setBackGroundDrawable(Drawable drawable) {
 			View view = baseFragment.getView();
 			if (view != null) {

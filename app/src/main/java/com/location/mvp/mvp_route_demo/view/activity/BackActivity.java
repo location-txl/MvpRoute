@@ -1,13 +1,15 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.location.mvp.mvp_route_demo.R;
-import com.location.mvp.mvp_route_demo.bean.PictureBean;
 import com.location.mvp.mvproutelibrary.base.BaseActivity;
 import com.location.mvp.mvproutelibrary.base.BasePresenter;
+import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 
 /**
@@ -16,20 +18,16 @@ import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
  * @author：location time：2018/7/31 16:07
  * description：
  */
-
+@Layout(R.layout.activity_back)
 public class BackActivity extends BaseActivity implements View.OnClickListener {
 	@Override
-	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
+	public void onShowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_back;
-	}
 
 	@Override
-	protected void initView() {
+	protected void initView(@Nullable Bundle savedInstanceState) {
 		findViewById(R.id.back_result).setOnClickListener(this);
 	}
 

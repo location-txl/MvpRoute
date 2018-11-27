@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<template
+    format="5"
+    revision="5"
+    name="MvpRouteFragment"
+    minApi="9"
+    minBuildApi="14"
+    description="创建MvpRoute MvpFragment">
+
+    <category value="Fragment" />
+    <formfactor value="Mobile" />
+
+
+      <parameter
+        id="mvprouteName"
+        name="MvpRoute名字"
+        type="string"
+        constraints="class|unique|nonempty"
+        default="Main"
+        help="没啥用  用了约束Fragment Presenter  Contract名字" />
+
+    <parameter
+        id="activityClass"
+        name="Fragment名字"
+        type="string"
+        constraints="class|unique|nonempty"
+        suggest="${mvprouteName}Fragment"
+        default="MainFragment"
+        help="这个名字是创建Fragment的名字" />
+
+    <parameter
+        id="generateLayout"
+        name="是否创建layout"
+        type="boolean"
+        default="true"
+        help="如果是true则会创建layout布局" />
+
+    <parameter
+        id="layoutName"
+        name="布局名字"
+        type="string"
+        constraints="layout|unique|nonempty"
+        suggest="fragment_${classToResource(activityClass)}"
+        default="fragment_main"
+        visibility="generateLayout"
+        help="这个名字布局的名字" />
+      <parameter
+        id="generateContract"
+        name="是否创建Contract"
+        type="boolean"
+        default="true"
+        help="如果是true 则会创建Contract和Presenter" />
+	<parameter
+    	id="contarctName"
+    	name="契约类名字"
+   	 	type="string"
+   		constraints="class|unique|nonempty"
+    	suggest="${mvprouteName}Contract"
+    	default="ActivityContract"
+    	visibility="generateContract"
+    	help="契约类名字"/>
+
+    <parameter
+    	id="presenterName"
+    	name="presenter名字"
+   	 	type="string"
+   		constraints="class|unique|nonempty"
+    	suggest="${mvprouteName}Presenter"
+    	default="MainPresenter"
+    	visibility="generateContract"
+    	help="默认的Presenter"/>
+
+    <!-- <parameter
+        id="isLauncher"
+        name="Launcher Activity"
+        type="boolean"
+        default="false"
+        help="If true, this activity will have a CATEGORY_LAUNCHER intent filter, making it visible in the launcher" /> -->
+
+    
+    
+    <parameter
+        id="packageName"
+        name="Package name"
+        type="string"
+        constraints="package"
+        default="com.mycompany.myapp" />
+
+    <!-- 128x128 thumbnails relative to template.xml -->
+    <thumbs>
+        <!-- default thumbnail is required -->
+        <thumb>template_blank_activity.png</thumb>
+    </thumbs>
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>

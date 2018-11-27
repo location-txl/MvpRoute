@@ -15,25 +15,28 @@
  */
 package com.location.mvp.mvproutelibrary.http;
 
+import com.location.mvp.mvproutelibrary.base.BaseProgressObserver;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.utils.LogUtils;
-import com.location.mvp.mvproutelibrary.utils.TimeUtils;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
+import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.nio.file.Path;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
 /**
- *   动态代理类  这里处理 token失效问题
- *   没有配置 刷新token类  此类不生效
- *   刷新token类  {@link IRefreshToken}
+ * 动态代理类  这里处理 token失效问题
+ * 没有配置 刷新token类  此类不生效
+ * 刷新token类  {@link IRefreshToken}
  */
 
 public class ProxyHandler implements InvocationHandler {
@@ -74,13 +77,13 @@ public class ProxyHandler implements InvocationHandler {
 									if (iRefreshToken.isTokenException(exception.result, exception.msg)) {
 
 										synchronized (ProxyHandler.class) {
-                                              if((System.currentTimeMillis()-refreshTime)<1000){
+											if ((System.currentTimeMillis() - refreshTime) < 1000) {
 
-												  return Observable.timer(50, TimeUnit.MILLISECONDS);
-											  }else{
-                                                  refreshTime = System.currentTimeMillis();
-												  return iRefreshToken.refreshToken();
-											  }
+												return Observable.timer(50, TimeUnit.MILLISECONDS);
+											} else {
+												refreshTime = System.currentTimeMillis();
+												return iRefreshToken.refreshToken();
+											}
 
 										}
 									} else {
@@ -97,5 +100,64 @@ public class ProxyHandler implements InvocationHandler {
 					}
 				});
 
+	}
+
+	/**
+	 * @deprecated  暂时废弃
+	 * 这个方法用来检测 接口方法中是否含有 {@link Progress} 注解 用于绑定 文件上传进度
+	 * @param method
+	 * @param args
+	 */
+	@Deprecated
+	private void checkProgress(Method method, Object[] args) {
+		Type[] types = method.getGenericParameterTypes();
+		Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+		int count = parameterAnnotations.length;
+		for (int i = 0; i < count; i++) {
+			Type genericParameterType = types[i];
+			Annotation[] parameterAnnotation = parameterAnnotations[i];
+			for (Annotation annotation : parameterAnnotation) {
+				if (annotation instanceof Progress) {
+					Class<?> rawType = getRawType(genericParameterType);
+					if (BaseProgressObserver.class.isAssignableFrom(rawType)) {
+						BaseProgressObserver progressObserver = (BaseProgressObserver) args[i];
+						RetrofitClient.getInstance().setProgressObserver(progressObserver);
+					} else {
+						throw new IllegalArgumentException("progress must include generic  BaseProgressObserver");
+					}
+				}
+			}
+		}
+	}
+
+	private Class<?> getRawType(Type type) {
+		if (type instanceof Class<?>) {
+			// Type is a normal class.
+			return (Class<?>) type;
+		}
+		if (type instanceof ParameterizedType) {
+			ParameterizedType parameterizedType = (ParameterizedType) type;
+
+			// I'm not exactly sure why getRawType() returns Type instead of Class. Neal isn't either but
+			// suspects some pathological case related to nested classes exists.
+			Type rawType = parameterizedType.getRawType();
+			if (!(rawType instanceof Class)) throw new IllegalArgumentException();
+			return (Class<?>) rawType;
+		}
+		if (type instanceof GenericArrayType) {
+			Type componentType = ((GenericArrayType) type).getGenericComponentType();
+			return Array.newInstance(getRawType(componentType), 0).getClass();
+		}
+		if (type instanceof TypeVariable) {
+			// We could use the variable's bounds, but that won't work if there are multiple. Having a raw
+			// type that's more general than necessary is okay.
+			return Object.class;
+		}
+		if (type instanceof WildcardType) {
+			return getRawType(((WildcardType) type).getUpperBounds()[0]);
+		}
+
+		throw new IllegalArgumentException("Expected a Class, ParameterizedType, or "
+				+ "GenericArrayType, but <" + type + "> is of type " + type.getClass().getName());
 	}
 }

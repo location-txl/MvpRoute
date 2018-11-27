@@ -22,6 +22,8 @@ import java.lang.annotation.Target;
 
 /**
  * 用于Activity Fragment的回传注解
+ * @see BaseActivity
+ * @see BaseFragment
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

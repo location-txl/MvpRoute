@@ -20,6 +20,9 @@ import android.support.annotation.StringRes;
 import android.widget.Toast;
 
 
+/**
+ * toast工具类
+ */
 public class ToastUtils {
 	private static Context context;
 	private static Toast toast;
@@ -30,11 +33,11 @@ public class ToastUtils {
 	}
 
 	public static void showShort(String message) {
-		show(message,Toast.LENGTH_SHORT);
+		show(message, Toast.LENGTH_SHORT);
 	}
 
 	private static void show(String message, int duration) {
-		if (init(message,duration)){
+		if (init(message, duration)) {
 			toast.setText(message);
 			toast.setDuration(duration);
 			toast.show();
@@ -42,20 +45,22 @@ public class ToastUtils {
 	}
 
 	public static void showShort(@StringRes int stringid) {
-		if(context==null)	throw new NullPointerException(ERROR);
-		show(context.getResources().getString(stringid),Toast.LENGTH_SHORT);
+		if (context == null) throw new NullPointerException(ERROR);
+		show(context.getResources().getString(stringid), Toast.LENGTH_SHORT);
 	}
 
-	public static  void showLong(String message){
-		show(message,Toast.LENGTH_LONG);
+	public static void showLong(String message) {
+		show(message, Toast.LENGTH_LONG);
 
 	}
-	public static  void showLong(@StringRes int stringid){
-		if(context==null)	throw new NullPointerException(ERROR);
-		show(context.getResources().getString(stringid),Toast.LENGTH_LONG);
+
+	public static void showLong(@StringRes int stringid) {
+		if (context == null) throw new NullPointerException(ERROR);
+		show(context.getResources().getString(stringid), Toast.LENGTH_LONG);
 
 	}
-	private static boolean init(String message,int duration) {
+
+	private static boolean init(String message, int duration) {
 		if (context == null) {
 			throw new NullPointerException(ERROR);
 		}

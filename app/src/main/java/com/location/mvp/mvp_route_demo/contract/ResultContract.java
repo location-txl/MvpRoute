@@ -1,7 +1,5 @@
 package com.location.mvp.mvp_route_demo.contract;
 
-import android.content.Context;
-
 import com.location.mvp.mvp_route_demo.view.activity.ResultActivity;
 import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.base.BaseView;

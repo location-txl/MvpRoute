@@ -20,6 +20,8 @@ import com.location.mvp.mvproutelibrary.manager.RxManager;
 /**
  * mvp 模式 Presenter层接口继承这个类
  *
+ * @see BaseActivity
+ * @see BaseFragment
  * @param <T>
  */
 
@@ -29,12 +31,19 @@ public abstract class BasePresenter<T extends BaseView> {
 	protected T view;
 
 
-	protected void unRegist() {
+	/**
+	 * 注册
+	 */
+	void unRegister() {
 		rxManager.clear();
 		view = null;
 	}
 
-	protected void regist(T view) {
+	/**
+	 * 解绑
+	 * @param view
+	 */
+	 void register(T view) {
 		this.view = view;
 		rxManager = new RxManager();
 	}

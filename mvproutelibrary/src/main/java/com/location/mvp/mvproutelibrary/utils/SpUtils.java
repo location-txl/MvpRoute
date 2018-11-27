@@ -31,6 +31,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -169,6 +170,14 @@ public class SpUtils {
 		sharedPreferences.edit().putStringSet(key, value).apply();
 	}
 
+
+	public void putArray(String key,Object object){
+		String tojson = JsonUtils.obtJson(object);
+		if (TextUtils.isEmpty(tojson)) {
+			return;
+		}
+		sharedPreferences.edit().putString(key, tojson).apply();
+	}
 	/**
 	 * 存储Object类型
 	 * 方法内会检查项目是否存在Gson包
@@ -178,13 +187,12 @@ public class SpUtils {
 	 * @param object
 	 */
 	public void putValue(String key, Object object) {
-		String tojson = tojson(object);
-		if(TextUtils.isEmpty(tojson)){
+		String tojson = JsonUtils.obtJson(object);
+		if (TextUtils.isEmpty(tojson)) {
 			return;
 		}
 		sharedPreferences.edit().putString(key, tojson).apply();
 	}
-
 
 
 	public void putValue(Object object) {
@@ -222,35 +230,26 @@ public class SpUtils {
 	}
 
 
-	public <T> T getObject(String key, Class<? extends T> aclass) {
+	public <T> T getObject(String key, Class<? extends T> clazz) {
 		String str = sharedPreferences.getString(key, DEFAULT_STRING);
 		if (TextUtils.isEmpty(str)) {
 			return null;
 		}
-		try {
-			Class<?> gsonClass = Class.forName("com.google.gson.Gson");
-			Object gsonObject = gsonClass.getConstructor().newInstance();
-			Method fromJson = gsonClass.getMethod("fromJson", String.class, Class.class);
-			T invoke = (T) fromJson.invoke(gsonObject, str, aclass);
-			return invoke;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
-
-		return null;
+		return JsonUtils.obtObject(key, clazz);
 	}
 
 
-	public <T> T getObject(Class<? extends T> aclass) {
-		return getObject(aclass.getSimpleName(), aclass);
+	public <T> T getObject(Class<? extends T> clazz) {
+		return getObject(clazz.getSimpleName(), clazz);
+	}
+
+
+	public <T> List<T> getArray(String key,Class<? extends T> clazz){
+		String str = sharedPreferences.getString(key, DEFAULT_STRING);
+		if(TextUtils.isEmpty(str)){
+			return null;
+		}
+		return JsonUtils.obtArray(str,clazz);
 	}
 
 	/**
@@ -301,27 +300,7 @@ public class SpUtils {
 		}
 	}
 
-	private String tojson(Object object) {
-		try {
-			Class gsonclass = Class.forName("com.google.gson.Gson");
-			Object o = gsonclass.getConstructor().newInstance();
-			Method toJson = gsonclass.getMethod("toJson", Object.class);
-			toJson.setAccessible(true);
-			String invoke = (String) toJson.invoke(o, object);
-			return invoke;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+
 
 
 }

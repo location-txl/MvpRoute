@@ -15,13 +15,20 @@
  */
 package com.location.mvp.mvproutelibrary.http;
 
+
+import com.location.mvp.mvproutelibrary.base.BaseProgressObserver;
 import com.location.mvp.mvproutelibrary.error.IResponseErrorMsg;
+
+import retrofit2.Retrofit;
 import com.location.mvp.mvproutelibrary.http.conver.GsonConverterFactory;
 
+import java.io.IOException;
 import java.lang.reflect.Proxy;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
+import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
@@ -47,6 +54,11 @@ public class RetrofitClient {
 
 	private ProxyHandler proxyHandler;
 
+	private BaseProgressObserver progressObserver;
+
+	public void setProgressObserver(BaseProgressObserver progressObserver) {
+		this.progressObserver = progressObserver;
+	}
 
 	/**
 	 * 初始化网络
@@ -87,6 +99,7 @@ public class RetrofitClient {
 		}
 		if (iRefreshToken != null) proxyHandler = new ProxyHandler(iRefreshToken);
 		OkHttpClient.Builder builder = config.getBuilder() == null ? new OkHttpClient.Builder() : config.getBuilder();
+//		builder.addInterceptor(progressInterceptor());
 		client = new Retrofit.Builder()
 				.client(builder.build())
 				.baseUrl(config.getBaseUrl())
@@ -97,7 +110,7 @@ public class RetrofitClient {
 
 	public static RetrofitClient getInstance() {
 		if (instance == null) {
-			throw new RuntimeException("you need initialize RetrofitClient");
+			throw new NullPointerException("you need initialize RetrofitClient");
 		}
 		return instance;
 	}
@@ -127,5 +140,23 @@ public class RetrofitClient {
 		return client.create(clazz);
 	}
 
-
+	/**
+	 * @deprecated  用于处理上传进度 和下载进度的拦截器 暂时废弃
+	 * @return
+	 */
+	@Deprecated
+	private Interceptor progressInterceptor() {
+		return new Interceptor() {
+			@Override
+			public Response intercept(Chain chain) throws IOException {
+				Request request = chain.request();
+				if (request.body() == null || progressObserver == null || progressObserver.getDisposable().isDisposed()) {
+					return chain.proceed(request);
+				}
+				Request.Builder builder = request.newBuilder();
+				Request build = builder.method(request.method(), new ProgressRequestBody(request.body(), progressObserver)).build();
+				return chain.proceed(build);
+			}
+		};
+	}
 }

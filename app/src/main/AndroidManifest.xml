@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.location.mvp.mvp_route_demo">
+	package="com.location.mvp.mvp_route_demo">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+	<!-- 在SDCard中创建与删除文件权限 -->
+	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+	<!-- 相机权限 -->
+	<uses-permission android:name="android.permission.CAMERA" />
 
+	<application
+		android:name=".App"
+		android:allowBackup="true"
+		android:icon="@mipmap/ic_launcher"
+		android:label="@string/app_name"
+		android:roundIcon="@mipmap/ic_launcher_round"
+		android:supportsRtl="true"
+		android:theme="@style/Base.AppTheme">
+		<activity android:name=".view.activity.HomeActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
 
-    <!-- 在SDCard中创建与删除文件权限 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <!-- 相机权限 -->
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:name=".App"
-        android:theme="@style/Base.AppTheme">
-        <activity android:name=".view.activity.HomeActivity"
-         >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".view.activity.TestActivity"/>
-        <activity android:name=".view.activity.ResultActivity"/>
-        <activity android:name=".view.activity.BackActivity"/>
-        <activity android:name=".view.activity.SpanActivity"/>
-        <activity android:name=".view.activity.adapteractivity.HomeAdaptrActivity"/>
-        <activity android:name=".view.activity.NetActivity"/>
-        <activity android:name=".view.activity.ZcActivity"/>
-        <activity android:name=".view.activity.ZcChildActivity"/>
-        <activity android:name=".view.activity.SpActivity"/>
-    </application>
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".view.activity.ResultActivity" />
+		<activity android:name=".view.activity.BackActivity" />
+		<activity android:name=".view.activity.SpanActivity" />
+		<activity android:name=".view.activity.adapteractivity.HomeAdaptrActivity" />
+		<activity android:name=".view.activity.NetActivity" />
+		<activity android:name=".view.activity.SpActivity" />
+		<activity android:name=".view.activity.BaseExalpActivity" />
+		<activity android:name=".view.activity.ImageActivity" />
+		<activity android:name=".view.activity.BobActivity" />
+	</application>
 
 </manifest>

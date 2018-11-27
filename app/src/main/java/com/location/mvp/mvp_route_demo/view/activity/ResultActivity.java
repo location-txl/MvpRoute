@@ -1,7 +1,9 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,9 +11,9 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.contract.ResultContract;
 import com.location.mvp.mvp_route_demo.presenter.ResultPresenter;
+import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.base.Request;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
-import com.location.mvp.mvproutelibrary.utils.SpanUtils;
 
 
 /**
@@ -20,20 +22,16 @@ import com.location.mvp.mvproutelibrary.utils.SpanUtils;
  * @author：location time：2018/7/31 16:02
  * description：
  */
-
+@Layout(R.layout.activity_result)
 public class ResultActivity extends BaseToActivity<ResultContract.Presenter> implements ResultContract.View, View.OnClickListener {
 	private final int REQUESTCODE = 100;
 	private TextView sinceText;
 private TextView resulttext;
 	@Override
-	public void onshowError(ExceptionHandle.ResponeThrowable baseThrowable) {
+	public void onShowError(ExceptionHandle.ResponseThrowable baseThrowable) {
 
 	}
 
-	@Override
-	protected int getLayout() {
-		return R.layout.activity_result;
-	}
 
 	@Override
 	protected String getTooBarTitle() {
@@ -41,8 +39,8 @@ private TextView resulttext;
 	}
 
 	@Override
-	protected void initView() {
-		super.initView();
+	protected void initView(@Nullable Bundle savedInstanceState) {
+		super.initView(savedInstanceState);
 		resulttext = findViewById(R.id.resylt_message);
 		findViewById(R.id.result_clcik).setOnClickListener(this);
 		sinceText = findViewById(R.id.result_since);
