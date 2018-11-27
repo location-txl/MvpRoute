@@ -25,6 +25,7 @@ import java.lang.annotation.Target;
  * @author location
  * @Date 2018/11/15
  * 标识 此注解后 Activity 默认全屏
+ * @see BaseActivity
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

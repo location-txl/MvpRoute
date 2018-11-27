@@ -40,6 +40,11 @@ import java.util.List;
 
 /**
  * 基类BaseActivity
+ * 设置{@link Layout} 注解来绑定布局
+ * 设置{@link FullScreen}    注解来使Activity全屏
+ * 设置{@link StatusBar}     注解设置沉浸式状态栏
+ * 设置{@link InjectBundle}  注解来注入字段  无需手写bundle get方法
+ * 设置{@link Request}       注解来设置onActivityResult回调方法  无需手动重写{@link #onActivityResult(int, int, Intent)}
  *
  * @param <T>
  * @author location

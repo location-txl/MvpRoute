@@ -20,6 +20,8 @@ import com.location.mvp.mvproutelibrary.manager.RxManager;
 /**
  * mvp 模式 Presenter层接口继承这个类
  *
+ * @see BaseActivity
+ * @see BaseFragment
  * @param <T>
  */
 

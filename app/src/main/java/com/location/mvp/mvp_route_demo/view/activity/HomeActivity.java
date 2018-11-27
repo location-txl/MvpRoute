@@ -65,12 +65,12 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 		homeAdapter = new HomeAdapter(R.layout.item_home);
 		recyclerView.setAdapter(homeAdapter);
 		homeAdapter.setOnItemClickListener(this);
-		homeAdapter.setOnChildClickListener(R.id.id_1, new OnChildClickListener() {
-			@Override
-			public void onChildClcik(BaseViewHolder viewHolder, View view, int position) {
-
-			}
-		});
+//		homeAdapter.setOnChildClickListener(R.id.id_1, new OnChildClickListener() {
+//			@Override
+//			public void onChildClcik(BaseViewHolder viewHolder, View view, int position) {
+//
+//			}
+//		});
 		homeAdapter.setOnHeaderClickListener(new OnHeaderClickListener() {
 			@Override
 			public void onHeaderClick(int layout, View view, @Nullable Object data, int position, boolean isHeader) {

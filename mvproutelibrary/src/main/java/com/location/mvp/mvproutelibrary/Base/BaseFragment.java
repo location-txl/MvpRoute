@@ -46,7 +46,9 @@ import static com.location.mvp.mvproutelibrary.base.Request.EXERA_RESULT;
 
 /**
  * 基类  BaseFragment
- *
+ * 设置{@link Layout} 注解来绑定布局
+ * 设置{@link InjectBundle}  注解来注入字段  无需手写bundle get方法
+ * 设置{@link Request}       注解来设置onActivityResult回调方法  无需手动重写{@link #onActivityResult(int, int, Intent)}
  * @param <T>
  * @author Administrator
  */

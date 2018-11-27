@@ -26,7 +26,8 @@ import java.lang.annotation.Target;
 /**
  * create：2018/11/15 17:50
  * {@link #value()}  layout布局id
- *
+ * @see BaseActivity
+ * @see BaseFragment
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

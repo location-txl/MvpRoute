@@ -29,6 +29,8 @@ import java.lang.reflect.Type;
  * @author location
  * Bundle  传值辅助类
  *         在这里可以传未序列化的json对象
+ *         @see BaseFragment
+ *         @see BaseActivity
  */
 
 public class BundleUtils {
