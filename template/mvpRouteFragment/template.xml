@@ -2,12 +2,12 @@
 <template
     format="5"
     revision="5"
-    name="MvpRouteActivity"
+    name="MvpRouteFragment"
     minApi="9"
     minBuildApi="14"
-    description="创建MvpRoute mvpActyivity">
+    description="创建MvpRoute MvpFragment">
 
-    <category value="Activity" />
+    <category value="Fragment" />
     <formfactor value="Mobile" />
 
 
@@ -16,34 +16,34 @@
         name="MvpRoute名字"
         type="string"
         constraints="class|unique|nonempty"
-        default="MainActivity"
-        help="没啥用  用了约束Activity Presenter  Contract名字" />
+        default="Main"
+        help="没啥用  用了约束Fragment Presenter  Contract名字" />
 
     <parameter
         id="activityClass"
-        name="Activity Namess"
+        name="Fragment名字"
         type="string"
         constraints="class|unique|nonempty"
-        suggest="${mvprouteName}Activity"
-        default="MainActivity"
-        help="The name of the activity class to create" />
+        suggest="${mvprouteName}Fragment"
+        default="MainFragment"
+        help="这个名字是创建Fragment的名字" />
 
     <parameter
         id="generateLayout"
-        name="Generate Layout File"
+        name="是否创建layout"
         type="boolean"
         default="true"
-        help="If true, a layout file will be generated" />
+        help="如果是true则会创建layout布局" />
 
     <parameter
         id="layoutName"
-        name="Layout Name"
+        name="布局名字"
         type="string"
         constraints="layout|unique|nonempty"
-        suggest="${activityToLayout(activityClass)}"
-        default="activity_main"
+        suggest="fragment_${classToResource(activityClass)}"
+        default="fragment_main"
         visibility="generateLayout"
-        help="The name of the layout to create for the activity" />
+        help="这个名字布局的名字" />
       <parameter
         id="generateContract"
         name="是否创建Contract"
@@ -66,7 +66,7 @@
    	 	type="string"
    		constraints="class|unique|nonempty"
     	suggest="${mvprouteName}Presenter"
-    	default="ActivityPresenter"
+    	default="MainPresenter"
     	visibility="generateContract"
     	help="默认的Presenter"/>
 
