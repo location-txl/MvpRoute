@@ -31,6 +31,16 @@ implementation 'com.location.mvp:mvproute:1.0.2'
 
 6. BannerView  自定义轮播图  采用RxJava调度 支持页面切换长度 切换时间  自定义指示器
 
+## 使用
+
+在Application中初始化
+
+```java
+
+```
+
+
+
 
 ## 使用的第三方
 
