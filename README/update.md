@@ -1,11 +1,31 @@
-v1.0.2:预览
+v1.0.2:
 
-- [x] BaseActivity BaseFragment 增加layout注解  舍弃之前的getLayout抽象方法
-- [x] BaseActivity  使用注解方式 实现全屏  沉浸式体验
-- [x] RxScheduer 调度器更新  增加 倒计时工具方法和防止view多次点击工具方法
-- [x] Activity Fragment传值支持 未序列化的Object对象  支持传值注入
-- [ ] BobPopwindow 增加默认动画  由下到上 由上到下 由左到右 由右到左
-- [ ] 增加AndroidStudio模板文件 一键创建MvpRoute样式的Activity及Fragment
+- Baseactivity BaseFragment增加 layout injectBundle注解
+
+  layout注解用于绑定布局 无需重写getLayout()方法
+  InjectBundle用于动态注入activity fragment传值 并且支持位序列化的object对象
+
+- BaseActivity 增加FullScreen StatusBar注解
+
+   FullScreen注解用于使Activity展示全屏状态
+   StatusBar注解用于设置沉浸式状态栏
+
+- RxScheduer 调度器更新  增加countDown 倒计时方法
+
+                                               增加click    防止view多次点击方法
+
+- BobPopwindow优化 增加 更多显示方法
+
+- 删除onDoubleClcik方法  后续统一使用RxScheduer方法
+
+- 新增AppManager类  用于记录当前在内的Activity BaseActivity内部已经自动调用
+
+  开发者可以使用此类来关闭Activity
+
+- MvpRoute新增全局初始化方法 RouteManager方法  新增RouteManager配置类RouteOptions
+
+- 新增MvpRoute模板文件 开发者可以一键生成Mvp样式的activity和fragment
+
 
 v1.0.1:
 
