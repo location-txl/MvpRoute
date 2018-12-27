@@ -30,6 +30,10 @@ import io.reactivex.disposables.Disposable;
 /**
  * @author location
  *         默认的RxJava  Observer 回调
+ *         如果使用带进度的上传文件请使用  {@link BaseProgressObserver}
+ *         The default RxJava Observer callback
+ *         Network request callback{@link RetrofitClient}
+ *         Use with progress if uploading and downloading are used{@link BaseProgressObserver}
  */
 
 
@@ -66,9 +70,9 @@ public abstract class BaseObserver<T> implements Observer<T> {
 	@Override
 	public void onSubscribe(Disposable d) {
 		rxManager.add(d);
-		if(baseView==null){
+		if (baseView == null) {
 			rxManager.clear();
-		}else{
+		} else {
 			loadingView.showLoading();
 		}
 	}
