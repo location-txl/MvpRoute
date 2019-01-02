@@ -6,7 +6,7 @@ Android项目开发框架 基于Mvp
  [ ![Download](https://api.bintray.com/packages/location/maven/mvproute/images/download.svg) ](https://bintray.com/location/maven/mvproute/_latestVersion)[![License][licensesvg]][license]
 
 ## [更新日志](https://github.com/TLocation/MvpRoute/blob/master/README/update.md)
-   目前文档还是v1.0.1版本的  最新文档将于元旦发布
+   
 ## 导入
 ```groovy
 implementation 'com.location.mvp:mvproute:1.0.2'
