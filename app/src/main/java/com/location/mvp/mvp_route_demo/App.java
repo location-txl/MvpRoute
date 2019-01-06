@@ -75,9 +75,9 @@ public class App extends Application {
 		//设置view点击的过滤时间为2秒
 		options.setFilterClickTime(2);
 		//设置全局沉浸式状态栏
-		options.setTransStatus(true);
+		options.setTransStatus(false);
 		//设置在沉浸式状态栏下布局内容在状态栏之下
-		options.setStatusPaddingTop(true);
+		options.setStatusPaddingTop(false);
 		RouteManager.init(this,options);
 	}
 

@@ -15,7 +15,8 @@ import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 /**
  * 项目:MvpRoute
  *
- * @author：location time：2018/7/31 16:07
+ * @author：location
+ * time：2018/7/31 16:07
  * description：
  */
 @Layout(R.layout.activity_back)

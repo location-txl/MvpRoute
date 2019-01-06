@@ -33,7 +33,7 @@ public abstract class BaseToActivity<P extends BasePresenter> extends BaseActivi
 			findViewById(R.id.bar_back).setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					finish();
+					onBackPressed();
 				}
 			});
 		}

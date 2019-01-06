@@ -120,7 +120,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 			//解决在某些机型上 透明状态栏后有半透明的黑色背景
 			StatusBarUtils.setStatusBarColor(this, Color.TRANSPARENT);
 		} else {
-			setStatusBarColorFromManager();
+//			setStatusBarColorFromManager();
 		}
 
 

@@ -34,19 +34,21 @@ import android.util.SparseArray;
 import android.view.View;
 
 
+import com.location.mvp.mvproutelibrary.R;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 
 /**
- *  Fragment 工具类
+ * Fragment 工具类
  */
 public class FragmentUtils {
 	private static final String TAG = FragmentUtils.class.getSimpleName();
 	/**
 	 * 存储fragment
-	 * 键值对  key----布局id
+	 * 键值对  key --- 当前对象的has值
 	 * value---fragment
 	 */
 	private SparseArray<Fragment> sparseIntArray;
@@ -54,6 +56,7 @@ public class FragmentUtils {
 
 	private String simpleName;
 
+	private static int tagCode;
 
 	private static FragmentManager fragmentManager;
 
@@ -64,9 +67,6 @@ public class FragmentUtils {
 
 	private Fragment baseFragment;
 
-
-	private @IdRes
-	int resId;
 
 	private FragmentUtils() {
 		sparseIntArray = new SparseArray<>();
@@ -82,6 +82,7 @@ public class FragmentUtils {
 	public static FragmentUtils getInstance(FragmentActivity activity) {
 		newInstance();
 		fragmentManager = activity.getSupportFragmentManager();
+		tagCode = activity.hashCode();
 		return instance;
 	}
 
@@ -94,6 +95,7 @@ public class FragmentUtils {
 	public static FragmentUtils getInstance(Fragment fragment) {
 		newInstance();
 		fragmentManager = fragment.getChildFragmentManager();
+		tagCode = fragment.hashCode();
 		return instance;
 	}
 
@@ -107,7 +109,7 @@ public class FragmentUtils {
 	public FragmentWrapper start(Class<? extends Fragment> clazz) {
 		transaction = fragmentManager.beginTransaction();
 		simpleName = clazz.getSimpleName();
-		baseFragment =  fragmentManager.findFragmentByTag(simpleName);
+		baseFragment = fragmentManager.findFragmentByTag(simpleName);
 		if (baseFragment == null) {
 			try {
 				baseFragment = clazz.newInstance();
@@ -133,7 +135,7 @@ public class FragmentUtils {
 		} else {
 			simpleName = tag;
 		}
-		baseFragment =  fragmentManager.findFragmentByTag(simpleName);
+		baseFragment = fragmentManager.findFragmentByTag(simpleName);
 		if (baseFragment == null) {
 			try {
 				baseFragment = clazz.newInstance();
@@ -340,13 +342,13 @@ public class FragmentUtils {
 		}
 
 		public FragmentResponse add(@IdRes int ids) {
-			resId = ids;
+
 			if (!baseFragment.isAdded()) {
-				transaction.add(resId, baseFragment, simpleName);
+				transaction.add(ids, baseFragment, simpleName);
 			}
 
-			if (sparseIntArray.get(resId) != null) {
-				transaction.hide(sparseIntArray.get(resId));
+			if (sparseIntArray.get(tagCode) != null) {
+				transaction.hide(sparseIntArray.get(tagCode));
 			}
 			transaction.show(baseFragment);
 			return new FragmentResponse();
@@ -390,15 +392,13 @@ public class FragmentUtils {
 		}
 
 
-
-
 		public void commit() {
 			transaction.commit();
-			sparseIntArray.put(resId, baseFragment);
+			sparseIntArray.put(tagCode, baseFragment);
 			baseFragment = null;
 			simpleName = null;
-			resId = -1;
 			transaction = null;
+			tagCode = -1;
 			fragmentManager = null;
 		}
 
