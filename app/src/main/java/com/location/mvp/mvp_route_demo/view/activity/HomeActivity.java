@@ -13,6 +13,7 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.adapter.HomeAdapter;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
+import com.location.mvp.mvp_route_demo.view.activity.adapteractivity.HomeAdaptrActivity;
 import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.adapter.OnHeaderClickListener;
@@ -37,7 +38,6 @@ import java.util.List;
  */
 
 @Layout(R.layout.activity_home)
-@StatusBar(tranStatus = false, color = Color.MAGENTA)
 public class HomeActivity extends BaseToActivity implements OnItemClickListener {
 	private RecyclerView recyclerView;
 	private HomeAdapter homeAdapter;
@@ -56,6 +56,7 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 	@Override
 	protected void initView(@Nullable Bundle savedInstanceState) {
 		super.initView(savedInstanceState);
+		findViewById(R.id.bar_back).setVisibility(View.GONE);
 		recyclerView = findViewById(R.id.home_RecyclerView);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration
@@ -99,10 +100,10 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 	public void onItemClick(BaseViewHolder viewHolder, View view, int position) {
 		switch (position) {
 			case 0:
-				StatusBarUtils.showStatusBar(this);
-//				startActivity(HomeAdaptrActivity.class);
+				startActivity(HomeAdaptrActivity.class);
 				break;
 			case 1:
+				startActivity(FragmentSimpleActivity.class);
 				break;
 			case 2:
 				//Spanutils

@@ -23,9 +23,10 @@ import android.support.annotation.Nullable;
  * 用于管理头尾布局
  */
 public class DataBean {
-	private @Nullable Object response;
-	private @LayoutRes int layout;
-
+	private @Nullable
+	Object response;
+	private @LayoutRes
+	int layout;
 
 
 	public int getLayout() {
@@ -36,7 +37,7 @@ public class DataBean {
 		this.layout = layout;
 	}
 
-	public DataBean(Object response,  @LayoutRes int layout) {
+	public DataBean(Object response, @LayoutRes int layout) {
 		this.response = response;
 		this.layout = layout;
 	}
@@ -53,4 +54,22 @@ public class DataBean {
 		this.response = response;
 	}
 
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof DataBean) {
+			if (((DataBean) obj).layout == layout && response.equals(((DataBean) obj).response)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "DataBean{" +
+				"response=" + response +
+				", layout=" + layout +
+				'}';
+	}
 }

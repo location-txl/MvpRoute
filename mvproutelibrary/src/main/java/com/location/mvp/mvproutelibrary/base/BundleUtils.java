@@ -45,17 +45,7 @@ public class BundleUtils {
 					continue;
 				}
 				Type genericType = field.getGenericType();
-				if (genericType instanceof Class<?>) {
-					Class<?> clazz = (Class<?>) genericType;
-					String name = clazz.getCanonicalName();
-					//过滤系统类
-					if (name.startsWith("android")
-							|| name.startsWith("java")
-							|| name.startsWith("javax")
-							|| name.startsWith("kotlin")) {
-						continue;
-					}
-				}
+
 				field.setAccessible(true);
 				InjectBundle routeField = field.getAnnotation(InjectBundle.class);
 				/*
@@ -75,6 +65,17 @@ public class BundleUtils {
 						e.printStackTrace();
 					}
 					continue;
+				}
+				if (genericType instanceof Class<?>) {
+					Class<?> clazz = (Class<?>) genericType;
+					String name = clazz.getCanonicalName();
+					//过滤系统类
+					if (name.startsWith("android")
+							|| name.startsWith("java")
+							|| name.startsWith("javax")
+							|| name.startsWith("kotlin")) {
+						continue;
+					}
 				}
 				//如果是String 使用json转成Object
 				if (o instanceof String) {
