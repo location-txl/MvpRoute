@@ -62,10 +62,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//设置状态栏
 		setStatusBar();
+		//设置布局
 		setContentView();
+		//透明状态栏所用
 		initPaddingTop();
-		Bundle extras = getIntent().getExtras();
 		activity = this;
 		presenter = createPresenter();
 		if (presenter != null) {
@@ -105,6 +107,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 	 */
 	private void setStatusBar() {
 		Class<? extends BaseActivity> baseClass = getClass();
+		//判断有没有注解
 		boolean haveStatusBar = baseClass.isAnnotationPresent(StatusBar.class);
 		if (haveStatusBar) {
 			StatusBar statusBar = baseClass.getAnnotation(StatusBar.class);

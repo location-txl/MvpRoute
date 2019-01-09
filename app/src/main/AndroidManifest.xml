@@ -37,6 +37,7 @@
 		<activity android:name=".view.activity.ImageActivity" />
 		<activity android:name=".view.activity.BobActivity" />
 		<activity android:name=".view.activity.FragmentSimpleActivity"/>
+		<activity android:name=".view.activity.GroupAdapterActivity"/>
 	</application>
 
 </manifest>

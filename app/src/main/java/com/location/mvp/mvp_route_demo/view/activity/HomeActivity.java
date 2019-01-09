@@ -127,6 +127,9 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 			case 8:
 				startActivity(BaseExalpActivity.class);
 				break;
+			case 9:
+				startActivity(GroupAdapterActivity.class);
+				break;
 			default:
 				LogUtils.d("未知");
 		}
