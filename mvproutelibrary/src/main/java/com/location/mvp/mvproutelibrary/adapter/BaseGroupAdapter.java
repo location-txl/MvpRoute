@@ -10,10 +10,10 @@ import java.util.List;
  *         description：
  */
 
-public abstract class GroupBaseAdapter<T, E, V extends BaseViewHolder> extends BaseAdapter<GroupBean<T, E>, V> {
+public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends BaseAdapter<GroupBean<T, E>, V> {
 
 
-	public GroupBaseAdapter(int groupLayout, int childLayout, List<T> groupList, List<List<E>> childGroupList) {
+	public BaseGroupAdapter(int groupLayout, int childLayout, List<T> groupList, List<List<E>> childGroupList) {
 		super(groupLayout);
 		addType(GroupBean.TYPE_GROUP,groupLayout);
 		addType(GroupBean.TYPE_CHILD, childLayout);

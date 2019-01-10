@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
-import com.location.mvp.mvproutelibrary.adapter.GroupBaseAdapter;
+import com.location.mvp.mvproutelibrary.adapter.BaseGroupAdapter;
 import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
@@ -63,7 +63,7 @@ private RecyclerView recyclerView;
 		return null;
 	}
 
-	class MyAdapter extends GroupBaseAdapter<String,String,BaseViewHolder>{
+	class MyAdapter extends BaseGroupAdapter<String,String,BaseViewHolder> {
 
 		public MyAdapter(int groupLayout, int childLayout, List<String> groupList, List<List<String>> childGroupList) {
 			super(groupLayout, childLayout, groupList, childGroupList);
