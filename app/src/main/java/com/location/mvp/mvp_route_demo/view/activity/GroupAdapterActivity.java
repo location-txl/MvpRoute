@@ -23,7 +23,6 @@ import java.util.List;
  */
 @Layout(R.layout.activity_group_recyclerview)
 public class GroupAdapterActivity extends BaseToActivity {
-	//test
 	@Override
 	protected String getTooBarTitle() {
 		return "v1.0.3版本测试分组模式";
