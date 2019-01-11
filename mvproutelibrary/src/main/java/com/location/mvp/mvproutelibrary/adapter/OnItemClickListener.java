@@ -23,4 +23,5 @@ import android.view.View;
 
 public interface OnItemClickListener<V extends BaseViewHolder>  {
 	void onItemClick(V viewHolder, View view, int position);
+
 }

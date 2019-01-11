@@ -1,6 +1,7 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import java.util.List;
 
@@ -10,15 +11,20 @@ import java.util.List;
  *         description：
  */
 
-public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends BaseAdapter<GroupBean<T, E>, V> {
+public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends AbstractBaseAdapter<GroupBean<T, E>, V> implements BaseGroupDealListener {
 
+	private OnGroupItemClickListener grouItemClickListener;
 
 	public BaseGroupAdapter(int groupLayout, int childLayout, List<T> groupList, List<List<E>> childGroupList) {
 		super(groupLayout);
-		addType(GroupBean.TYPE_GROUP,groupLayout);
+		addType(GroupBean.TYPE_GROUP, groupLayout);
 		addType(GroupBean.TYPE_CHILD, childLayout);
 		initData(groupList, childGroupList);
 
+	}
+
+	public void setOnGroupClickListener(OnGroupItemClickListener listener) {
+		this.grouItemClickListener = listener;
 	}
 
 	private void initData(List<T> groupList, List<List<E>> childGroupList) {
@@ -47,14 +53,47 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends B
 
 	@Override
 	public void conver(V holder, @Nullable GroupBean<T, E> data, int viewType) {
-		if(data.isInGroup()){
-			onBindGroup(data.getGroup(), holder.getAdapterPosition());
-		}else{
-			onBindChild(data.getChild(),0,0);
+		if (data.isInGroup()) {
+			onBindGroup(holder, data.getGroup(), holder.getAdapterPosition());
+		} else {
+			onBindChild(holder, data.getChild(), 0, 0);
 		}
+
 	}
 
-	public abstract void onBindGroup(T response, int groupPosition);
+	/**
+	 * d
+	 *
+	 * @param holder
+	 * @param response
+	 * @param groupPosition
+	 */
+	public abstract void onBindGroup(V holder, T response, int groupPosition);
 
-	public abstract void onBindChild(E response, int groupPosition, int childPosition);
+	/**
+	 * 1
+	 *
+	 * @param holder
+	 * @param response
+	 * @param groupPosition
+	 * @param childPosition
+	 */
+	public abstract void onBindChild(V holder, E response, int groupPosition, int childPosition);
+
+	@Override
+	protected void registerListener(V holder) {
+		holder.registerGroupListener(getHeaderCount(), this);
+	}
+
+	@Override
+	public void dealItem(int position, View itemview) {
+		if (grouItemClickListener != null) {
+			GroupBean<T, E> teGroupBean = data.get(position);
+			if (teGroupBean.isInGroup()) {
+				grouItemClickListener.onGroupItemClick(itemview, teGroupBean.getGroupPosition());
+			} else {
+				grouItemClickListener.onChildItemClick(itemview, teGroupBean.getGroupPosition(), teGroupBean.getChildGroupPosition());
+			}
+		}
+	}
 }

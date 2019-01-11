@@ -70,14 +70,16 @@ private RecyclerView recyclerView;
 		}
 
 		@Override
-		public void onBindGroup(String response, int groupPosition) {
+		public void onBindGroup(BaseViewHolder holder, String response, int groupPosition) {
 
 		}
 
 		@Override
-		public void onBindChild(String response, int groupPosition, int childPosition) {
+		public void onBindChild(BaseViewHolder holder, String response, int groupPosition, int childPosition) {
 
 		}
+
+
 
 
 	}

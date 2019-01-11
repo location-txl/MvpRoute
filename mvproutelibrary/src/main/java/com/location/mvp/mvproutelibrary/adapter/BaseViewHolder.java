@@ -44,9 +44,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 	}
 
 
-
-
-	public void registItemListener(final OnItemClickListener listener, SparseArray<OnChildClickListener> sparseArray, final int headerSize){
+	void registerItemListener(final OnItemClickListener listener, final int headerSize) {
 		if (listener != null) {
 			this.itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -57,6 +55,10 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 		}
 
 
+	}
+
+
+	void registerChildClick(SparseArray<OnChildClickListener> sparseArray, final int headerSize) {
 
 		if (sparseArray != null && sparseArray.size() > 0) {
 			int length = sparseArray.size();
@@ -73,6 +75,17 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 					});
 				}
 			}
+		}
+	}
+
+	void registerGroupListener(final int headerSize, final BaseGroupDealListener listener) {
+		if (listener != null) {
+			this.itemView.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					listener.dealItem(getAdapterPosition() - headerSize,itemView);
+				}
+			});
 		}
 
 	}
@@ -104,13 +117,13 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 	}
 
 
-
 	public View getItemView() {
 		return itemView;
 	}
 
 	/**
 	 * 设置文本
+	 *
 	 * @param ids
 	 * @param charSequence
 	 */
@@ -123,6 +136,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
 	/**
 	 * 设置文本
+	 *
 	 * @param ids
 	 * @param message
 	 */
@@ -136,6 +150,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
 	/**
 	 * 设置文本
+	 *
 	 * @param ids
 	 * @param stringres
 	 */
@@ -148,6 +163,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
 	/**
 	 * 设置Imageview资源图片
+	 *
 	 * @param ids
 	 * @param resouce
 	 */
@@ -160,6 +176,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
 	/**
 	 * 设置显示某个view
+	 *
 	 * @param ids
 	 */
 	public void setVisibility(@IdRes int ids) {
@@ -171,6 +188,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
 	/**
 	 * 隐藏某个view
+	 *
 	 * @param ids
 	 */
 	public void setGone(@IdRes int ids) {
@@ -179,8 +197,6 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 			view.setVisibility(View.GONE);
 		}
 	}
-
-
 
 
 }
