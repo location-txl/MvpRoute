@@ -14,44 +14,53 @@ class GroupBean<T, E> implements MulitTypeListener {
 	private E child;
 	private int groupPosition;
 	private int childGroupPosition;
+	private boolean expand;
 
-	 boolean isInGroup() {
+	public boolean isExpand() {
+		return expand;
+	}
+
+	public void setExpand(boolean expand) {
+		this.expand = expand;
+	}
+
+	boolean isInGroup() {
 		return inGroup;
 	}
 
-	 void setInGroup(boolean inGroup) {
+	void setInGroup(boolean inGroup) {
 		this.inGroup = inGroup;
 	}
 
-	 T getGroup() {
+	T getGroup() {
 		return group;
 	}
 
-	 void setGroup(T group) {
+	void setGroup(T group) {
 		this.group = group;
 	}
 
-	 E getChild() {
+	E getChild() {
 		return child;
 	}
 
-	 void setChild(E child) {
+	void setChild(E child) {
 		this.child = child;
 	}
 
-	 int getGroupPosition() {
+	int getGroupPosition() {
 		return groupPosition;
 	}
 
-	 void setGroupPosition(int groupPosition) {
+	void setGroupPosition(int groupPosition) {
 		this.groupPosition = groupPosition;
 	}
 
-	 int getChildGroupPosition() {
+	int getChildGroupPosition() {
 		return childGroupPosition;
 	}
 
-	 void setChildGroupPosition(int childGroupPosition) {
+	void setChildGroupPosition(int childGroupPosition) {
 		this.childGroupPosition = childGroupPosition;
 	}
 

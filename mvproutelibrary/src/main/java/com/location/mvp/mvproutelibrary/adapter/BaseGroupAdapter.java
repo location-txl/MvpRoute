@@ -13,10 +13,14 @@ import java.util.List;
 
 public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends AbstractBaseAdapter<GroupBean<T, E>, V> implements BaseGroupDealListener {
 
-	private OnGroupItemClickListener grouItemClickListener;
+	private OnGroupItemClickListener groupItemClickListener;
+	private List<T> groups;
+	private List<List<E>> childs;
 
 	public BaseGroupAdapter(int groupLayout, int childLayout, List<T> groupList, List<List<E>> childGroupList) {
 		super(groupLayout);
+		this.groups = groupList;
+		this.childs = childGroupList;
 		addType(GroupBean.TYPE_GROUP, groupLayout);
 		addType(GroupBean.TYPE_CHILD, childLayout);
 		initData(groupList, childGroupList);
@@ -24,7 +28,7 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 	}
 
 	public void setOnGroupClickListener(OnGroupItemClickListener listener) {
-		this.grouItemClickListener = listener;
+		this.groupItemClickListener = listener;
 	}
 
 	private void initData(List<T> groupList, List<List<E>> childGroupList) {
@@ -39,12 +43,17 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 			GroupBean<T, E> groupBean = new GroupBean<>();
 			groupBean.setGroup(group);
 			groupBean.setInGroup(true);
+			groupBean.setExpand(true);
+			groupBean.setGroupPosition(i);
 			data.add(groupBean);
 			List<E> tempChildList = childGroupList.get(i);
 			//TODO  默认全部展开
-			for (E child : tempChildList) {
+			for (int i1 = 0; i1 < tempChildList.size(); i1++) {
+
 				GroupBean<T, E> childBean = new GroupBean<>();
-				childBean.setChild(child);
+				childBean.setChild(tempChildList.get(i1));
+				childBean.setGroupPosition(i);
+				childBean.setChildGroupPosition(i1);
 				data.add(childBean);
 			}
 		}
@@ -58,7 +67,6 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 		} else {
 			onBindChild(holder, data.getChild(), 0, 0);
 		}
-
 	}
 
 	/**
@@ -87,12 +95,31 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 
 	@Override
 	public void dealItem(int position, View itemview) {
-		if (grouItemClickListener != null) {
+		if (groupItemClickListener != null) {
 			GroupBean<T, E> teGroupBean = data.get(position);
 			if (teGroupBean.isInGroup()) {
-				grouItemClickListener.onGroupItemClick(itemview, teGroupBean.getGroupPosition());
+				boolean expand = teGroupBean.isExpand();
+				teGroupBean.setExpand(!expand);
+				List<E> es = childs.get(teGroupBean.getGroupPosition());
+				if (expand) {
+					for (int i = 0; i < es.size(); i++) {
+						data.remove(position + 1);
+					}
+					notifyItemRangeRemoved(position+1,es.size());
+				} else {
+					int index;
+					for (int i = 0; i < es.size(); i++) {
+						GroupBean<T, E> childBean = new GroupBean<>();
+						childBean.setGroupPosition(teGroupBean.getGroupPosition());
+						childBean.setChildGroupPosition(i);
+						childBean.setChild(es.get(i));
+                        data.add(position+i+1,childBean);
+					}
+					notifyItemRangeInserted(position+1,es.size());
+				}
+				groupItemClickListener.onGroupItemClick(itemview, teGroupBean.getGroupPosition());
 			} else {
-				grouItemClickListener.onChildItemClick(itemview, teGroupBean.getGroupPosition(), teGroupBean.getChildGroupPosition());
+				groupItemClickListener.onChildItemClick(itemview, teGroupBean.getGroupPosition(), teGroupBean.getChildGroupPosition());
 			}
 		}
 	}

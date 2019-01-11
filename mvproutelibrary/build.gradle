@@ -6,7 +6,10 @@ android {
     lintOptions {
         abortOnError false
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     compileSdkVersion 26
 //    packagingOptions {
 //        exclude 'META-INF/rxjava.properties'
