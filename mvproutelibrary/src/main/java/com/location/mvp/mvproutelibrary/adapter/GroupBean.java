@@ -16,6 +16,10 @@ class GroupBean<T, E> implements MulitTypeListener {
 	private int childGroupPosition;
 	private boolean expand;
 
+
+	public void toggle(){
+		this.expand = !expand;
+	}
 	public boolean isExpand() {
 		return expand;
 	}
