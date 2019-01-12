@@ -15,7 +15,16 @@ class GroupBean<T, E> implements MulitTypeListener {
 	private int groupPosition;
 	private int childGroupPosition;
 	private boolean expand;
+	private boolean showAnim;
 
+
+	public boolean isShowAnim() {
+		return showAnim;
+	}
+
+	public void showAnim(boolean showAnim) {
+		this.showAnim = showAnim;
+	}
 
 	public void toggle(){
 		this.expand = !expand;

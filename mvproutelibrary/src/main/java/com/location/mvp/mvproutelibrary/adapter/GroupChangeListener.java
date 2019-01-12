@@ -6,12 +6,11 @@ package com.location.mvp.mvproutelibrary.adapter;
  *         description：
  */
 
-public interface GroupAdapterChangeListener<V extends BaseViewHolder> {
+public interface GroupChangeListener {
 	/**
 	 * 分组模式下状态变化监听接口
-	 * @param holder       viewHolder
 	 * @param groupPosition 变换的索引
 	 * @param state         true 展开  false  闭合
 	 */
-	void onGroupStateChange(V holder,int groupPosition, boolean state);
+	void onGroupStateChange(int groupPosition, boolean state);
 }

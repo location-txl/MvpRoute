@@ -18,6 +18,7 @@ import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author tianxiaolong
@@ -26,6 +27,10 @@ import java.util.List;
  */
 @Layout(R.layout.activity_group_recyclerview)
 public class GroupAdapterActivity extends BaseToActivity {
+
+	private Random random;
+	private MyAdapter myAdapter;
+
 	@Override
 	protected String getTooBarTitle() {
 		return "v1.0.3版本测试分组模式";
@@ -50,20 +55,21 @@ public class GroupAdapterActivity extends BaseToActivity {
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		List<String> group = new ArrayList<>();
 		List<List<String>> child = new ArrayList<>();
-		for (int i = 0; i < 20; i++) {
+		random = new Random();
+		for (int i = 0; i < 5; i++) {
 			group.add("dsa");
 			List<String> list = new ArrayList<>();
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < random.nextInt(20) + 1; j++) {
 				list.add("dsa");
 			}
 			child.add(list);
 		}
-		MyAdapter myAdapter = new MyAdapter(R.layout.item_group, R.layout.item_child, group, child);
+		myAdapter = new MyAdapter(R.layout.item_group, R.layout.item_child, group, child);
 		recyclerView.setAdapter(myAdapter);
 		myAdapter.setOnGroupClickListener(new OnGroupItemClickListener() {
 			@Override
 			public void onGroupItemClick(View itemView, int groupPosition) {
-				  ToastUtils.showShort("点击分组view");
+				ToastUtils.showShort("点击分组view");
 			}
 
 			@Override
@@ -78,6 +84,8 @@ public class GroupAdapterActivity extends BaseToActivity {
 	protected BasePresenter createPresenter() {
 		return null;
 	}
+
+
 
 	class MyAdapter extends BaseGroupAdapter<String, String, BaseViewHolder> {
 
@@ -94,7 +102,17 @@ public class GroupAdapterActivity extends BaseToActivity {
 		public void onBindChild(BaseViewHolder holder, String response, int groupPosition, int childPosition) {
 
 		}
+	}
 
+	public void close(View view){
+		int i = random.nextInt(5);
+		ToastUtils.showShort("关闭索引为"+i+"分组");
+		myAdapter.close(i);
+	}
 
+	public void open(View view){
+		int i = random.nextInt(5);
+		ToastUtils.showShort("打开索引为"+i+"分组");
+		myAdapter.open(i);
 	}
 }
