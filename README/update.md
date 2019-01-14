@@ -1,3 +1,18 @@
+v1.0.3 (预览版本):
+
+​    1.0.3版本 主要对BaseAdapter进行了扩展 ，并且全局支持Java8 lambda 表达式
+
+- BaseAdapter的setEmptyView(View view)方法参数进行了修改 在新版本中只需要layout布局即可
+
+- 增加了BaseGroupAdapter适配器  类似Expandablelistview 分组样式
+
+       - BaseAdapter有的方法 BaseGroupAdapter都有
+       - 包含  分组切换监听  item（group/child）点击事件  切换动画
+
+- 增加粘性头部适配器（还在开发中  名字暂定） 自定义悬浮头部 类似小米通讯录  
+
+
+
 v1.0.2:
 
 - Baseactivity BaseFragment增加 layout injectBundle注解
@@ -12,7 +27,7 @@ v1.0.2:
 
 - RxScheduer 调度器更新  增加countDown 倒计时方法
 
-                                               增加click    防止view多次点击方法
+         增加click    防止view多次点击方法
 
 - BobPopwindow优化 增加 更多显示方法
 
