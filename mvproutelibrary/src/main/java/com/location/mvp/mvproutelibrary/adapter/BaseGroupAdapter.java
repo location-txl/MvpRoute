@@ -79,11 +79,11 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 	@Override
 	public void conver(V holder, @Nullable GroupBean<T, E> data, int viewType) {
 		if (data.isInGroup()) {
+			onBindGroup(holder, data.getGroup(), holder.getAdapterPosition());
 			if (data.isShowAnim()) {
 				showAnim(holder, data.isExpand());
 				data.showAnim(false);
 			}
-			onBindGroup(holder, data.getGroup(), holder.getAdapterPosition());
 		} else {
 			onBindChild(holder, data.getChild(), 0, 0);
 		}
@@ -182,11 +182,6 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 		notifyItemRangeInserted(position + 1, es.size());
 	}
 
-	private void invokeChange(int groupPosition, boolean state) {
-		if (changeListener != null) {
-			changeListener.onGroupStateChange(groupPosition, state);
-		}
-	}
 
 	private void closePosition(int position) {
 
@@ -200,6 +195,12 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 		showAnim(position, teGroupBean);
 		invokeChange(teGroupBean.getGroupPosition(), true);
 		notifyItemRangeRemoved(position + 1, es.size());
+	}
+
+	private void invokeChange(int groupPosition, boolean state) {
+		if (changeListener != null) {
+			changeListener.onGroupStateChange(groupPosition, state);
+		}
 	}
 
 	/**

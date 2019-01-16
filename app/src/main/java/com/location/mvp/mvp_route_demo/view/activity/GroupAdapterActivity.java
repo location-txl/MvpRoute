@@ -1,10 +1,15 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.widget.ImageView;
 
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
@@ -100,6 +105,19 @@ public class GroupAdapterActivity extends BaseToActivity {
 
 		@Override
 		public void onBindChild(BaseViewHolder holder, String response, int groupPosition, int childPosition) {
+
+		}
+
+		@Override
+		public void showAnim(BaseViewHolder holder, boolean state) {
+			Log.d(TAG, "调用动画方法  state===>" + state);
+			ImageView imageView = holder.findViewById(R.id.group_image);
+			ObjectAnimator rotation = ObjectAnimator.ofFloat(imageView, "rotation", 0.0f, -90.0f);
+			rotation
+					.setRepeatMode(ValueAnimator.REVERSE);
+			rotation.setDuration(500);
+			rotation.setRepeatCount(1);
+			rotation.start();
 
 		}
 	}
