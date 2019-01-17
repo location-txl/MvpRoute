@@ -58,13 +58,16 @@ public abstract class BaseAdapter<T, V extends BaseViewHolder> extends AbstractB
 	public BaseAdapter(int layout) {
 		super(layout);
 	}
+
 	public BaseAdapter(Collection data, int layout) {
 		super(data, layout);
 	}
+
 	public BaseAdapter(Collection data, int layout, OnItemClickListener<V> listener) {
 		super(data, layout);
 		this.listener = listener;
 	}
+
 	private OnItemClickListener<V> listener;
 
 	/**
@@ -80,10 +83,6 @@ public abstract class BaseAdapter<T, V extends BaseViewHolder> extends AbstractB
 	protected void registerListener(V holder) {
 		holder.registerItemListener(listener, getHeaderCount());
 	}
-
-
-
-
 
 
 }

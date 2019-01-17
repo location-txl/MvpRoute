@@ -41,6 +41,8 @@ public class RouteManager {
 	static final String GSON_NAME = "com.google.gson.Gson";
 	static final String FAST_JSON_NAME = "com.alibaba.fastjson.JSON";
 
+
+	public static boolean DEBUG = true;
 	/**
 	 * 是否为透明状态栏
 	 */
@@ -117,5 +119,8 @@ public class RouteManager {
 		SpUtils.init(context);
 	}
 
+	public static void setDEBUG(boolean debug) {
+		DEBUG = true;
+	}
 
 }

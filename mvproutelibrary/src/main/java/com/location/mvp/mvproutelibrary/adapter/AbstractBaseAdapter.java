@@ -31,6 +31,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.location.mvp.mvproutelibrary.base.Layout;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Constructor;
@@ -71,7 +73,7 @@ public abstract class AbstractBaseAdapter<T, V extends BaseViewHolder> extends R
 	/**
 	 * 存储空View
 	 */
-	private View emptyView;
+	private @LayoutRes  int emptyView = -1;
 	/**
 	 * 头尾布局点击事件
 	 */
@@ -218,7 +220,9 @@ public abstract class AbstractBaseAdapter<T, V extends BaseViewHolder> extends R
 					parent, false);
 		}
 		if (viewType == TYPE_EMPTY) {
-			view = emptyView;
+			view = LayoutInflater.from(parent.getContext()).inflate(emptyView,parent,false);
+			RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+			view.setLayoutParams(params);
 		}
 		V holder;
 		if (view == null) {
@@ -410,11 +414,11 @@ public abstract class AbstractBaseAdapter<T, V extends BaseViewHolder> extends R
 	@Override
 	public int getItemCount() {
 		if (emptyModle == EMPTY_MODLE_NOMAL) {
-			if (data.isEmpty() && data.size() == 0 && emptyView != null && headerList.isEmpty() && footerList.isEmpty()) {
+			if (data.isEmpty() && data.size() == 0 && emptyView != -1 && headerList.isEmpty() && footerList.isEmpty()) {
 				return 1;
 			}
 		} else {
-			if (data.isEmpty() && data.size() == 0 && emptyView != null) {
+			if (data.isEmpty() && data.size() == 0 && emptyView != -1) {
 				return 1;
 			}
 		}
@@ -479,12 +483,10 @@ public abstract class AbstractBaseAdapter<T, V extends BaseViewHolder> extends R
 	/**
 	 * 当没有数据时会显示此View
 	 *
-	 * @param view
+	 * @param emptyLayout
 	 */
-	public void setEmptyView(@NonNull View view) {
-		this.emptyView = view;
-		RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT);
-		this.emptyView.setLayoutParams(params);
+	public void setEmptyView(@LayoutRes int  emptyLayout) {
+		this.emptyView = emptyLayout;
 	}
 
 
@@ -498,10 +500,10 @@ public abstract class AbstractBaseAdapter<T, V extends BaseViewHolder> extends R
 	@Override
 	public final int getItemViewType(int position) {
 		if (emptyModle == EMPTY_MODLE_NOMAL) {
-			if (data.isEmpty() && data.size() == 0 && emptyView != null && headerList.isEmpty() && footerList.isEmpty())
+			if (data.isEmpty() && data.size() == 0 && emptyView != -1 && headerList.isEmpty() && footerList.isEmpty())
 				return TYPE_EMPTY;
 		} else {
-			if (data.isEmpty() && data.size() == 0 && emptyView != null) return TYPE_EMPTY;
+			if (data.isEmpty() && data.size() == 0 && emptyView != -1) return TYPE_EMPTY;
 		}
 
 		if (isHeaderPos(position)) {

@@ -63,6 +63,7 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 				.VERTICAL_LIST, 5, Color.parseColor("#999999")));
 
 		homeAdapter = new HomeAdapter(R.layout.item_home);
+		homeAdapter.setEmptyView(R.layout.view_empty);
 		recyclerView.setAdapter(homeAdapter);
 		homeAdapter.setOnItemClickListener(this);
 //		homeAdapter.setOnChildClickListener(R.id.id_1, new OnChildClickListener() {

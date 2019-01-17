@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -61,7 +62,7 @@ public class GroupAdapterActivity extends BaseToActivity {
 		List<String> group = new ArrayList<>();
 		List<List<String>> child = new ArrayList<>();
 		random = new Random();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 15; i++) {
 			group.add("dsa");
 			List<String> list = new ArrayList<>();
 			for (int j = 0; j < random.nextInt(20) + 1; j++) {
@@ -71,6 +72,10 @@ public class GroupAdapterActivity extends BaseToActivity {
 		}
 		myAdapter = new MyAdapter(R.layout.item_group, R.layout.item_child, group, child);
 		recyclerView.setAdapter(myAdapter);
+		recyclerView.getItemAnimator().setAddDuration(0);
+		recyclerView.getItemAnimator().setRemoveDuration(0);
+		recyclerView.getItemAnimator().setChangeDuration(0);
+		recyclerView.getItemAnimator().setMoveDuration(0);
 		myAdapter.setOnGroupClickListener(new OnGroupItemClickListener() {
 			@Override
 			public void onGroupItemClick(View itemView, int groupPosition) {
