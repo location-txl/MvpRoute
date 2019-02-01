@@ -15,6 +15,7 @@
  */
 package com.location.mvp.mvproutelibrary.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -40,7 +41,7 @@ import java.util.Set;
  * SharedPreferences存储工具类  简化了sp存储方式
  * 并且支持实体类的保存
  */
-public class SpUtils {
+public final  class SpUtils {
 
 	/**
 	 * SharedPreferences 对象
@@ -49,7 +50,7 @@ public class SpUtils {
 	/**
 	 * 上下文
 	 */
-	private static Context context;
+	protected   Context context;
 	/**
 	 * 存储SharedPreferences对象  每个key值对应一个
 	 */
@@ -84,22 +85,25 @@ public class SpUtils {
 	 */
 	private static final float DEFAULT_FLOAT = -1f;
 
+
+	private SharedPreferences.Editor editor;
+
 	/**
 	 * 构造私有化
 	 *
 	 * @param context
 	 */
 	private SpUtils(Context context) {
-		SpUtils.context = context;
+		this.context = context.getApplicationContext();
 		/**
 		 * 默认的key值为app名字
 		 * 没有获取到名字 获取包名
 		 */
-		sharedPreferences = context.getSharedPreferences(getAppName(context), Context.MODE_PRIVATE);
+		sharedPreferences =this.context.getSharedPreferences(getAppName(context), Context.MODE_PRIVATE);
 		/**
 		 * 存储到集合
 		 */
-		sps.put(getAppName(context), sharedPreferences);
+		sps.put(getAppName(this.context), sharedPreferences);
 	}
 
 	/**
@@ -117,12 +121,12 @@ public class SpUtils {
 		 * 抛出异常
 		 * throw {@link NullPointerException}
 		 */
-		if (context == null) throw new NullPointerException("you may Application init");
+		if (spUtils == null) throw new NullPointerException("you may Application init");
 		/**
 		 * 判断当前key是否为空 为空则第一次加载  实例化
 		 */
 		if (sps.get(keys) == null) {
-			sharedPreferences = context.getSharedPreferences(keys, Context.MODE_PRIVATE);
+			sharedPreferences = spUtils.context.getSharedPreferences(keys, Context.MODE_PRIVATE);
 			sps.put(keys, sharedPreferences);
 		} else {
 			//反之获取sharedPreferences对象
@@ -132,72 +136,84 @@ public class SpUtils {
 	}
 
 	public static SpUtils getInstance() {
-		if (context == null) throw new NullPointerException("you may Application init");
-		sharedPreferences = sps.get(getAppName(context));
+		if (spUtils == null) throw new NullPointerException("you may Application init");
+		sharedPreferences = sps.get(getAppName(spUtils.context));
 		return spUtils;
 	}
 
-	/**
-	 * 下面的重载方法都是存储在
-	 *
-	 * @param key
-	 * @param value
-	 */
-	public void putValue(String key, String value) {
-		SharedPreferences.Editor edit = sharedPreferences.edit();
-		edit.putString(key, value);
-		//使用apply降低内存开销
-		edit.apply();
-	}
 
-	public void putValue(String key, int value) {
-		sharedPreferences.edit().putInt(key, value).apply();
-	}
 
-	public void putValue(String key, boolean value) {
-		sharedPreferences.edit().putBoolean(key, value).apply();
-	}
-
-	public void putValue(String key, long value) {
-		sharedPreferences.edit().putLong(key, value).apply();
-	}
-
-	public void putValue(String key, float value) {
-		sharedPreferences.edit().putFloat(key, value).apply();
-	}
-
-	public void putValue(String key, Set<String> value) {
-		sharedPreferences.edit().putStringSet(key, value).apply();
+	@SuppressLint("CommitPrefEdits")
+	private void checkEditor() {
+		if (editor == null) {
+			editor = sharedPreferences.edit();
+		}
 	}
 
 
-	public void putArray(String key,Object object){
+
+
+	public void putArray(String key, Object object) {
 		String tojson = JsonUtils.obtJson(object);
 		if (TextUtils.isEmpty(tojson)) {
 			return;
 		}
 		sharedPreferences.edit().putString(key, tojson).apply();
 	}
+
 	/**
+	 *
+	 * 存储数据
 	 * 存储Object类型
 	 * 方法内会检查项目是否存在Gson包
 	 * 如果存在就会使用Gson toJson方法转化成字符串存储
 	 *
 	 * @param key
-	 * @param object
+	 * @param value
 	 */
-	public void putValue(String key, Object object) {
-		String tojson = JsonUtils.obtJson(object);
-		if (TextUtils.isEmpty(tojson)) {
-			return;
+	public SpUtils putValue(String key, Object value) {
+		checkEditor();
+		if (value instanceof String) {
+			editor.putBoolean(key, (Boolean) value);
+		} else if (value instanceof Boolean) {
+			editor.putBoolean(key, (Boolean) value);
+		} else if (value instanceof Integer) {
+			editor.putInt(key, (Integer) value);
+		} else if (value instanceof Long) {
+			editor.putLong(key, (Long) value);
+		} else if (value instanceof Float) {
+			editor.putFloat(key, (Float) value);
+		} else {
+			if (filterSystem(value.getClass())) {
+				String tojson = JsonUtils.obtJson(value);
+				if (TextUtils.isEmpty(tojson)) {
+					return this;
+				}
+				editor.putString(key, tojson);
+			}
 		}
-		sharedPreferences.edit().putString(key, tojson).apply();
+		return this;
 	}
+
+
 
 
 	public void putValue(Object object) {
 		putValue(object.getClass().getSimpleName(), object);
 	}
+
+	private boolean filterSystem(Class<?> clazz) {
+		String name = clazz.getCanonicalName();
+		if (name.startsWith("android")
+				|| name.startsWith("java")
+				|| name.startsWith("javax")
+				|| name.startsWith("kotlin")) {
+			return false;
+		}
+		return true;
+	}
+
+
 
 	/**
 	 * 下方都是获取值
@@ -244,12 +260,12 @@ public class SpUtils {
 	}
 
 
-	public <T> List<T> getArray(String key,Class<? extends T> clazz){
+	public <T> List<T> getArray(String key, Class<? extends T> clazz) {
 		String str = sharedPreferences.getString(key, DEFAULT_STRING);
-		if(TextUtils.isEmpty(str)){
+		if (TextUtils.isEmpty(str)) {
 			return null;
 		}
-		return JsonUtils.obtArray(str,clazz);
+		return JsonUtils.obtArray(str, clazz);
 	}
 
 	/**
@@ -265,8 +281,10 @@ public class SpUtils {
 	/**
 	 * 清除掉数据
 	 */
-	public void clearAll() {
-		sharedPreferences.edit().clear().apply();
+	public SpUtils clearAll() {
+		checkEditor();
+		editor.clear();
+		return this;
 	}
 
 	/**
@@ -274,8 +292,10 @@ public class SpUtils {
 	 *
 	 * @param key
 	 */
-	public void remove(String key) {
-		sharedPreferences.edit().remove(key).apply();
+	public SpUtils remove(String key) {
+		checkEditor();
+		editor.remove(key);
+		return this;
 	}
 
 
@@ -301,6 +321,11 @@ public class SpUtils {
 	}
 
 
-
+	public void commit() {
+         if(editor!=null){
+         	editor.apply();
+         	editor = null;
+		}
+	}
 
 }

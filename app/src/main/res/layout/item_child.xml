@@ -6,6 +6,7 @@
 	android:textColor="#000"
 	android:gravity="center_vertical"
 	android:text="child"
+	android:id="@+id/item_child_name"
 	android:textSize="14sp"
 	android:layout_width="match_parent"
 	android:layout_height="30dp" />

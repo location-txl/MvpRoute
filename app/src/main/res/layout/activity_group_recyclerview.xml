@@ -6,16 +6,58 @@
 
 	<include layout="@layout/baseview" />
 
-	<Button
-		android:text="随机关闭某个分组"
-		android:onClick="close"
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:orientation="horizontal"
+
+		android:layout_height="wrap_content">
+		<EditText
+			android:id="@+id/group_edittext"
+			android:layout_width="50dp"
+			android:inputType="number"
+			android:layout_height="wrap_content" />
+		<Button
+			android:text="关闭分组"
+			android:onClick="close"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+		<Button
+			android:onClick="open"
+			android:text="打开分组"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+
+		<Button
+			android:onClick="openAll"
+			android:text="打开全部"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+		<Button
+			android:onClick="closeAll"
+			android:text="关闭全部"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+	</LinearLayout>
+
+
+	<LinearLayout
+		android:orientation="horizontal"
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" />
-<Button
-	android:onClick="open"
-	android:text="随机打开某个分组"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content" />
+		android:layout_height="wrap_content">
+		<Button
+			android:onClick="addData"
+			android:text="增加一条分组"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+		<Button
+			android:onClick="removeData"
+			android:text="删除一个分组"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+
+	</LinearLayout>
+
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/main_recyclerView"
 		android:layout_width="match_parent"

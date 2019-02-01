@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.location.mvp.mvp_route_demo.R;
@@ -23,6 +24,8 @@ import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -36,7 +39,7 @@ public class GroupAdapterActivity extends BaseToActivity {
 
 	private Random random;
 	private MyAdapter myAdapter;
-
+private EditText numText;
 	@Override
 	protected String getTooBarTitle() {
 		return "v1.0.3版本测试分组模式";
@@ -59,14 +62,15 @@ public class GroupAdapterActivity extends BaseToActivity {
 		super.initView(savedInstanceState);
 		recyclerView = findViewById(R.id.main_recyclerView);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+		numText = findViewById(R.id.group_edittext);
 		List<String> group = new ArrayList<>();
 		List<List<String>> child = new ArrayList<>();
 		random = new Random();
 		for (int i = 0; i < 15; i++) {
-			group.add("dsa");
+			group.add("分组");
 			List<String> list = new ArrayList<>();
 			for (int j = 0; j < random.nextInt(20) + 1; j++) {
-				list.add("dsa");
+				list.add("child");
 			}
 			child.add(list);
 		}
@@ -90,6 +94,15 @@ public class GroupAdapterActivity extends BaseToActivity {
 
 	}
 
+	public void addData(View view){
+
+		myAdapter.loadGroup(1,"增加的分组头", Arrays.asList("1","2","#"),false);
+
+
+	}
+public void removeData(View view){
+		myAdapter.removeGroup(1);
+}
 	@Override
 	protected BasePresenter createPresenter() {
 		return null;
@@ -105,12 +118,14 @@ public class GroupAdapterActivity extends BaseToActivity {
 
 		@Override
 		public void onBindGroup(BaseViewHolder holder, String response, int groupPosition) {
+                   holder.setText(R.id.item_group_name,response);
+
 
 		}
 
 		@Override
 		public void onBindChild(BaseViewHolder holder, String response, int groupPosition, int childPosition) {
-
+               holder.setText(R.id.item_child_name,response);
 		}
 
 		@Override
@@ -128,14 +143,30 @@ public class GroupAdapterActivity extends BaseToActivity {
 	}
 
 	public void close(View view){
-		int i = random.nextInt(5);
-		ToastUtils.showShort("关闭索引为"+i+"分组");
-		myAdapter.close(i);
+		String s = numText.getText().toString();
+		int num = Integer.parseInt(s);
+		if(num>=5){
+			return;
+		}
+		ToastUtils.showShort("关闭索引为"+num+"分组");
+		myAdapter.close(num);
 	}
 
+
 	public void open(View view){
-		int i = random.nextInt(5);
-		ToastUtils.showShort("打开索引为"+i+"分组");
-		myAdapter.open(i);
+		String s = numText.getText().toString();
+		int num = Integer.parseInt(s);
+		if(num>=5){
+			return;
+		}
+		ToastUtils.showShort("打开索引为"+num+"分组");
+		myAdapter.open(num);
+	}
+
+	public void openAll(View view){
+		myAdapter.openAll();
+	}
+	public void closeAll(View view){
+		myAdapter.closeAll();
 	}
 }

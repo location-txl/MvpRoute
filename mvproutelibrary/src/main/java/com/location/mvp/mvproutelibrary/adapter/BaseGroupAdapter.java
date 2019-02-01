@@ -1,13 +1,21 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
+import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
+import android.os.Build;
+import android.os.HardwarePropertiesManager;
+import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.view.KeyboardShortcutGroup;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 /**
  * @author tianxiaolong
@@ -106,7 +114,9 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 	 * @param groupPosition
 	 * @param childPosition
 	 */
-	public abstract void onBindChild(V holder, E response, int groupPosition, int childPosition);
+	public abstract void
+
+	onBindChild(V holder, E response, int groupPosition, int childPosition);
 
 
 	public void showAnim(V holder, boolean state) {
@@ -132,6 +142,21 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 		}
 	}
 
+
+	public void openAll() {
+		int length = groups.size();
+		for (int i = 0; i < length; i++) {
+			open(i);
+		}
+	}
+
+
+	public void closeAll() {
+		int length = groups.size();
+		for (int i = 0; i < length; i++) {
+			close(i);
+		}
+	}
 
 	/**
 	 * close group
@@ -214,7 +239,7 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 	private boolean canOpen(int position) {
 		GroupBean<T, E> teGroupBean = data.get(position);
 		if (!teGroupBean.isInGroup()) {
-			throw new SecurityException("The current position is incorrect ");
+			throw new SecurityException("The current position is incorrect  position ===>" + position);
 		}
 		return !teGroupBean.isExpand();
 	}
@@ -252,6 +277,138 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 			return true;
 		}
 		return false;
+	}
+
+	public void removeGroup(@IntRange(from = 0) int index){
+		    if(index>=groups.size())return;
+		int appropriatePosition = getAppropriatePosition(index);
+		LinkedList<GroupBean<T, E>> tempList = new LinkedList<>();
+		GroupBean<T, E> groupBean = data.get(appropriatePosition);
+		tempList.addLast(groupBean);
+		if(groupBean.isInGroup()&&groupBean.isExpand()){
+			for(int i=appropriatePosition+1;i<appropriatePosition+1+childs.get(index).size();i++){
+				tempList.addLast(data.get(i));
+			}
+		}
+		if(index!=groups.size()-1){
+			int dataLength = data.size();
+			for (int i = appropriatePosition; i < dataLength; i++) {
+				GroupBean<T, E> dataGroup = data.get(i);
+				dataGroup.setGroupPosition(dataGroup.getGroupPosition() - 1);
+			}
+
+			List<Integer> collect = null;
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+				collect = openData.stream().filter(i -> i >= index).collect(Collectors.toList());
+				openData.removeAll(collect);
+				collect.forEach(i -> openData.add(i - 1));
+			} else {
+				collect = new LinkedList<>();
+				for (Integer openDatum : openData) {
+					if (openDatum >= index) {
+						collect.add(openDatum);
+					}
+				}
+				openData.removeAll(collect);
+				for (Integer integer : collect) {
+					openData.add(integer -1);
+				}
+			}
+		}
+
+
+		data.removeAll(tempList);
+		groups.remove(index);
+		childs.remove(index);
+notifyDataSetChanged();
+	}
+
+	/**
+	 * @see #loadGroup(int, Object, List, boolean)
+	 */
+	public void loadGroup(T group, List<E> groupChild, boolean open) {
+		loadGroup(groups.size(), group, groupChild, open);
+
+	}
+	/**
+	 * @see #loadGroup(int, Object, List, boolean)
+	 */
+	public void loadGroup(T group, List<E> groupChild) {
+		loadGroup(groups.size(), group, groupChild, false);
+	}
+
+	/**
+	 * @see #loadGroup(int, Object, List, boolean)
+	 */
+	public void loadGroup(@IntRange(from = 0) int index, T group, List<E> groupChild) {
+		loadGroup(index, group, groupChild, false);
+	}
+
+	/**
+	 * 增加分组
+	 *
+	 * @param index      插入时的索引
+	 * @param group      分组data
+	 * @param groupChild 分组子项的listData
+	 * @param open       分组是否自动打开
+	 */
+	public void loadGroup(@IntRange(from = 0) int index, T group, List<E> groupChild, boolean open) {
+		boolean isLast = groups.size()-1 == index;
+		groups.add(index, group);
+		childs.add(index, groupChild);
+		List<GroupBean<T, E>> tempList = new LinkedList<>();
+		int appropriatePosition = getAppropriatePosition(index);
+
+		GroupBean<T, E> groupBean = new GroupBean<>();
+		groupBean.setGroupPosition(index);
+		groupBean.setExpand(open);
+		groupBean.setInGroup(true);
+		groupBean.setGroup(group);
+		tempList.add(groupBean);
+		if (!isLast) {
+			int dataLength = data.size();
+			for (int i = appropriatePosition; i < dataLength; i++) {
+				GroupBean<T, E> dataGroup = data.get(i);
+				dataGroup.setGroupPosition(dataGroup.getGroupPosition() + 1);
+			}
+			List<Integer> collect = null;
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+				collect = openData.stream().filter(i -> i >= index).collect(Collectors.toList());
+				openData.removeAll(collect);
+				collect.forEach(i -> openData.add(i + 1));
+			} else {
+				collect = new LinkedList<>();
+				for (Integer openDatum : openData) {
+					if (openDatum >= index) {
+						collect.add(openDatum);
+					}
+				}
+				openData.removeAll(collect);
+				for (Integer integer : collect) {
+					openData.add(integer + 1);
+				}
+			}
+
+
+		}
+
+		if (open) {
+			for (int i = 0; i < groupChild.size(); i++) {
+				GroupBean<T, E> childBean = new GroupBean<>();
+				childBean.setGroupPosition(index);
+				childBean.setChildGroupPosition(i);
+				childBean.setChild(groupChild.get(i));
+				tempList.add(childBean);
+			}
+		}
+
+		data.addAll(appropriatePosition, tempList);
+
+
+		//TODO  使用这个局部刷新有短暂的白屏时间  具体查看demo 暂时使用全局刷新  发版之前需要解决
+//		notifyItemRangeInserted(appropriatePosition,tempList.size());
+		notifyDataSetChanged();
+//		notifyItemMoved(appropriatePosition,data.size()-appropriatePosition);
 	}
 
 	@Override
