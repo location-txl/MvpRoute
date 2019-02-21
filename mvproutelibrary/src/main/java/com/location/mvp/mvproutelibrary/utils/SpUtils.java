@@ -58,7 +58,7 @@ public final  class SpUtils {
 	/**
 	 * 单例模式
 	 */
-	private static SpUtils spUtils;
+	private static volatile SpUtils spUtils;
 
 	/**
 	 * 查找String的默认字符串
@@ -107,12 +107,19 @@ public final  class SpUtils {
 	}
 
 	/**
+	 * 在多进程中  Application 会初始化两次
 	 * 初始化方法  在Application中初始化 防止内存泄露
 	 *
 	 * @param context
 	 */
 	public static void init(Context context) {
-		spUtils = new SpUtils(context);
+		if(spUtils==null){
+			synchronized (SpUtils.class){
+				if(spUtils==null){
+					spUtils = new SpUtils(context);
+				}
+			}
+		}
 	}
 
 	public static SpUtils getInstance(String keys) {
@@ -121,7 +128,13 @@ public final  class SpUtils {
 		 * 抛出异常
 		 * throw {@link NullPointerException}
 		 */
-		if (spUtils == null) throw new NullPointerException("you may Application init");
+		if(spUtils==null){
+			synchronized (SpanUtils.class){
+				if (spUtils == null) throw new NullPointerException("you may Application init");
+			}
+		}
+
+
 		/**
 		 * 判断当前key是否为空 为空则第一次加载  实例化
 		 */

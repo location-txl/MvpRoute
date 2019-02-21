@@ -1,21 +1,9 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
-import android.annotation.TargetApi;
-import android.appwidget.AppWidgetManager;
-import android.os.Build;
-import android.os.HardwarePropertiesManager;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.KeyboardShortcutGroup;
 import android.view.View;
 
-import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,9 +20,12 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 
 	private OnGroupItemClickListener groupItemClickListener;
 
+	/**
+	 * group state change callback
+	 */
 	private GroupChangeListener changeListener;
-	private List<T> groups;
-	private List<List<E>> childs;
+	private List<T> groupList;
+	private List<List<E>> childList;
 	/**
 	 * save open position
 	 */
@@ -43,12 +34,11 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 	public BaseGroupAdapter(int groupLayout, int childLayout, List<T> groupList, List<List<E>> childGroupList) {
 		super(groupLayout);
 		openData = new TreeSet<>();
-		this.groups = groupList;
-		this.childs = childGroupList;
+		this.groupList = groupList;
+		this.childList = childGroupList;
 		addType(GroupBean.TYPE_GROUP, groupLayout);
 		addType(GroupBean.TYPE_CHILD, childLayout);
 		initData(groupList, childGroupList);
-
 	}
 
 
@@ -103,8 +93,9 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 	}
 
 	/**
-	 * d
 	 *
+	 *
+	 * bind data to group view
 	 * @param holder
 	 * @param response
 	 * @param groupPosition
@@ -112,18 +103,21 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 	public abstract void onBindGroup(V holder, T response, int groupPosition);
 
 	/**
-	 * 1
 	 *
+	 * bind data to child view
 	 * @param holder
 	 * @param response
 	 * @param groupPosition
 	 * @param childPosition
 	 */
-	public abstract void
-
-	onBindChild(V holder, E response, int groupPosition, int childPosition);
+	public abstract void onBindChild(V holder, E response, int groupPosition, int childPosition);
 
 
+	/**
+	 * only group view
+	 * set anim view
+	 * @param state  is open group or close group
+	 */
 	public void showAnim(V holder, boolean state) {
 	}
 
@@ -149,7 +143,7 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 
 
 	public void openAll() {
-		int length = groups.size();
+		int length = groupList.size();
 		for (int i = 0; i < length; i++) {
 			open(i);
 		}
@@ -157,7 +151,7 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 
 
 	public void closeAll() {
-		int length = groups.size();
+		int length = groupList.size();
 		for (int i = 0; i < length; i++) {
 			close(i);
 		}
@@ -198,7 +192,7 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 		GroupBean<T, E> teGroupBean = data.get(position);
 		teGroupBean.toggle();
 		int groupPosition = teGroupBean.getGroupPosition();
-		List<E> es = childs.get(groupPosition);
+		List<E> es = childList.get(groupPosition);
 		openData.add(teGroupBean.getGroupPosition());
 		for (int i = 0; i < es.size(); i++) {
 			GroupBean<T, E> childBean = new GroupBean<>();
@@ -217,7 +211,7 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 
 		GroupBean<T, E> teGroupBean = data.get(position);
 		teGroupBean.toggle();
-		List<E> es = childs.get(teGroupBean.getGroupPosition());
+		List<E> es = childList.get(teGroupBean.getGroupPosition());
 		openData.remove(teGroupBean.getGroupPosition());
 		for (int i = 0; i < es.size(); i++) {
 			data.remove(position + 1);
@@ -264,7 +258,7 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 		int index = groupPosition;
 		for (int i = 0; i < groupPosition; i++) {
 			if (openData.contains(i)) {
-				index += childs.get(i).size();
+				index += childList.get(i).size();
 			}
 		}
 		return index;
@@ -278,24 +272,24 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 	 * @return
 	 */
 	private boolean checkGroup(int groupPosition) {
-		if (groupPosition < groups.size()) {
+		if (groupPosition < groupList.size()) {
 			return true;
 		}
 		return false;
 	}
 
 	public void removeGroup(@IntRange(from = 0) int index) {
-		if (index >= groups.size()) return;
+		if (index >= groupList.size()) return;
 		int appropriatePosition = getAppropriatePosition(index);
 		LinkedList<GroupBean<T, E>> tempList = new LinkedList<>();
 		GroupBean<T, E> groupBean = data.get(appropriatePosition);
 		tempList.addLast(groupBean);
 		if (groupBean.isInGroup() && groupBean.isExpand()) {
-			for (int i = appropriatePosition + 1; i < appropriatePosition + 1 + childs.get(index).size(); i++) {
+			for (int i = appropriatePosition + 1; i < appropriatePosition + 1 + childList.get(index).size(); i++) {
 				tempList.addLast(data.get(i));
 			}
 		}
-		if (index != groups.size() - 1) {
+		if (index != groupList.size() - 1) {
 			int dataLength = data.size();
 			for (int i = appropriatePosition; i < dataLength; i++) {
 				GroupBean<T, E> dataGroup = data.get(i);
@@ -323,8 +317,8 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 
 
 		data.removeAll(tempList);
-		groups.remove(index);
-		childs.remove(index);
+		groupList.remove(index);
+		childList.remove(index);
 		notifyDataSetChanged();
 	}
 
@@ -332,7 +326,7 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 	 * @see #loadGroup(int, Object, List, boolean)
 	 */
 	public void loadGroup(T group, List<E> groupChild, boolean open) {
-		loadGroup(groups.size(), group, groupChild, open);
+		loadGroup(groupList.size(), group, groupChild, open);
 
 	}
 
@@ -340,7 +334,7 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 	 * @see #loadGroup(int, Object, List, boolean)
 	 */
 	public void loadGroup(T group, List<E> groupChild) {
-		loadGroup(groups.size(), group, groupChild, false);
+		loadGroup(groupList.size(), group, groupChild, false);
 	}
 
 	/**
@@ -351,31 +345,42 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 	}
 
 
+	/**
+	 *   refresh data
+	 * @param groupPosition
+	 */
 	public void refreshGroup(@IntRange(from = 0) int groupPosition) {
 		if (checkGroup(groupPosition)) {
 			int appropriatePosition = getAppropriatePosition(groupPosition);
 			int refreshCount = 1;
 			if (!canOpen(appropriatePosition)) {
-				refreshCount += childs.get(groupPosition).size();
+				refreshCount += childList.get(groupPosition).size();
 			}
 			notifyItemRangeChanged(appropriatePosition, refreshCount);
 		}
 	}
 
-	public void refreshGroup(@IntRange(from = 0) int groupPosition, T group, List<E> childList) {
+	/**
+	 * refresh data
+	 * if newGroup and newChildList is null you  Should  invoke {@link #refreshGroup(int)} method
+	 * @param groupPosition is data  group Position
+ 	 * @param newGroup  new group header
+	 * @param newChildList new child data
+	 */
+	public void refreshGroup(@IntRange(from = 0) int groupPosition, T newGroup, List<E> newChildList) {
 		if (checkGroup(groupPosition)) {
 			int appropriatePosition = getAppropriatePosition(groupPosition);
-			if (group != null) {
-				groups.remove(groupPosition);
-				groups.add(groupPosition, group);
-				data.get(appropriatePosition).setGroup(group);
+			if (newGroup != null) {
+				groupList.remove(groupPosition);
+				groupList.add(groupPosition, newGroup);
+				data.get(appropriatePosition).setGroup(newGroup);
 			}
 
-			if (childList != null) {
+			if (newChildList != null) {
 
 
-				List<E> es = childs.get(groupPosition);
-				Iterator<E> newChild = childList.iterator();
+				List<E> es = childList.get(groupPosition);
+				Iterator<E> newChild = newChildList.iterator();
 				LinkedList<GroupBean<T, E>> tempList = new LinkedList<>();
 				for (int i = appropriatePosition + 1; i < appropriatePosition + 1 + es.size(); i++) {
 					if (newChild.hasNext()) {
@@ -406,9 +411,9 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 					data.addAll(appropriatePosition + es.size(), tempList);
 				}
 
-				childs.remove(groupPosition);
-				childs.add(groupPosition, childList);
-//				es.addAll(childList);
+				childList.remove(groupPosition);
+				childList.add(groupPosition, newChildList);
+
 			}
 		}
 		notifyDataSetChanged();
@@ -423,9 +428,9 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 	 * @param open       分组是否自动打开
 	 */
 	public void loadGroup(@IntRange(from = 0) int index, T group, List<E> groupChild, boolean open) {
-		boolean isLast = groups.size() - 1 == index;
-		groups.add(index, group);
-		childs.add(index, groupChild);
+		boolean isLast = groupList.size() - 1 == index;
+		groupList.add(index, group);
+		childList.add(index, groupChild);
 		List<GroupBean<T, E>> tempList = new LinkedList<>();
 		int appropriatePosition = getAppropriatePosition(index);
 

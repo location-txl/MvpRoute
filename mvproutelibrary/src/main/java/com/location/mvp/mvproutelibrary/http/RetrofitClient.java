@@ -42,7 +42,7 @@ public class RetrofitClient {
 	private static final String TAG = "Retrofit";
 
 
-	private static RetrofitClient instance;
+	private static volatile RetrofitClient instance;
 	private Retrofit client;
 
 
