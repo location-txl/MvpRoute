@@ -55,7 +55,11 @@
 			android:text="删除一个分组"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" />
-
+<Button
+	android:onClick="refreshData"
+	android:text="刷新第1项"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" />
 	</LinearLayout>
 
 	<android.support.v7.widget.RecyclerView

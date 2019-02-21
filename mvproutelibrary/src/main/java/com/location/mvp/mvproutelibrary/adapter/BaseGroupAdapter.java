@@ -7,11 +7,16 @@ import android.os.HardwarePropertiesManager;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyboardShortcutGroup;
 import android.view.View;
 
+import com.location.mvp.mvproutelibrary.utils.FragmentUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
@@ -279,18 +284,18 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 		return false;
 	}
 
-	public void removeGroup(@IntRange(from = 0) int index){
-		    if(index>=groups.size())return;
+	public void removeGroup(@IntRange(from = 0) int index) {
+		if (index >= groups.size()) return;
 		int appropriatePosition = getAppropriatePosition(index);
 		LinkedList<GroupBean<T, E>> tempList = new LinkedList<>();
 		GroupBean<T, E> groupBean = data.get(appropriatePosition);
 		tempList.addLast(groupBean);
-		if(groupBean.isInGroup()&&groupBean.isExpand()){
-			for(int i=appropriatePosition+1;i<appropriatePosition+1+childs.get(index).size();i++){
+		if (groupBean.isInGroup() && groupBean.isExpand()) {
+			for (int i = appropriatePosition + 1; i < appropriatePosition + 1 + childs.get(index).size(); i++) {
 				tempList.addLast(data.get(i));
 			}
 		}
-		if(index!=groups.size()-1){
+		if (index != groups.size() - 1) {
 			int dataLength = data.size();
 			for (int i = appropriatePosition; i < dataLength; i++) {
 				GroupBean<T, E> dataGroup = data.get(i);
@@ -311,7 +316,7 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 				}
 				openData.removeAll(collect);
 				for (Integer integer : collect) {
-					openData.add(integer -1);
+					openData.add(integer - 1);
 				}
 			}
 		}
@@ -320,7 +325,7 @@ public abstract class BaseGroupAdapter<T, E, V extends BaseViewHolder> extends A
 		data.removeAll(tempList);
 		groups.remove(index);
 		childs.remove(index);
-notifyDataSetChanged();
+		notifyDataSetChanged();
 	}
 
 	/**
@@ -330,6 +335,7 @@ notifyDataSetChanged();
 		loadGroup(groups.size(), group, groupChild, open);
 
 	}
+
 	/**
 	 * @see #loadGroup(int, Object, List, boolean)
 	 */
@@ -344,6 +350,70 @@ notifyDataSetChanged();
 		loadGroup(index, group, groupChild, false);
 	}
 
+
+	public void refreshGroup(@IntRange(from = 0) int groupPosition) {
+		if (checkGroup(groupPosition)) {
+			int appropriatePosition = getAppropriatePosition(groupPosition);
+			int refreshCount = 1;
+			if (!canOpen(appropriatePosition)) {
+				refreshCount += childs.get(groupPosition).size();
+			}
+			notifyItemRangeChanged(appropriatePosition, refreshCount);
+		}
+	}
+
+	public void refreshGroup(@IntRange(from = 0) int groupPosition, T group, List<E> childList) {
+		if (checkGroup(groupPosition)) {
+			int appropriatePosition = getAppropriatePosition(groupPosition);
+			if (group != null) {
+				groups.remove(groupPosition);
+				groups.add(groupPosition, group);
+				data.get(appropriatePosition).setGroup(group);
+			}
+
+			if (childList != null) {
+
+
+				List<E> es = childs.get(groupPosition);
+				Iterator<E> newChild = childList.iterator();
+				LinkedList<GroupBean<T, E>> tempList = new LinkedList<>();
+				for (int i = appropriatePosition + 1; i < appropriatePosition + 1 + es.size(); i++) {
+					if (newChild.hasNext()) {
+						data.get(i).setChild(newChild.next());
+					} else {
+						//nothing  new child   need to remove old child
+						tempList.addLast(data.get(i));
+					}
+				}
+
+				if (!tempList.isEmpty() && !newChild.hasNext()) {
+					//remove old child
+					data.removeAll(tempList);
+				} else if(tempList.isEmpty()&&newChild.hasNext()){
+					// more new child
+					tempList.clear();
+					int position = es.size();
+					while (newChild.hasNext()) {
+						GroupBean<T, E> newChildBean = new GroupBean<>();
+						E next = newChild.next();
+						newChildBean.setChild(next);
+						newChildBean.setGroupPosition(groupPosition);
+						newChildBean.setChildGroupPosition(position);
+						position++;
+						tempList.addLast(newChildBean);
+					}
+					//add new child
+					data.addAll(appropriatePosition + es.size(), tempList);
+				}
+
+				childs.remove(groupPosition);
+				childs.add(groupPosition, childList);
+//				es.addAll(childList);
+			}
+		}
+		notifyDataSetChanged();
+	}
+
 	/**
 	 * 增加分组
 	 *
@@ -353,7 +423,7 @@ notifyDataSetChanged();
 	 * @param open       分组是否自动打开
 	 */
 	public void loadGroup(@IntRange(from = 0) int index, T group, List<E> groupChild, boolean open) {
-		boolean isLast = groups.size()-1 == index;
+		boolean isLast = groups.size() - 1 == index;
 		groups.add(index, group);
 		childs.add(index, groupChild);
 		List<GroupBean<T, E>> tempList = new LinkedList<>();

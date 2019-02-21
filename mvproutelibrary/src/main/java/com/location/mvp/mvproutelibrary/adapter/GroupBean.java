@@ -18,22 +18,22 @@ class GroupBean<T, E> implements MulitTypeListener {
 	private boolean showAnim;
 
 
-	public boolean isShowAnim() {
+	 boolean isShowAnim() {
 		return showAnim;
 	}
 
-	public void showAnim(boolean showAnim) {
+	 void showAnim(boolean showAnim) {
 		this.showAnim = showAnim;
 	}
 
-	public void toggle(){
+	 void toggle(){
 		this.expand = !expand;
 	}
-	public boolean isExpand() {
+	 boolean isExpand() {
 		return expand;
 	}
 
-	public void setExpand(boolean expand) {
+	 void setExpand(boolean expand) {
 		this.expand = expand;
 	}
 
@@ -76,6 +76,9 @@ class GroupBean<T, E> implements MulitTypeListener {
 	void setChildGroupPosition(int childGroupPosition) {
 		this.childGroupPosition = childGroupPosition;
 	}
+
+
+
 
 	@Override
 	public int getItemType() {

@@ -138,10 +138,14 @@ public void removeData(View view){
 			rotation.setDuration(500);
 			rotation.setRepeatCount(1);
 			rotation.start();
-
 		}
 	}
+public void refreshData(View view){
+	myAdapter.refreshGroup(1,"新的内容",Arrays.asList("a","b","c"));
 
+
+
+}
 	public void close(View view){
 		String s = numText.getText().toString();
 		int num = Integer.parseInt(s);
