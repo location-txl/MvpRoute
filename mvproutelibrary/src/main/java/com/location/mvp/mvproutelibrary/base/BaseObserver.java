@@ -78,12 +78,16 @@ public abstract class BaseObserver<T> implements Observer<T> {
 	}
 
 	@Override
-	public void onError(Throwable e) {
+	public final void onError(Throwable e) {
 		if (e instanceof ExceptionHandle.ResponseThrowable) {
 			baseView.onShowError((ExceptionHandle.ResponseThrowable) e);
 		}
 		if (loadingView != null) loadingView.dismissLoading();
+		showError(e);
 	}
+
+	protected void showError(Throwable e) {}
+
 
 	@Override
 	public void onComplete() {
