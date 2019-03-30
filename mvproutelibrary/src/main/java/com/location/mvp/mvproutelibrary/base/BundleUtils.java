@@ -16,7 +16,9 @@
 package com.location.mvp.mvproutelibrary.base;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
@@ -29,12 +31,18 @@ import java.lang.reflect.Type;
  * @author location
  * Bundle  传值辅助类
  *         在这里可以传未序列化的json对象
+ *         传递的对象不可以是系统类
  *         @see BaseFragment
  *         @see BaseActivity
  */
 
 public class BundleUtils {
-	void setBundleField(Object parasitifer, Bundle bundle) {
+	private static final String TAG = BundleUtils.class.getSimpleName();
+	static void setBundleField(Object parasitifer, Bundle bundle) {
+		if(bundle==null){
+			Log.d(TAG, "inject params break  " + parasitifer.getClass().getSimpleName() + " bundle is null");
+			return;
+		}
 		Field[] declaredFields = parasitifer.getClass().getDeclaredFields();
 		for (Field field : declaredFields) {
 			if (field.isAnnotationPresent(InjectBundle.class)) {
@@ -90,7 +98,7 @@ public class BundleUtils {
 		}
 	}
 
-	private static boolean checkedClass(String pageName) {
+	private static boolean checkedClazz(String pageName) {
 		try {
 			Class.forName(pageName);
 			return true;
@@ -100,24 +108,24 @@ public class BundleUtils {
 		}
 	}
 
-	private <T> T toObject(String data, Type type) {
-		if (checkedClass(RouteManager.GSON_NAME)) {
+	private static  <T> T toObject(String data, Type type) {
+		if (checkedClazz(RouteManager.GSON_NAME)) {
 			return new Gson().fromJson(data, type);
-		} else if (checkedClass(RouteManager.FAST_JSON_NAME)) {
+		} else if (checkedClazz(RouteManager.FAST_JSON_NAME)) {
 			return JSON.parseObject(data, type);
 		} else {
-			throw new NullPointerException("you must import gson or FastJson");
+			throw new NullPointerException("you mut import Gson or FastJson");
 		}
 	}
 
 	public   static void putObject(Bundle bundle,String key,Object data){
 		String content;
-		if(checkedClass(RouteManager.GSON_NAME)){
+		if(checkedClazz(RouteManager.GSON_NAME)){
 			content = new Gson().toJson(data);
-		}else if(checkedClass(RouteManager.FAST_JSON_NAME)){
+		}else if(checkedClazz(RouteManager.FAST_JSON_NAME)){
 			content = JSON.toJSONString(data);
 		}else{
-			throw new NullPointerException("you must import gson or FastJson");
+			throw new NullPointerException("you must import Gson or FastJson");
 		}
 		bundle.putString(key, content);
 	}

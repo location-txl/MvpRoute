@@ -58,23 +58,25 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 	protected View rootView;
 
 
-	@TargetApi(Build.VERSION_CODES.KITKAT)
 	public static <T extends BaseFragment> T newInstance(Class<? extends T> clazz) {
 		try {
 			return clazz.newInstance();
-		} catch (java.lang.InstantiationException | IllegalAccessException e) {
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (java.lang.InstantiationException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	@TargetApi(Build.VERSION_CODES.KITKAT)
 	public static <T extends BaseFragment> T newInstance(Class<? extends T> clazz, Bundle bundle) {
 		try {
 			T t = clazz.newInstance();
 			t.setArguments(bundle);
 			return t;
-		} catch (java.lang.InstantiationException | IllegalAccessException e) {
+		} catch (java.lang.InstantiationException   e) {
+			e.printStackTrace();
+		}catch (IllegalAccessException e){
 			e.printStackTrace();
 		}
 		return null;
@@ -106,8 +108,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 		initHideBoard(view);
 		if (getArguments() != null) {
 			getBundle(getArguments());
-			new BundleUtils().setBundleField(this,getArguments());
 		}
+		BundleUtils.setBundleField(this,getArguments());
 		initView(savedInstanceState);
 		loadData();
 	}
