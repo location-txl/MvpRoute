@@ -4,14 +4,15 @@ android {
     lintOptions {
         abortOnError false
     }
-    compileSdkVersion 26
+    compileSdkVersion sdkVersion.compileSdkVersion
 //    packagingOptions {
 //        exclude 'META-INF/rxjava.properties'
 //    }
     defaultConfig {
         applicationId "com.location.mvp.mvp_route_demo"
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdkVersion sdkVersion.minSdkVersion
+        targetSdkVersion sdkVersion.targetSdkVersion
+
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -31,19 +32,18 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation support.appcompat
     implementation('com.android.support:support-annotations:26.1.0') {
         force = true
     }
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':mvproutelibrary')
-    debugImplementation 'com.amitshekhar.android:debug-db:1.0.0'
-    implementation 'com.github.bumptech.glide:glide:3.8.0'
-//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    implementation 'com.android.support:design:26.1.0'
-    implementation 'com.alibaba:fastjson:1.1.70.android'
+    implementation support.amitshekhar
+    implementation support.glide
+    implementation support.leakcanary
+    implementation support.design
+    implementation support.fastjson
+    implementation support.rxAndroid
+    implementation support.rxJava
+    implementation support.gson
 
 }

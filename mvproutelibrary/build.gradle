@@ -10,15 +10,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    compileSdkVersion 26
+    compileSdkVersion sdkVersion.compileSdkVersion
 //    packagingOptions {
 //        exclude 'META-INF/rxjava.properties'
 //    }
 
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdkVersion sdkVersion.minSdkVersion
+        targetSdkVersion sdkVersion.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -38,12 +38,12 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    compileOnly 'com.android.support:appcompat-v7:26.1.0'
-    compileOnly 'com.android.support:design:26.1.0'
-    testImplementation 'junit:junit:4.12'
+    compileOnly support.appcompat
+    compileOnly support.design
     //RxAndroid里面已经依赖了RxJava2的库
-    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    api 'com.google.code.gson:gson:2.8.5'
-    compileOnly 'com.alibaba:fastjson:1.1.70.android'
+    compileOnly support.rxAndroid
+    compileOnly support.rxJava
+    compileOnly support.gson
+    compileOnly support.fastjson
+
 }

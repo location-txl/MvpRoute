@@ -1,5 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
+apply from: 'config.gradle'
 buildscript {
     
     repositories {
@@ -23,6 +23,35 @@ allprojects {
     }
 
 }
+
+
+subprojects() {
+    def releaseTasks = project.getTasksByName("assembleRelease", false)
+    copyApkFile(releaseTasks, project)
+}
+
+def copyApkFile(Set<Task> tasks , Project project) {
+    for (task in tasks) {
+        def dir = project.getProjectDir().getAbsolutePath()
+        println "assemble release dir = $dir"
+        def file = new File(dir + "/build/outputs/apk/release")
+        if(file.exists()){
+            delete(file.getAbsolutePath())
+        }
+
+        task.doLast {
+            if (file.exists()) {
+                copy{
+                    println "copy file -------------------"
+                    from dir + "/build/outputs/apk/release/"
+                    into rootProject.getRootDir().getAbsolutePath()
+                    include '*.apk'
+                }
+            }
+        }
+    }
+}
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir
