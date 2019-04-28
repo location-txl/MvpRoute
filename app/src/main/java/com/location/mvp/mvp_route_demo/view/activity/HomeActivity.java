@@ -14,16 +14,15 @@ import com.location.mvp.mvp_route_demo.adapter.HomeAdapter;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.bean.LoginResponse;
 import com.location.mvp.mvp_route_demo.view.activity.adapteractivity.HomeAdaptrActivity;
+import com.location.mvp.mvp_route_demo.view.activity.adapteractivity.SingleAdapterActivity;
 import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.adapter.OnHeaderClickListener;
 import com.location.mvp.mvproutelibrary.adapter.OnItemClickListener;
 import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
-import com.location.mvp.mvproutelibrary.base.StatusBar;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
 import com.location.mvp.mvproutelibrary.utils.DividerItemDecoration;
 import com.location.mvp.mvproutelibrary.utils.LogUtils;
-import com.location.mvp.mvproutelibrary.utils.StatusBarUtils;
 
 
 import java.util.Arrays;
@@ -131,6 +130,9 @@ public class HomeActivity extends BaseToActivity implements OnItemClickListener 
 			case 9:
 				startActivity(GroupAdapterActivity.class);
 //				startActivity(FoorActivity.class);
+				break;
+			case 10:
+				startActivity(SingleAdapterActivity.class);
 				break;
 			default:
 				LogUtils.d("未知");
