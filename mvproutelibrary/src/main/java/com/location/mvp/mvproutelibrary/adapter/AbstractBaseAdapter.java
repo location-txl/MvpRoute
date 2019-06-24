@@ -15,6 +15,7 @@
  */
 package com.location.mvp.mvproutelibrary.adapter;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
@@ -810,7 +811,7 @@ public abstract class AbstractBaseAdapter<T, V extends BaseViewHolder> extends R
 				constructor.setAccessible(true);
 				return (V) constructor.newInstance(view);
 			}
-		} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
+		} catch (@SuppressLint("NewApi") NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
 			e.printStackTrace();
 		}
 		return null;

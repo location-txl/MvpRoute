@@ -11,7 +11,7 @@ import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvproutelibrary.adapter.AdapterList;
 import com.location.mvp.mvproutelibrary.adapter.BaseViewHolder;
-import com.location.mvp.mvproutelibrary.adapter.SingleAdapter;
+import com.location.mvp.mvproutelibrary.adapter.SelectAdapter;
 import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;
@@ -43,7 +43,7 @@ public class SingleAdapterActivity extends BaseToActivity {
 		RecyclerView recyclerView = findViewById(R.id.single_recyclerView);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		List<String> list = new AdapterList<>();
-		for(int i=0;i<50;i++){
+		for(int i=0;i<200;i++){
 			list.add("测试" + i);
 		}
 		Adapter adapter = new Adapter(list, R.layout.item_data);
@@ -59,10 +59,10 @@ public class SingleAdapterActivity extends BaseToActivity {
 	public void onShowError(ExceptionHandle.ResponseThrowable throwable) {
 
 	}
-	class Adapter extends SingleAdapter<String, BaseViewHolder>{
+	class Adapter extends SelectAdapter<String, BaseViewHolder> {
 
 		public Adapter(Collection<String> data, int layout) {
-			super(data, layout);
+			super(data, layout,TYPE_MULTIPLE);
 		}
 
 		@Override
