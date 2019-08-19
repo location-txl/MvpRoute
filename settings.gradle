@@ -1,1 +1,1 @@
-include ':app', ':mvproutelibrary'
+include ':app', ':mvproutelibrary', ':sample'
