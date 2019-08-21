@@ -3,13 +3,11 @@ package com.location.mvp.mvp_route_demo.view.activity;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -25,7 +23,6 @@ import com.location.mvp.mvproutelibrary.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 

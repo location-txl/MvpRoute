@@ -16,7 +16,6 @@
 package com.location.mvp.mvproutelibrary.base;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
 import android.util.Log;
 

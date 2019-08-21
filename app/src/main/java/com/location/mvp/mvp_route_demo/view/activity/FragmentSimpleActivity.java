@@ -1,13 +1,12 @@
 package com.location.mvp.mvp_route_demo.view.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.widget.RadioGroup;
 
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvp_route_demo.base.BaseToActivity;
 import com.location.mvp.mvp_route_demo.view.fragment.SimpleFragment;
-import com.location.mvp.mvproutelibrary.base.BaseActivity;
 import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.base.Layout;
 import com.location.mvp.mvproutelibrary.error.ExceptionHandle;

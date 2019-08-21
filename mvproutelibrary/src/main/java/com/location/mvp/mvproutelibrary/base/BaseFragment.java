@@ -15,18 +15,17 @@
  */
 package com.location.mvp.mvproutelibrary.base;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import androidx.annotation.CallSuper;
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;

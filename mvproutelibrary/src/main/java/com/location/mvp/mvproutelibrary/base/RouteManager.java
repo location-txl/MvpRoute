@@ -17,7 +17,7 @@ package com.location.mvp.mvproutelibrary.base;
 
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.location.mvp.mvproutelibrary.utils.SpUtils;
 import com.location.mvp.mvproutelibrary.utils.ToastUtils;

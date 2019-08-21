@@ -1,14 +1,12 @@
 package com.location.mvp.mvp_route_demo.view.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
 import com.location.mvp.mvp_route_demo.R;
-import com.location.mvp.mvp_route_demo.view.activity.FragmentSimpleActivity;
 import com.location.mvp.mvproutelibrary.base.BaseFragment;
 import com.location.mvp.mvproutelibrary.base.BasePresenter;
 import com.location.mvp.mvproutelibrary.base.InjectBundle;

@@ -15,7 +15,7 @@
  */
 package com.location.mvp.mvproutelibrary.manager;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;

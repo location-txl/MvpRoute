@@ -15,35 +15,15 @@
  */
 package com.location.mvp.mvproutelibrary.adapter;
 
-import android.support.annotation.CallSuper;
-import android.support.annotation.IdRes;
-import android.support.annotation.IntDef;
-import android.support.annotation.IntRange;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.SparseArray;
-import android.util.SparseIntArray;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.annotation.CallSuper;
+import androidx.annotation.IdRes;
+import androidx.annotation.IntDef;
+import androidx.annotation.IntRange;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
 
 /**

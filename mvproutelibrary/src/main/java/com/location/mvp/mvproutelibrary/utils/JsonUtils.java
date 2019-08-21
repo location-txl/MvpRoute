@@ -1,8 +1,6 @@
 package com.location.mvp.mvproutelibrary.utils;
 
-import android.support.annotation.Nullable;
-
-import com.google.gson.Gson;
+import androidx.annotation.Nullable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,7 +9,6 @@ import org.json.JSONTokener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 

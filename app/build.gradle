@@ -15,7 +15,7 @@ android {
 
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -33,7 +33,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation support.appcompat
-    implementation('com.android.support:support-annotations:26.1.0') {
+    implementation('androidx.annotation:annotation:1.0.0') {
         force = true
     }
     implementation project(':mvproutelibrary')

@@ -7,9 +7,9 @@ ext{
     ]
 
     sdkVersion = [
-            minSdkVersion : 14,
-            targetSdkVersion : 26,
-            compileSdkVersion : 26
+            minSdkVersion : 21,
+            targetSdkVersion : 28,
+            compileSdkVersion : 28
     ]
     project = [
             gradle : "3.4.0",
@@ -31,8 +31,8 @@ ext{
 
 
     support = [
-            appcompat : "com.android.support:appcompat-v7:${supportVersion.appcompat}",
-            design    : "com.android.support:design:${supportVersion.design}",
+            appcompat : 'androidx.appcompat:appcompat:1.0.0',
+            design    : 'com.google.android.material:material:1.0.0',
             rxAndroid : "io.reactivex.rxjava2:rxandroid:${supportVersion.rxAndroid}",
             rxJava    : "com.squareup.retrofit2:adapter-rxjava2:${supportVersion.rxJava}",
             gson      : "com.google.code.gson:gson:${supportVersion.gson}",

@@ -16,7 +16,7 @@
 package com.location.mvp.mvproutelibrary.http;
 
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.location.mvp.mvproutelibrary.base.BaseProgressObserver;
 

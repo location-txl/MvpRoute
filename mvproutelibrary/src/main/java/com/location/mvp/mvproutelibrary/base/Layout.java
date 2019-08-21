@@ -15,7 +15,7 @@
  */
 package com.location.mvp.mvproutelibrary.base;
 
-import android.support.annotation.LayoutRes;
+import androidx.annotation.LayoutRes;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

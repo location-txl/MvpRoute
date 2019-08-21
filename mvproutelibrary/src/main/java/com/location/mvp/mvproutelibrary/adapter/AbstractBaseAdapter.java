@@ -16,23 +16,21 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.CallSuper;
-import android.support.annotation.IdRes;
-import android.support.annotation.IntDef;
-import android.support.annotation.IntRange;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import androidx.annotation.CallSuper;
+import androidx.annotation.IdRes;
+import androidx.annotation.IntDef;
+import androidx.annotation.IntRange;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.location.mvp.mvproutelibrary.base.Layout;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

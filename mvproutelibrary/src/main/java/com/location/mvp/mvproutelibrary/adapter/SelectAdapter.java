@@ -1,8 +1,8 @@
 package com.location.mvp.mvproutelibrary.adapter;
 
 import android.os.Bundle;
-import android.support.annotation.IntDef;
-import android.support.annotation.Nullable;
+import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -120,6 +120,7 @@ public abstract class SelectAdapter<T, V extends BaseViewHolder> extends Abstrac
      * if getSelectPosition is  {@link #DEFAULT_POSITION}  there are no selected items
      *
      * @return select item position
+     * @throws RuntimeException when mode is {@link #TYPE_MULTIPLE}
      */
     public final int getCurrentPosition() {
         if (selectType == TYPE_MULTIPLE) {
@@ -129,6 +130,11 @@ public abstract class SelectAdapter<T, V extends BaseViewHolder> extends Abstrac
     }
 
 
+    /**
+     * get select state item
+     * @return select item
+     * @throws RuntimeException() when mode is {@link #TYPE_MULTIPLE}
+     */
     public T getCurrentItem() {
         if (selectType == TYPE_MULTIPLE) {
             throw new RuntimeException("select mode is single mulitiple you need use getSelectItem method");

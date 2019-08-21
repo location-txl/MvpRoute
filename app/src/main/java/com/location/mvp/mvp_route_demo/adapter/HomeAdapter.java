@@ -1,6 +1,6 @@
 package com.location.mvp.mvp_route_demo.adapter;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.location.mvp.mvp_route_demo.R;
 import com.location.mvp.mvproutelibrary.adapter.BaseAdapter;

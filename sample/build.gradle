@@ -1,25 +1,29 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-
+    lintOptions {
+        abortOnError false
+    }
+    compileSdkVersion sdkVersion.compileSdkVersion
 
 
     defaultConfig {
         applicationId "com.location.mvp"
-        minSdkVersion 21
-        targetSdkVersion 26
+        minSdkVersion sdkVersion.minSdkVersion
+        targetSdkVersion sdkVersion.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -28,4 +32,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation support.appcompat
+    implementation project(':mvproutelibrary')
+    implementation support.amitshekhar
+    implementation support.glide
+    implementation support.leakcanary
+    implementation support.design
+    implementation support.fastjson
+    implementation support.rxAndroid
+    implementation support.rxJava
+    implementation support.gson
 }

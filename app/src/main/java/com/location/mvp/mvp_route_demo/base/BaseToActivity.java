@@ -1,9 +1,8 @@
 package com.location.mvp.mvp_route_demo.base;
 
-import android.app.ListActivity;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
+import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;

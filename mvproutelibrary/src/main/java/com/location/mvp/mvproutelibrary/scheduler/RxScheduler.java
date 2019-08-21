@@ -16,7 +16,7 @@
 package com.location.mvp.mvproutelibrary.scheduler;
 
 import android.os.Looper;
-import android.support.annotation.IntRange;
+import androidx.annotation.IntRange;
 import android.view.View;
 
 import com.location.mvp.mvproutelibrary.base.RouteManager;

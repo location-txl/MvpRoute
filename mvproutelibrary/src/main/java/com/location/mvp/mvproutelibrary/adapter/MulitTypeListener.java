@@ -15,7 +15,7 @@
  */
 package com.location.mvp.mvproutelibrary.adapter;
 
-import android.support.annotation.IntRange;
+import androidx.annotation.IntRange;
 
 
 /**
