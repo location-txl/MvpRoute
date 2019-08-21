@@ -8,7 +8,7 @@ Android项目开发框架 基于Mvp
 ## [更新日志](https://github.com/TLocation/MvpRoute/blob/master/README/update.md)
 
 ## 重要声明
-   v1.0.3 项目已经迁移到AndroidX v1.0.2 版本会持续维护到v1.0.5 
+   v1.0.3 版本已经迁移到AndroidX v1.0.2 版本会持续维护到v1.0.5 
    
 ## 导入
 ```groovy
