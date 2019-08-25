@@ -2,13 +2,13 @@ package com.location.mvp.mvproutelibrary.adapter;
 
 /**
  * @author tianxiaolong
- *         time：2019/1/10 0:10
- *         description：
+ * time：2019/1/10 0:10
+ * description：
  */
 
-class GroupBean<T, E> implements MulitTypeListener {
-	static final int TYPE_GROUP = 0;
-	static final int TYPE_CHILD = 1;
+class GroupData<T, E> implements MulitTypeListener {
+	static final int TYPE_GROUP = 0x001;
+	static final int TYPE_CHILD = 0x002;
 	private boolean inGroup;
 	private T group;
 	private E child;
@@ -18,22 +18,23 @@ class GroupBean<T, E> implements MulitTypeListener {
 	private boolean showAnim;
 
 
-	 boolean isShowAnim() {
+	boolean isShowAnim() {
 		return showAnim;
 	}
 
-	 void showAnim(boolean showAnim) {
+	void showAnim(boolean showAnim) {
 		this.showAnim = showAnim;
 	}
 
-	 void toggle(){
+	void toggle() {
 		this.expand = !expand;
 	}
-	 boolean isExpand() {
+
+	boolean isExpand() {
 		return expand;
 	}
 
-	 void setExpand(boolean expand) {
+	void setExpand(boolean expand) {
 		this.expand = expand;
 	}
 
@@ -78,12 +79,8 @@ class GroupBean<T, E> implements MulitTypeListener {
 	}
 
 
-
-
 	@Override
 	public int getItemType() {
-
-
 		return inGroup ? TYPE_GROUP : TYPE_CHILD;
 	}
 }
