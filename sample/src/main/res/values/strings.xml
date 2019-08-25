@@ -1,3 +1,16 @@
 <resources>
-	<string name="app_name">Sample</string>
+	<string name="app_name">MvpRoute</string>
+	<string name="mode_baseAdapter">BaseAdapter</string>
+	<string name="mode_PopWinwow">BobPopWindow</string>
+	<string name="mode_Retrofit">Retrofit</string>
+	<string name="mode_Base">base</string>
+	<string name="mode_banner">banner</string>
+
+	<string-array name="home_list">
+		<item>@string/mode_baseAdapter</item>
+		<item>@string/mode_PopWinwow</item>
+		<item>@string/mode_Retrofit</item>
+		<item>@string/mode_Base</item>
+		<item>@string/mode_banner</item>
+	</string-array>
 </resources>

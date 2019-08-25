@@ -1,11 +1,30 @@
 <resources>
 
 	<!-- Base application theme. -->
-	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-		<!-- Customize your theme here. -->
-		<item name="colorPrimary">@color/colorPrimary</item>
-		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+	<style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+		<item name="android:windowAnimationStyle">@style/AcitivityEnterAndExit</item>
+		<item name="colorPrimary">@color/material_deep_teal_500</item>
 		<item name="colorAccent">@color/colorAccent</item>
+		<item name="colorPrimaryDark">@color/colorPrimary</item>
+		<item name="android:textCursorDrawable">@null</item>
+		<item name="android:windowBackground">@color/white</item>
+
+	</style>
+
+	<style name="textStyle">
+		<item name="android:textColor">@color/black</item>
+		<item name="android:textSize">16sp</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:singleLine">true</item>
+	</style>
+
+	<style name="AcitivityEnterAndExit" parent="@android:style/Animation.Activity">
+		<item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+		<item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+		<item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+		<item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
 	</style>
 
 </resources>
